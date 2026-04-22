@@ -1,10 +1,10 @@
-<h1>TEST CAPTURE</h1>
 <!DOCTYPE html>
 <html lang="en-AU">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RESINC Media Schedule</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root {
     /* ===== Brand ===== */
@@ -2076,6 +2076,132 @@
     opacity: 0.6;
   }
   .search-empty-hint { font-size: 12px; margin-top: 8px; color: var(--muted); }
+
+  /* ========== Cloud UI ========== */
+  /* Connection status dot */
+  .conn-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--line-strong);
+    margin-right: 2px;
+    transition: background 0.3s;
+    flex-shrink: 0;
+  }
+  .conn-dot.online {
+    background: #10B981;
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6);
+    animation: conn-pulse 2.4s ease-out infinite;
+  }
+  .conn-dot.offline { background: #EF4444; }
+  .conn-dot.syncing { background: #F59E0B; }
+  @keyframes conn-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.55); }
+    70%  { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+  }
+
+  /* User badge in header */
+  .user-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--surface-alt);
+    border: 1px solid var(--line);
+    padding: 3px 10px 3px 3px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: inherit;
+    color: var(--ink);
+    transition: border-color 0.12s;
+  }
+  .user-badge:hover { border-color: var(--sky); }
+  .user-badge-avatar {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    color: #FFFFFF;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.02em;
+  }
+  .user-badge-name { font-size: 12px; font-weight: 600; letter-spacing: 0.005em; }
+  @media (max-width: 700px) {
+    .user-badge-name { display: none; }
+    .user-badge { padding: 3px; border-radius: 50%; }
+  }
+
+  /* Welcome modal */
+  .welcome-people-list {
+    max-height: 280px;
+    overflow-y: auto;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--softer);
+    padding: 4px;
+  }
+  .welcome-person-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    margin-bottom: 4px;
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+  .welcome-person-row:hover { border-color: var(--sky); background: var(--sky-tint); }
+  .welcome-person-row:last-child { margin-bottom: 0; }
+  .welcome-person-info { flex: 1; min-width: 0; }
+  .welcome-person-name { font-size: 14px; font-weight: 600; color: var(--ink); }
+  .welcome-person-email { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  /* App loading overlay */
+  #app-loading {
+    position: fixed; inset: 0;
+    background: var(--paper);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 9999;
+  }
+  .app-loading-inner { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+  .app-loading-spinner {
+    width: 28px; height: 28px;
+    border: 3px solid var(--line);
+    border-top-color: var(--sky);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .app-loading-msg { font-size: 13px; color: var(--muted); letter-spacing: 0.01em; }
+
+  /* App error overlay */
+  #app-error {
+    position: fixed; inset: 0;
+    background: var(--paper);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 9999; padding: 20px;
+  }
+  .app-error-inner {
+    max-width: 440px; text-align: center; padding: 32px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+  }
+  .app-error-icon { font-size: 40px; margin-bottom: 10px; }
+  .app-error-title { font-size: 20px; font-weight: 700; color: var(--heading); margin-bottom: 10px; }
+  .app-error-detail {
+    font-size: 12px; color: #991B1B; background: #FEE2E2;
+    padding: 10px 12px; border-radius: var(--radius-sm);
+    margin: 12px 0; word-break: break-word; font-family: monospace;
+  }
+  body.dark-mode .app-error-detail { color: #FCA5A5; background: #4B1818; }
+  .app-error-help { font-size: 13px; color: var(--muted); margin: 14px 0 18px; line-height: 1.5; }
+
   .coverage-strip {
     padding: 16px 26px 18px;
     background: var(--softer);
@@ -2341,6 +2467,8 @@
 <header>
   <h1>RESINC <span class="accent">Media Schedule</span></h1>
   <div class="header-right">
+    <span class="conn-dot" id="connDot" title="Connecting…"></span>
+    <button class="user-badge" id="userBadge" onclick="switchUser()" style="display:none;"></button>
     <button class="icon-btn notify-btn" id="notifyBtn" onclick="openNotifyModal()" title="Tanya notifications">
       <span>🔔</span>
       <span class="notify-badge" id="notifyBadge" style="display:none;">0</span>
@@ -2696,6 +2824,35 @@
 <!-- Toast -->
 <div id="toast" class="toast"></div>
 
+<!-- Welcome / Who are you? Modal -->
+<div class="modal-overlay" id="welcomeModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>👋 Welcome</h2>
+    </div>
+    <div class="modal-body">
+      <p class="settings-intro">
+        So we can attribute changes to the right person, pick who you are below — or add yourself to the team if you're new.
+        This gets remembered on this browser, so you only have to do it once per device.
+      </p>
+      <div class="field">
+        <label>Pick yourself</label>
+        <div id="welcomePeopleList" class="welcome-people-list"></div>
+      </div>
+      <div class="field" style="border-top:1px solid var(--line); padding-top:16px; margin-top:16px;">
+        <label>Or add yourself to the team</label>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;">
+          <input type="text" id="welcomeNewName" placeholder="Your name" style="flex:1; min-width:140px; padding:10px 12px; border:1px solid var(--line); border-radius:var(--radius-md); font-family:inherit; font-size:14px; color:var(--ink); background:var(--paper);">
+          <input type="email" id="welcomeNewEmail" placeholder="you@resinc.com.au (optional)" style="flex:1.2; min-width:160px; padding:10px 12px; border:1px solid var(--line); border-radius:var(--radius-md); font-family:inherit; font-size:14px; color:var(--ink); background:var(--paper);">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-primary" onclick="confirmWelcomeNew()">Add me and continue</button>
+    </div>
+  </div>
+</div>
+
 <!-- Add Pre-prod Tasks from Library Modal -->
 <div class="modal-overlay" id="addFromLibraryModal">
   <div class="modal modal-wide">
@@ -2779,6 +2936,377 @@
 </div>
 
 <script>
+  // ====================================================================
+  // SUPABASE SETUP
+  // ====================================================================
+  const SUPABASE_URL = 'https://kosqyettdnibrxskwgfn.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtvc3F5ZXR0ZG5pYnJ4c2t3Z2ZuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4MTI3NDIsImV4cCI6MjA5MjM4ODc0Mn0.JccP4W0dVw-kcbKlGOwWzwsNwPEb8rBVujN6mQliuMQ';
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // ====================================================================
+  // ROW ↔ OBJECT MAPPERS
+  // SQL uses snake_case; JavaScript uses camelCase.
+  // ====================================================================
+  function rowToEvent(r) {
+    return {
+      id: r.id,
+      title: r.title,
+      date: r.date,
+      endDate: r.end_date,
+      allDay: r.all_day,
+      startTime: r.start_time,
+      endTime: r.end_time,
+      categoryId: r.category_id,
+      attendeeIds: Array.isArray(r.attendee_ids) ? r.attendee_ids : [],
+      location: r.location || '',
+      details: r.details || '',
+      scheduleType: r.schedule_type,
+      platforms: Array.isArray(r.platforms) ? r.platforms : [],
+      link: r.link || '',
+      status: r.status,
+      projectId: r.project_id,
+      driveLink: r.drive_link || '',
+      createdAt: r.created_at,
+      createdBy: r.created_by,
+      lastModifiedAt: r.last_modified_at,
+      lastModifiedBy: r.last_modified_by,
+    };
+  }
+  function eventToRow(e) {
+    return {
+      id: e.id,
+      title: e.title,
+      date: e.date,
+      end_date: e.endDate || null,
+      all_day: e.allDay !== false,
+      start_time: e.startTime || null,
+      end_time: e.endTime || null,
+      category_id: e.categoryId || null,
+      attendee_ids: e.attendeeIds || [],
+      location: e.location || null,
+      details: e.details || null,
+      schedule_type: e.scheduleType || 'production',
+      platforms: e.platforms || [],
+      link: e.link || null,
+      status: e.status || null,
+      project_id: e.projectId || null,
+      drive_link: e.driveLink || null,
+      created_at: e.createdAt || new Date().toISOString(),
+      created_by: e.createdBy || null,
+      last_modified_at: e.lastModifiedAt || new Date().toISOString(),
+      last_modified_by: e.lastModifiedBy || null,
+    };
+  }
+  function rowToProject(r) {
+    return {
+      id: r.id,
+      name: r.name,
+      description: r.description || '',
+      categoryId: r.category_id,
+      leadId: r.lead_id,
+      status: r.status || 'planning',
+      driveLink: r.drive_link || '',
+      targetDate: r.target_date || '',
+      teamAware: !!r.team_aware,
+      createdAt: r.created_at,
+      createdBy: r.created_by,
+      lastModifiedAt: r.last_modified_at,
+      lastModifiedBy: r.last_modified_by,
+    };
+  }
+  function projectToRow(p) {
+    return {
+      id: p.id,
+      name: p.name,
+      description: p.description || null,
+      category_id: p.categoryId || null,
+      lead_id: p.leadId || null,
+      status: p.status || 'planning',
+      drive_link: p.driveLink || null,
+      target_date: p.targetDate || null,
+      team_aware: !!p.teamAware,
+      created_at: p.createdAt || new Date().toISOString(),
+      created_by: p.createdBy || null,
+      last_modified_at: p.lastModifiedAt || new Date().toISOString(),
+      last_modified_by: p.lastModifiedBy || null,
+    };
+  }
+  function rowToNotify(r) {
+    return {
+      id: r.id,
+      type: r.type,
+      title: r.title,
+      schedule: r.schedule,
+      date: r.queue_date || null,
+      extra: r.extra || '',
+      addedAt: r.added_at,
+      addedBy: r.added_by,
+    };
+  }
+  function notifyToRow(n) {
+    return {
+      type: n.type,
+      title: n.title,
+      schedule: n.schedule,
+      queue_date: n.date || null,
+      extra: n.extra || null,
+      added_at: n.addedAt || new Date().toISOString(),
+      added_by: n.addedBy || null,
+    };
+  }
+
+  // ====================================================================
+  // CLOUD DATA LAYER
+  // Replaces all the localStorage loaders/savers.
+  // In-memory arrays are the source of truth for rendering.
+  // Writes go to Supabase and (on success) stay in memory.
+  // Real-time subscriptions pull in changes made by other users.
+  //
+  // To keep the refactor manageable, save functions have dual signatures:
+  //   saveEventsToStorage()       — sync ALL in-memory events to cloud
+  //   saveEventsToStorage(event)  — save ONE event to cloud (faster)
+  // Existing no-arg call sites still work unchanged.
+  // ====================================================================
+
+  async function loadAllFromSupabase() {
+    const [catsRes, platsRes, peopleRes, libRes, projsRes, eventsRes, notifyRes] = await Promise.all([
+      sb.from('categories').select('*').order('sort_order'),
+      sb.from('platforms').select('*').order('sort_order'),
+      sb.from('people').select('*').order('name'),
+      sb.from('preprod_library').select('*').order('sort_order'),
+      sb.from('projects').select('*').order('created_at'),
+      sb.from('events').select('*').order('date'),
+      sb.from('notify_queue').select('*').order('added_at'),
+    ]);
+    const errs = [catsRes, platsRes, peopleRes, libRes, projsRes, eventsRes, notifyRes]
+      .map(r => r.error).filter(Boolean);
+    if (errs.length) { throw new Error('Cloud load failed: ' + errs.map(e => e.message).join('; ')); }
+    return {
+      categories: catsRes.data || [],
+      platforms: platsRes.data || [],
+      people: peopleRes.data || [],
+      preprodLibrary: libRes.data || [],
+      projects: (projsRes.data || []).map(rowToProject),
+      events: (eventsRes.data || []).map(rowToEvent),
+      notifyQueue: (notifyRes.data || []).map(rowToNotify),
+    };
+  }
+
+  // ============== Save helpers (dual-signature) ==============
+
+  async function saveEventsToStorage(ev) {
+    if (ev) {
+      const { error } = await sb.from('events').upsert(eventToRow(ev));
+      if (error) showToast('Couldn\'t save event — ' + error.message);
+    } else {
+      // No-arg form: sync whatever's in the in-memory `events` array
+      if (!events.length) return;
+      const { error } = await sb.from('events').upsert(events.map(eventToRow));
+      if (error) showToast('Couldn\'t sync events — ' + error.message);
+    }
+  }
+  async function deleteEventFromCloud(id) {
+    const { error } = await sb.from('events').delete().eq('id', id);
+    if (error) showToast('Couldn\'t delete — ' + error.message);
+  }
+
+  async function saveProjectsToStorage(pr) {
+    if (pr) {
+      const { error } = await sb.from('projects').upsert(projectToRow(pr));
+      if (error) showToast('Couldn\'t save project — ' + error.message);
+    } else {
+      if (!projects.length) return;
+      const { error } = await sb.from('projects').upsert(projects.map(projectToRow));
+      if (error) showToast('Couldn\'t sync projects — ' + error.message);
+    }
+  }
+  async function deleteProjectFromCloud(id) {
+    const { error } = await sb.from('projects').delete().eq('id', id);
+    if (error) showToast('Couldn\'t delete project — ' + error.message);
+  }
+
+  async function savePeopleToStorage(p) {
+    const mapPerson = (x) => ({ id: x.id, name: x.name, email: x.email || null });
+    if (p) {
+      const { error } = await sb.from('people').upsert(mapPerson(p));
+      if (error) showToast('Couldn\'t save person — ' + error.message);
+    } else {
+      if (!people.length) return;
+      const { error } = await sb.from('people').upsert(people.map(mapPerson));
+      if (error) showToast('Couldn\'t sync people — ' + error.message);
+    }
+  }
+  async function deletePersonFromCloud(id) {
+    const { error } = await sb.from('people').delete().eq('id', id);
+    if (error) showToast('Couldn\'t delete person — ' + error.message);
+  }
+
+  async function saveCategoriesToStorage(c) {
+    const mapCat = (x) => ({ id: x.id, name: x.name, hex: x.hex, sort_order: x.sort_order || 0 });
+    if (c) {
+      const { error } = await sb.from('categories').upsert(mapCat(c));
+      if (error) showToast('Couldn\'t save category — ' + error.message);
+    } else {
+      if (!CATEGORIES.length) return;
+      const { error } = await sb.from('categories').upsert(CATEGORIES.map(mapCat));
+      if (error) showToast('Couldn\'t sync categories — ' + error.message);
+    }
+  }
+  async function deleteCategoryFromCloud(id) {
+    const { error } = await sb.from('categories').delete().eq('id', id);
+    if (error) showToast('Couldn\'t delete category — ' + error.message);
+  }
+
+  async function savePlatformsToStorage(pl) {
+    const mapPlat = (x) => ({ id: x.id, name: x.name, icon: x.icon, sort_order: x.sort_order || 0 });
+    if (pl) {
+      const { error } = await sb.from('platforms').upsert(mapPlat(pl));
+      if (error) showToast('Couldn\'t save platform — ' + error.message);
+    } else {
+      if (!PLATFORMS.length) return;
+      const { error } = await sb.from('platforms').upsert(PLATFORMS.map(mapPlat));
+      if (error) showToast('Couldn\'t sync platforms — ' + error.message);
+    }
+  }
+  async function deletePlatformFromCloud(id) {
+    const { error } = await sb.from('platforms').delete().eq('id', id);
+    if (error) showToast('Couldn\'t delete platform — ' + error.message);
+  }
+
+  async function savePreprodLibrary(t) {
+    const mapLib = (x) => ({ id: x.id, title: x.title, sort_order: x.sort_order || 0 });
+    if (t) {
+      const { error } = await sb.from('preprod_library').upsert(mapLib(t));
+      if (error) showToast('Couldn\'t save library task — ' + error.message);
+    } else {
+      if (!PREPROD_LIBRARY.length) return;
+      const { error } = await sb.from('preprod_library').upsert(PREPROD_LIBRARY.map(mapLib));
+      if (error) showToast('Couldn\'t sync library — ' + error.message);
+    }
+  }
+  async function deletePreprodLibraryFromCloud(id) {
+    const { error } = await sb.from('preprod_library').delete().eq('id', id);
+    if (error) showToast(error.message);
+  }
+
+  async function saveNotifyQueue() {
+    // Wipe and rewrite — queue is small
+    await sb.from('notify_queue').delete().neq('id', -1);
+    if (notifyQueue && notifyQueue.length) {
+      const { error } = await sb.from('notify_queue').insert(notifyQueue.map(notifyToRow));
+      if (error) showToast('Couldn\'t update notifications — ' + error.message);
+    }
+  }
+
+  // ====================================================================
+  // REAL-TIME SUBSCRIPTIONS
+  // When another user adds/edits/deletes, we get a notification here
+  // and update the local arrays + re-render.
+  // ====================================================================
+  let realtimeChannel = null;
+  function subscribeToRealtime() {
+    if (realtimeChannel) { sb.removeChannel(realtimeChannel); }
+    realtimeChannel = sb.channel('resinc-media-schedule')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'events' },          (p) => handleRealtimeChange('events', p))
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'projects' },        (p) => handleRealtimeChange('projects', p))
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'people' },          (p) => handleRealtimeChange('people', p))
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'categories' },      (p) => handleRealtimeChange('categories', p))
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'platforms' },       (p) => handleRealtimeChange('platforms', p))
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'preprod_library' }, (p) => handleRealtimeChange('preprod_library', p))
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'notify_queue' },    (p) => handleRealtimeChange('notify_queue', p))
+      .subscribe();
+  }
+
+  function handleRealtimeChange(tbl, payload) {
+    const { eventType, new: newRow, old: oldRow } = payload;
+
+    // Maintain in-memory state to match the change, then re-render.
+    if (tbl === 'events') {
+      if (eventType === 'DELETE') {
+        events = events.filter(e => e.id !== (oldRow && oldRow.id));
+      } else if (newRow) {
+        const ev = rowToEvent(newRow);
+        const idx = events.findIndex(e => e.id === ev.id);
+        if (idx >= 0) events[idx] = ev; else events.push(ev);
+      }
+    }
+    else if (tbl === 'projects') {
+      if (eventType === 'DELETE') {
+        projects = projects.filter(p => p.id !== (oldRow && oldRow.id));
+      } else if (newRow) {
+        const pr = rowToProject(newRow);
+        const idx = projects.findIndex(p => p.id === pr.id);
+        if (idx >= 0) projects[idx] = pr; else projects.push(pr);
+      }
+    }
+    else if (tbl === 'people') {
+      if (eventType === 'DELETE') {
+        people = people.filter(p => p.id !== (oldRow && oldRow.id));
+      } else if (newRow) {
+        const idx = people.findIndex(p => p.id === newRow.id);
+        if (idx >= 0) people[idx] = newRow; else people.push(newRow);
+      }
+    }
+    else if (tbl === 'categories') {
+      if (eventType === 'DELETE') {
+        CATEGORIES = CATEGORIES.filter(c => c.id !== (oldRow && oldRow.id));
+      } else if (newRow) {
+        const idx = CATEGORIES.findIndex(c => c.id === newRow.id);
+        if (idx >= 0) CATEGORIES[idx] = newRow; else CATEGORIES.push(newRow);
+      }
+    }
+    else if (tbl === 'platforms') {
+      if (eventType === 'DELETE') {
+        PLATFORMS = PLATFORMS.filter(p => p.id !== (oldRow && oldRow.id));
+      } else if (newRow) {
+        const idx = PLATFORMS.findIndex(p => p.id === newRow.id);
+        if (idx >= 0) PLATFORMS[idx] = newRow; else PLATFORMS.push(newRow);
+      }
+    }
+    else if (tbl === 'preprod_library') {
+      if (eventType === 'DELETE') {
+        PREPROD_LIBRARY = PREPROD_LIBRARY.filter(t => t.id !== (oldRow && oldRow.id));
+      } else if (newRow) {
+        const idx = PREPROD_LIBRARY.findIndex(t => t.id === newRow.id);
+        if (idx >= 0) PREPROD_LIBRARY[idx] = newRow; else PREPROD_LIBRARY.push(newRow);
+      }
+    }
+    else if (tbl === 'notify_queue') {
+      if (eventType === 'DELETE') {
+        if (oldRow) notifyQueue = notifyQueue.filter(n => n.id !== oldRow.id);
+        else notifyQueue = [];
+      } else if (newRow) {
+        notifyQueue.push(rowToNotify(newRow));
+      }
+    }
+
+    // Re-render affected UI
+    if (document.getElementById('app-loading')) return;  // don't render during initial load
+    try {
+      render();
+      renderNotifyBadge && renderNotifyBadge();
+      renderViewAsOptions && renderViewAsOptions();
+      // If settings modal is open on the same tab, refresh it too
+      const settingsModal = document.getElementById('settingsModal');
+      if (settingsModal && settingsModal.classList.contains('active')) renderSettingsPanel();
+    } catch (e) { console.warn('Realtime render error', e); }
+  }
+
+  // ====================================================================
+  // CURRENT USER (not a login — just who's sitting at this browser)
+  // ====================================================================
+  let currentUserId = localStorage.getItem('resinc_current_user_id') || '';
+  let currentUserName = localStorage.getItem('resinc_current_user_name') || '';
+
+  function setCurrentUser(id, name) {
+    currentUserId = id || '';
+    currentUserName = name || '';
+    if (id) localStorage.setItem('resinc_current_user_id', id);
+    else localStorage.removeItem('resinc_current_user_id');
+    if (name) localStorage.setItem('resinc_current_user_name', name);
+    else localStorage.removeItem('resinc_current_user_name');
+  }
+
   // ============== Configuration ==============
   const DEFAULT_CATEGORIES = [
     { id: 'budget',      name: 'Budget Battlers',    hex: '#C2681C' },
@@ -2787,12 +3315,8 @@
     { id: 'influencers', name: 'Influencers',        hex: '#8B3A77' },
     { id: 'media',       name: 'Media Engagement',   hex: '#00AEEF' },
   ];
-  function loadCategories() {
-    try { const raw = localStorage.getItem('resinc_media_categories'); return raw ? JSON.parse(raw) : DEFAULT_CATEGORIES.slice(); }
-    catch (e) { return DEFAULT_CATEGORIES.slice(); }
-  }
-  function saveCategoriesToStorage() { localStorage.setItem('resinc_media_categories', JSON.stringify(CATEGORIES)); }
-  let CATEGORIES = loadCategories();
+  // Populated from Supabase on boot; mutated in-memory, written back via saveCategoriesToStorage(c)
+  let CATEGORIES = [];
 
   const DEFAULT_PLATFORMS = [
     { id: 'youtube',   name: 'YouTube',   icon: '▶' },
@@ -2804,15 +3328,8 @@
     { id: 'press',     name: 'Press',     icon: '📰' },
     { id: 'other',     name: 'Other',     icon: '🔗' },
   ];
-  function loadPlatforms() {
-    try { const raw = localStorage.getItem('resinc_media_platforms'); return raw ? JSON.parse(raw) : DEFAULT_PLATFORMS.slice(); }
-    catch (e) { return DEFAULT_PLATFORMS.slice(); }
-  }
-  function savePlatformsToStorage() { localStorage.setItem('resinc_media_platforms', JSON.stringify(PLATFORMS)); }
-  let PLATFORMS = loadPlatforms();
+  let PLATFORMS = [];
 
-  // Flat library of common pre-production tasks. Tick the ones you need,
-  // set date + assignee at the moment of adding. No time-before-target math.
   const DEFAULT_PREPROD_LIBRARY = [
     { id: 'lib_1',  title: 'Confirm customer/subject/story' },
     { id: 'lib_2',  title: 'Pre-call with subject to scope' },
@@ -2828,12 +3345,7 @@
     { id: 'lib_12', title: 'Final brief to crew' },
     { id: 'lib_13', title: 'Day-of logistics check' },
   ];
-  function loadPreprodLibrary() {
-    try { const raw = localStorage.getItem('resinc_preprod_library'); return raw ? JSON.parse(raw) : DEFAULT_PREPROD_LIBRARY.slice(); }
-    catch (e) { return DEFAULT_PREPROD_LIBRARY.slice(); }
-  }
-  function savePreprodLibrary() { localStorage.setItem('resinc_preprod_library', JSON.stringify(PREPROD_LIBRARY)); }
-  let PREPROD_LIBRARY = loadPreprodLibrary();
+  let PREPROD_LIBRARY = [];
 
   const TASK_STATUSES = [
     { id: 'todo',  name: 'Not started', colour: '#94A3B8' },
@@ -2868,15 +3380,17 @@
 
   // ============== State ==============
   let currentView = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
-  let events = loadEvents();
-  let people = loadPeople();
-  let projects = loadProjects();
-  let notifyQueue = loadNotifyQueue();
+  // These arrays are populated from Supabase on boot (initApp).
+  // All mutations write through to Supabase via the save helpers defined above.
+  let events = [];
+  let people = [];
+  let projects = [];
+  let notifyQueue = [];
   let editingEventId = null;
   let editingProjectId = null;
   let viewingEventId = null;
   let viewingProjectId = null;
-  let selectedCategory = CATEGORIES[4].id;
+  let selectedCategory = 'media';  // sensible default until categories load
   let selectedPlatforms = ['youtube'];
   let selectedStatus = 'todo';
   let selectedProjectId = null;
@@ -2891,23 +3405,7 @@
   let searchQuery = '';
   let activeFilters = new Set();  // 'overdue' | 'thisweek' | 'unassigned' | 'noproject' | 'draft'
 
-  // ============== Storage ==============
-  function loadEvents() {
-    try { const raw = localStorage.getItem('resinc_media_events'); return raw ? JSON.parse(raw) : []; }
-    catch (e) { return []; }
-  }
-  function saveEventsToStorage() { localStorage.setItem('resinc_media_events', JSON.stringify(events)); }
-  function loadPeople() {
-    try { const raw = localStorage.getItem('resinc_media_people'); return raw ? JSON.parse(raw) : DEFAULT_PEOPLE.slice(); }
-    catch (e) { return DEFAULT_PEOPLE.slice(); }
-  }
-  function savePeopleToStorage() { localStorage.setItem('resinc_media_people', JSON.stringify(people)); }
-
-  function loadProjects() {
-    try { const raw = localStorage.getItem('resinc_media_projects'); return raw ? JSON.parse(raw) : []; }
-    catch (e) { return []; }
-  }
-  function saveProjectsToStorage() { localStorage.setItem('resinc_media_projects', JSON.stringify(projects)); }
+  // ============== Helpers ==============
   function getProject(id) { return projects.find(p => p.id === id); }
 
   // Compute platform coverage for a project — which platforms has content been pushed to, with counts
@@ -2931,31 +3429,31 @@
     return { active, inactive, totalDrops: drops.length, allDrops: drops };
   }
 
-  function loadNotifyQueue() {
-    try { const raw = localStorage.getItem('resinc_notify_queue'); return raw ? JSON.parse(raw) : []; }
-    catch (e) { return []; }
-  }
-  function saveNotifyQueue() { localStorage.setItem('resinc_notify_queue', JSON.stringify(notifyQueue)); }
   function queueNotification(type, title, schedule, date, extra) {
-    notifyQueue.push({
+    const entry = {
       type,
       title,
       schedule,
-      date,
+      date: date || null,
       extra: extra || '',
       addedAt: new Date().toISOString(),
       addedBy: getCurrentUserName(),
+    };
+    // Push to cloud; realtime will also echo it back but dedup by pushing now too for snappy UX
+    sb.from('notify_queue').insert(notifyToRow(entry)).then(({ error }) => {
+      if (error) showToast('Couldn\'t queue notification — ' + error.message);
     });
-    saveNotifyQueue();
+    notifyQueue.push(entry);
     renderNotifyBadge();
     showToast(`Queued for ${NOTIFY_EMAIL}`);
   }
   function getCurrentUserName() {
+    if (currentUserName) return currentUserName;
     if (viewAsPersonId) {
       const p = getPerson(viewAsPersonId);
       if (p) return p.name;
     }
-    return 'Chris Johns';  // default
+    return 'Someone';
   }
 
   // Format an ISO timestamp as a "just now" / "3h ago" / "2 days ago" / full date style label.
@@ -3382,32 +3880,44 @@
     ];
   }
 
-  function loadSampleData() {
-    if (events.length > 0) {
-      if (!confirm('Replace current data with demo events and people?')) return;
+  async function loadSampleData() {
+    if (events.length > 0 || projects.length > 0) {
+      if (!confirm('This will ADD demo projects, tasks, events, and people to the shared cloud database — visible to the whole team. Continue?')) return;
     }
-    people = SAMPLE_PEOPLE.slice();
-    events = buildSamplePreprodTasks()
+    showToast('Loading demo data to the cloud…');
+    const samplePeople = SAMPLE_PEOPLE.slice();
+    const sampleEvents = buildSamplePreprodTasks()
               .concat(buildSampleProductionEvents())
               .concat(buildSampleReleaseEvents());
-    projects = buildSampleProjects();
+    const sampleProjects = buildSampleProjects();
+    // Temporarily link
+    const origPeople = people, origEvents = events, origProjects = projects;
+    people = samplePeople;
+    events = sampleEvents;
+    projects = sampleProjects;
     linkSampleEventsToProjects();
-    notifyQueue = [];
-    savePeopleToStorage();
-    saveEventsToStorage();
-    saveProjectsToStorage();
-    saveNotifyQueue();
-    const now = new Date();
-    currentView = new Date(now.getFullYear(), now.getMonth(), 1);
-    selectedDay = toISODate(now);
-    render();
-    renderNotifyBadge();
-    setTimeout(() => {
+
+    try {
+      await Promise.all([
+        sb.from('people').upsert(samplePeople.map(p => ({ id: p.id, name: p.name, email: p.email || null }))),
+        sb.from('events').upsert(events.map(eventToRow)),
+        sb.from('projects').upsert(projects.map(projectToRow)),
+      ]);
+      const now = new Date();
+      currentView = new Date(now.getFullYear(), now.getMonth(), 1);
+      selectedDay = toISODate(now);
+      render();
+      renderNotifyBadge();
       const pre  = events.filter(e => scheduleOf(e) === 'preprod').length;
       const prod = events.filter(e => scheduleOf(e) === 'production').length;
       const rel  = events.filter(e => scheduleOf(e) === 'release').length;
-      alert(`Demo data loaded 🎉\n\n• ${projects.length} projects\n• ${pre} pre-production tasks\n• ${prod} production events\n• ${rel} release drops\n• 5 people\n\nTry the new Projects view for the pipeline view of each content piece.`);
-    }, 100);
+      alert(`Demo data loaded to the cloud 🎉\n\n• ${projects.length} projects\n• ${pre} pre-production tasks\n• ${prod} production events\n• ${rel} release drops\n• ${samplePeople.length} people\n\nEveryone else on the team will see this data too.`);
+    } catch (err) {
+      // Rollback in-memory
+      people = origPeople; events = origEvents; projects = origProjects;
+      render();
+      alert('Couldn\'t push demo data to the cloud: ' + err.message);
+    }
   }
 
   // ============== Legend ==============
@@ -4707,13 +5217,14 @@
     }
   }
 
-  function deleteEvent() {
+  async function deleteEvent() {
     if (!editingEventId) return;
-    if (!confirm('Delete this event?')) return;
-    events = events.filter(e => e.id !== editingEventId);
-    saveEventsToStorage();
+    if (!confirm('Delete this? It\'ll be removed for the whole team.')) return;
+    const id = editingEventId;
+    events = events.filter(e => e.id !== id);
     closeEventModal();
     render();
+    await deleteEventFromCloud(id);
   }
 
   // ============== Detail modal ==============
@@ -5481,19 +5992,28 @@
       setTimeout(() => openProjectDetail(payload.id), 150);
     }
   }
-  function deleteProject() {
+  async function deleteProject() {
     if (!editingProjectId) return;
     const proj = getProject(editingProjectId);
     if (!proj) return;
-    const linked = events.filter(ev => ev.projectId === editingProjectId).length;
-    if (!confirm(`Delete project "${proj.name}"?${linked > 0 ? `\n\n${linked} linked items will become standalone (not deleted).` : ''}`)) return;
-    // Unlink items
-    events.forEach(ev => { if (ev.projectId === editingProjectId) delete ev.projectId; });
-    saveEventsToStorage();
-    projects = projects.filter(p => p.id !== editingProjectId);
-    saveProjectsToStorage();
+    const linked = events.filter(ev => ev.projectId === editingProjectId);
+    if (!confirm(`Delete project "${proj.name}"?${linked.length > 0 ? `\n\n${linked.length} linked items will become standalone (not deleted).` : ''}\n\nThis removes it for the whole team.`)) return;
+    const id = editingProjectId;
+
+    // Unlink items locally + in the cloud
+    const unlinked = [];
+    events.forEach(ev => { if (ev.projectId === id) { ev.projectId = null; unlinked.push(ev); } });
+
+    // Remove project from in-memory
+    projects = projects.filter(p => p.id !== id);
     closeProjectModal();
     render();
+
+    // Push changes to cloud (unlink items, then delete project)
+    if (unlinked.length > 0) {
+      await sb.from('events').upsert(unlinked.map(eventToRow));
+    }
+    await deleteProjectFromCloud(id);
   }
 
   // ============== Project Detail ==============
@@ -5950,7 +6470,7 @@
     }
   }
 
-  function handleSettingsAction(action, idx) {
+  async function handleSettingsAction(action, idx) {
     if (action === 'add-cat') {
       const id = 'cat_' + Math.random().toString(36).slice(2, 8);
       CATEGORIES.push({ id, name: 'New Category', hex: '#64748B' });
@@ -5961,38 +6481,44 @@
       const c = CATEGORIES[idx];
       if (!c) return;
       if (!confirm(`Delete category "${c.name}"? Nothing else will be affected because no items are using it.`)) return;
+      const catId = c.id;
       CATEGORIES.splice(idx, 1);
-      saveCategoriesToStorage();
       renderSettingsPanel();
       renderLegend();
+      await deleteCategoryFromCloud(catId);
     }
     else if (action === 'add-plat') {
       const id = 'plat_' + Math.random().toString(36).slice(2, 8);
-      PLATFORMS.push({ id, name: 'New Platform', icon: '🔗' });
-      savePlatformsToStorage();
+      const p = { id, name: 'New Platform', icon: '🔗' };
+      PLATFORMS.push(p);
+      await savePlatformsToStorage(p);
       renderSettingsPanel();
     } else if (action === 'delete-plat') {
       const p = PLATFORMS[idx];
       if (!p) return;
       if (!confirm(`Delete platform "${p.name}"? No items are using it, so nothing else will change.`)) return;
+      const platId = p.id;
       PLATFORMS.splice(idx, 1);
-      savePlatformsToStorage();
       renderSettingsPanel();
+      await deletePlatformFromCloud(platId);
     }
     else if (action === 'add-libtask') {
-      PREPROD_LIBRARY.push({ id: 'lib_' + Math.random().toString(36).slice(2,8), title: 'New task' });
-      savePreprodLibrary();
+      const t = { id: 'lib_' + Math.random().toString(36).slice(2,8), title: 'New task' };
+      PREPROD_LIBRARY.push(t);
+      await savePreprodLibrary(t);
       renderSettingsPanel();
     } else if (action === 'delete-libtask') {
       if (!confirm('Remove this task from your library? Any tasks already created from it in projects will stay where they are.')) return;
+      const libId = PREPROD_LIBRARY[idx] && PREPROD_LIBRARY[idx].id;
       PREPROD_LIBRARY.splice(idx, 1);
-      savePreprodLibrary();
       renderSettingsPanel();
+      if (libId) await deletePreprodLibraryFromCloud(libId);
     }
     else if (action === 'add-person') {
       const id = 'p_' + Math.random().toString(36).slice(2, 8);
-      people.push({ id, name: 'New Person', email: '' });
-      savePeopleToStorage();
+      const newP = { id, name: 'New Person', email: '' };
+      people.push(newP);
+      await savePeopleToStorage(newP);
       renderSettingsPanel();
       renderViewAsOptions();
     } else if (action === 'delete-person') {
@@ -6003,17 +6529,28 @@
                      projects.filter(pr => pr.leadId === p.id).length;
       if (usedBy > 0) {
         if (!confirm(`${p.name} is assigned to ${usedBy} item${usedBy === 1 ? '' : 's'}. Remove them anyway? They'll be unassigned from all items.`)) return;
-        events.forEach(ev => { ev.attendeeIds = ev.attendeeIds.filter(pid => pid !== p.id); });
-        projects.forEach(pr => { if (pr.leadId === p.id) pr.leadId = null; });
-        saveEventsToStorage();
-        saveProjectsToStorage();
+        const touchedEvents = [];
+        const touchedProjects = [];
+        events.forEach(ev => {
+          if (ev.attendeeIds.includes(p.id)) {
+            ev.attendeeIds = ev.attendeeIds.filter(pid => pid !== p.id);
+            touchedEvents.push(ev);
+          }
+        });
+        projects.forEach(pr => {
+          if (pr.leadId === p.id) { pr.leadId = null; touchedProjects.push(pr); }
+        });
+        // Push changes
+        if (touchedEvents.length)   await sb.from('events').upsert(touchedEvents.map(eventToRow));
+        if (touchedProjects.length) await sb.from('projects').upsert(touchedProjects.map(projectToRow));
       } else {
         if (!confirm(`Remove ${p.name}?`)) return;
       }
+      const personId = p.id;
       people.splice(idx, 1);
-      savePeopleToStorage();
       renderSettingsPanel();
       renderViewAsOptions();
+      await deletePersonFromCloud(personId);
     }
     else if (action === 'export-data') {
       exportAllData();
@@ -6025,29 +6562,44 @@
         loadSampleData();
       }
     } else if (action === 'reset-data') {
-      if (!confirm('Reset everything? All projects, tasks, events, drops, people, categories and platforms will be permanently deleted. This cannot be undone.')) return;
+      if (!confirm('Reset everything? All projects, tasks, events, drops, people, categories and platforms will be permanently deleted from the cloud for the WHOLE TEAM. This cannot be undone.')) return;
       if (!confirm('Are you absolutely sure? Last chance to export a backup first.')) return;
-      localStorage.removeItem('resinc_media_events');
-      localStorage.removeItem('resinc_media_projects');
-      localStorage.removeItem('resinc_media_people');
-      localStorage.removeItem('resinc_media_categories');
-      localStorage.removeItem('resinc_media_platforms');
-      localStorage.removeItem('resinc_preprod_library');
-      localStorage.removeItem('resinc_media_templates');
-      localStorage.removeItem('resinc_notify_queue');
-      localStorage.removeItem('resinc_sample_v7_loaded');
-      localStorage.removeItem('resinc_sample_v8_loaded');
-      events = [];
-      projects = [];
-      people = DEFAULT_PEOPLE.slice();
-      CATEGORIES = DEFAULT_CATEGORIES.slice();
-      PLATFORMS = DEFAULT_PLATFORMS.slice();
-      PREPROD_LIBRARY = DEFAULT_PREPROD_LIBRARY.slice();
-      notifyQueue = [];
-      closeSettingsModal();
-      renderLegend();
-      render();
-      alert('Everything has been reset. Fresh slate.');
+
+      // Wipe all cloud tables in parallel
+      (async () => {
+        showToast('Resetting all cloud data…');
+        try {
+          await Promise.all([
+            sb.from('events').delete().neq('id', ''),
+            sb.from('projects').delete().neq('id', ''),
+            sb.from('people').delete().neq('id', ''),
+            sb.from('categories').delete().neq('id', ''),
+            sb.from('platforms').delete().neq('id', ''),
+            sb.from('preprod_library').delete().neq('id', ''),
+            sb.from('notify_queue').delete().neq('id', -1),
+          ]);
+          // Re-seed defaults that the app needs to function
+          await Promise.all([
+            sb.from('categories').upsert(DEFAULT_CATEGORIES.map((c, i) => ({ ...c, sort_order: i }))),
+            sb.from('platforms').upsert(DEFAULT_PLATFORMS.map((p, i) => ({ ...p, sort_order: i }))),
+            sb.from('preprod_library').upsert(DEFAULT_PREPROD_LIBRARY.map((t, i) => ({ ...t, sort_order: i }))),
+          ]);
+          // Refresh in-memory state
+          events = []; projects = []; people = []; notifyQueue = [];
+          CATEGORIES = DEFAULT_CATEGORIES.slice();
+          PLATFORMS = DEFAULT_PLATFORMS.slice();
+          PREPROD_LIBRARY = DEFAULT_PREPROD_LIBRARY.slice();
+          setCurrentUser('', '');  // clear local identity so welcome picker re-fires
+          closeSettingsModal();
+          renderLegend();
+          renderUserBadge();
+          render();
+          alert('Everything has been reset. You\'ll be asked to pick who you are again.');
+          setTimeout(openWelcomeModal, 200);
+        } catch (err) {
+          alert('Reset failed: ' + err.message);
+        }
+      })();
     }
   }
 
@@ -6401,39 +6953,174 @@
   }
 
   // ============== Init ==============
-  if (!localStorage.getItem('resinc_media_people')) savePeopleToStorage();
+  async function initApp() {
+    showAppLoading('Connecting to the cloud…');
+    try {
+      const data = await loadAllFromSupabase();
+      CATEGORIES       = data.categories;
+      PLATFORMS        = data.platforms;
+      people           = data.people;
+      PREPROD_LIBRARY  = data.preprodLibrary;
+      projects         = data.projects;
+      events           = data.events;
+      notifyQueue      = data.notifyQueue;
+      hideAppLoading();
+    } catch (err) {
+      hideAppLoading();
+      showConnectionError(err.message || String(err));
+      return;
+    }
 
-  // First-visit auto-seed
-  if (!localStorage.getItem('resinc_sample_v8_loaded')) {
-    localStorage.setItem('resinc_sample_v8_loaded', '1');
-    people = SAMPLE_PEOPLE.slice();
-    events = buildSamplePreprodTasks()
-              .concat(buildSampleProductionEvents())
-              .concat(buildSampleReleaseEvents());
-    projects = buildSampleProjects();
-    linkSampleEventsToProjects();
-    notifyQueue = [];
-    savePeopleToStorage();
-    saveEventsToStorage();
-    saveProjectsToStorage();
-    saveNotifyQueue();
-    const now = new Date();
-    currentView = new Date(now.getFullYear(), now.getMonth(), 1);
-    selectedDay = toISODate(now);
+    // Make sure we have a sensible default category
+    if (CATEGORIES.length > 0 && !CATEGORIES.find(c => c.id === selectedCategory)) {
+      selectedCategory = CATEGORIES[0].id;
+    }
+
+    applyDarkMode();
+    renderLegend();
+    renderViewAsOptions();
+    renderNotifyBadge();
+    renderFilterChips();
+    render();
+    setConnectionStatus('online');
+
+    // Subscribe to real-time updates from other users
+    subscribeToRealtime();
+
+    // If we don't know who's sitting at this browser, show the welcome picker
+    if (!currentUserId || !people.find(p => p.id === currentUserId)) {
+      setTimeout(openWelcomeModal, 300);
+    } else {
+      renderUserBadge();
+    }
   }
 
-  applyDarkMode();
-  renderLegend();
-  renderViewAsOptions();
-  renderNotifyBadge();
-  render();
-
+  // Boot
   document.querySelectorAll('.modal-overlay').forEach(m => {
     m.addEventListener('click', (e) => { if (e.target === m) m.classList.remove('active'); });
   });
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
   });
+
+  initApp();
+
+  // ============== Loading + error states ==============
+  function showAppLoading(msg) {
+    let el = document.getElementById('app-loading');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'app-loading';
+      el.innerHTML = `
+        <div class="app-loading-inner">
+          <div class="app-loading-spinner"></div>
+          <div class="app-loading-msg">${escapeHTML(msg || 'Loading…')}</div>
+        </div>
+      `;
+      document.body.appendChild(el);
+    } else {
+      el.querySelector('.app-loading-msg').textContent = msg || 'Loading…';
+      el.style.display = 'flex';
+    }
+  }
+  function hideAppLoading() {
+    const el = document.getElementById('app-loading');
+    if (el) el.remove();
+  }
+  function showConnectionError(detail) {
+    let el = document.getElementById('app-error');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'app-error';
+      document.body.appendChild(el);
+    }
+    el.innerHTML = `
+      <div class="app-error-inner">
+        <div class="app-error-icon">⚠️</div>
+        <div class="app-error-title">Can't reach the cloud</div>
+        <div class="app-error-detail">${escapeHTML(detail)}</div>
+        <p class="app-error-help">
+          Check your internet connection and try again. If this keeps happening,
+          the Supabase project may need its database schema set up — see the README.
+        </p>
+        <button class="btn-primary" onclick="location.reload()">Retry</button>
+      </div>
+    `;
+  }
+
+  // Connection status indicator (small dot in header)
+  function setConnectionStatus(state) {
+    const dot = document.getElementById('connDot');
+    if (!dot) return;
+    dot.classList.remove('online', 'offline', 'syncing');
+    dot.classList.add(state);
+    dot.title = {
+      online:  'Connected — live syncing with the team',
+      offline: 'Offline — changes may not save',
+      syncing: 'Syncing…',
+    }[state] || '';
+  }
+
+  // ============== Welcome / Who are you? modal ==============
+  function openWelcomeModal() {
+    const modal = document.getElementById('welcomeModal');
+    const list  = document.getElementById('welcomePeopleList');
+    // List existing people + option to add a new one
+    list.innerHTML = people.map(p => `
+      <div class="welcome-person-row" onclick="pickWelcomePerson('${p.id}', '${escapeHTML(p.name).replace(/'/g, "\\'")}')">
+        <div class="person-avatar" style="background:${personColour(p.id)}">${initials(p.name)}</div>
+        <div class="welcome-person-info">
+          <div class="welcome-person-name">${escapeHTML(p.name)}</div>
+          ${p.email ? `<div class="welcome-person-email">${escapeHTML(p.email)}</div>` : ''}
+        </div>
+      </div>
+    `).join('');
+    if (!people.length) {
+      list.innerHTML = '<div style="padding:20px; text-align:center; color:var(--muted); font-size:13px;">No team members yet. Add yourself below to get started.</div>';
+    }
+    document.getElementById('welcomeNewName').value = '';
+    document.getElementById('welcomeNewEmail').value = '';
+    modal.classList.add('active');
+  }
+  function pickWelcomePerson(id, name) {
+    setCurrentUser(id, name);
+    renderUserBadge();
+    document.getElementById('welcomeModal').classList.remove('active');
+    showToast(`Welcome, ${name.split(' ')[0]}!`);
+  }
+  async function confirmWelcomeNew() {
+    const name = document.getElementById('welcomeNewName').value.trim();
+    const email = document.getElementById('welcomeNewEmail').value.trim();
+    if (!name) { alert('Please enter your name.'); return; }
+    const id = 'p_' + Math.random().toString(36).slice(2, 10);
+    const newPerson = { id, name, email };
+    people.push(newPerson);
+    await savePeopleToStorage(newPerson);
+    setCurrentUser(id, name);
+    renderUserBadge();
+    renderViewAsOptions();
+    document.getElementById('welcomeModal').classList.remove('active');
+    showToast(`Welcome, ${name.split(' ')[0]}! You've been added to the team.`);
+  }
+  function switchUser() {
+    // Let the user pick a different identity from the welcome screen
+    openWelcomeModal();
+  }
+  function renderUserBadge() {
+    const badge = document.getElementById('userBadge');
+    if (!badge) return;
+    if (!currentUserName) {
+      badge.style.display = 'none';
+      return;
+    }
+    badge.style.display = 'inline-flex';
+    const firstName = (currentUserName.split(' ')[0] || currentUserName);
+    badge.innerHTML = `
+      <div class="user-badge-avatar" style="background:${personColour(currentUserId || 'u')}">${initials(currentUserName)}</div>
+      <span class="user-badge-name">${escapeHTML(firstName)}</span>
+    `;
+    badge.title = `Signed in as ${currentUserName} — click to switch`;
+  }
 </script>
 
 </body>
