@@ -6976,7 +6976,12 @@
       selectedCategory = CATEGORIES[0].id;
     }
 
-    applyDarkMode();
+    // Clear stale viewAs if the stored ID no longer matches any loaded person
+        if (viewAsPersonId && !people.find(p => p.id === viewAsPersonId)) {
+                viewAsPersonId = '';
+                localStorage.removeItem('resinc_view_as');
+        }
+        applyDarkMode();
     renderLegend();
     renderViewAsOptions();
     renderNotifyBadge();
