@@ -1,0 +1,56 @@
+{
+  "events": [
+    {
+      "id": "e_pcw755z3mo9m64mr",
+      "title": "Installation",
+      "date": "2026-04-22",
+      "endDate": "2026-04-22",
+      "allDay": true,
+      "startTime": null,
+      "endTime": null,
+      "categoryId": "influencers",
+      "attendeeIds": [
+        "chris"
+      ],
+      "status": "todo",
+      "location": "",
+      "details": "",
+      "scheduleType": "preprod",
+      "projectId": "proj_0pday42j",
+      "driveLink": ""
+    }
+  ],
+  "projects": [
+    {
+      "id": "proj_n0xkmxw9",
+      "name": "Beau Miles Films",
+      "description": "",
+      "driveLink": "",
+      "targetDate": "2026-04-22",
+      "teamAware": false,
+      "leadId": null,
+      "status": "planning",
+      "categoryId": "influencers",
+      "createdAt": "2026-04-22T05:29:43.320Z",
+      "createdBy": "Chris Johns",
+      "lastModifiedAt": "2026-04-22T05:29:43.320Z",
+      "lastModifiedBy": "Chris Johns"
+    },
+    {
+      "id": "proj_0pday42j",
+      "name": "Beau Miles Films",
+      "description": "",
+      "driveLink": "",
+      "targetDate": "2026-04-22",
+      "teamAware": false,
+      "leadId": "chris",
+      "status": "planning",
+      "categoryId": "influencers",
+      "createdAt": "2026-04-22T05:30:19.251Z",
+      "createdBy": "Chris Johns",
+      "lastModifiedAt": "2026-04-22T05:30:19.251Z",
+      "lastModifiedBy": "Chris Johns"
+    }
+  ],
+  "savedAt": "2026-04-23T11:25:53.410Z"
+}
