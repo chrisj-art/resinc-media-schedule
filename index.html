@@ -4458,33 +4458,21 @@
     // ===== Toggle states =====
     // In Projects view, repurpose the view-toggle as a schedule picker (quick escape to schedule views)
     const viewBtns = document.querySelectorAll('.view-toggle button');
-    if (isProjects) {
-      const schedLabels = [
-        { label: '🗓 Pre-production', schedule: 'preprod' },
-        { label: '🎬 Production',     schedule: 'production' },
-        { label: '🚀 Release',        schedule: 'release' }
-      ];
-      viewBtns.forEach((b, i) => {
-        if (!b.dataset.origText) b.dataset.origText = b.textContent;
-        if (!b.dataset.origOnclick) b.dataset.origOnclick = b.getAttribute('onclick') || '';
-        b.textContent = schedLabels[i].label;
-        const sched = schedLabels[i].schedule;
+    const viewLabels = { month: 'Month', gantt: 'Timeline', projects: 'Projects' };
+    const schedMap = ['preprod', 'production', 'release'];
+    const schedLabels2 = ['🗓 Pre-production', '🎬 Production', '🚀 Release'];
+    viewBtns.forEach((b, i) => {
+      if (viewMode === 'projects') {
+        b.textContent = schedLabels2[i];
+        const sched = schedMap[i];
         b.onclick = function() { setSchedule(sched); setViewMode('month'); };
         b.classList.toggle('active', sched === currentSchedule);
-      });
-    } else {
-      viewBtns.forEach(b => {
-        if (b.dataset.origText) {
-          b.textContent = b.dataset.origText;
-          delete b.dataset.origText;
-        }
-        if (b.dataset.origOnclick) {
-          b.setAttribute('onclick', b.dataset.origOnclick);
-          delete b.dataset.origOnclick;
-        }
+      } else {
+        b.textContent = viewLabels[b.dataset.view] || b.dataset.view;
+        b.onclick = function() { setViewMode(b.dataset.view); };
         b.classList.toggle('active', b.dataset.view === viewMode);
-      });
-    }
+      }
+    });
     document.querySelectorAll('.schedule-toggle button').forEach(b => {
       b.classList.toggle('active', b.dataset.schedule === currentSchedule);
     });
