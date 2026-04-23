@@ -1343,7 +1343,6 @@
   .project-card {
     background: var(--paper);
     border: 1px solid var(--line);
-    border-left: 3px solid var(--sky);
     border-radius: var(--radius-xl);
     padding: 18px;
     box-shadow: var(--shadow-sm);
@@ -5826,7 +5825,7 @@
       const coverage = getProjectPlatformCoverage(proj.id);
       const lead = proj.leadId ? getPerson(proj.leadId) : null;
       return `
-        <div class="project-card" onclick="openProjectDetail('${proj.id}')">
+        <div class="project-card" style="border-left: 3px solid ${cat.hex}" onclick="openProjectDetail('${proj.id}')">
           <div class="project-card-stripe" style="background:${cat.hex}"></div>
           <div class="project-card-head">
             <div class="project-card-title">${escapeHTML(proj.name)}</div>
