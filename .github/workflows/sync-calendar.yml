@@ -1,0 +1,72 @@
+name: Sync RESINC Media Schedule to Google Calendar
+
+on:
+  # Run every day at 6am Brisbane time (20:00 UTC)
+  schedule:
+    - cron: '0 20 * * *'
+  # Also run whenever index.html is updated (schedule data lives there)
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'resinc_events.json'
+      - 'sync_calendar.py'
+  # Allow manual trigger from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  sync:
+    name: Sync to Google Calendar
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install \
+            google-auth \
+            google-auth-httplib2 \
+            google-api-python-client
+
+      - name: Extract schedule data from index.html
+        run: |
+          python3 - <<'PYEOF'
+          import re, json
+
+          with open("index.html", encoding="utf-8") as f:
+              html = f.read()
+
+          # Pull localStorage seed data that the app embeds in the HTML
+          # The app stores data in script tags as JSON assignments
+          events_match = re.search(
+              r'localStorage\.setItem\(["\'"]resinc_media_events["\'"],\s*JSON\.stringify\(([\s\S]*?)\)\)',
+              html
+          )
+          projects_match = re.search(
+              r'localStorage\.setItem\(["\'"]resinc_media_projects["\'"],\s*JSON\.stringify\(([\s\S]*?)\)\)',
+              html
+          )
+
+          events = json.loads(events_match.group(1)) if events_match else []
+          projects = json.loads(projects_match.group(1)) if projects_match else []
+
+          output = {"events": events, "projects": projects}
+          with open("resinc_events.json", "w") as f:
+              json.dump(output, f, indent=2)
+
+          print(f"Extracted {len(events)} event(s) and {len(projects)} project(s)")
+          PYEOF
+
+      - name: Sync to Google Calendar
+        env:
+          GOOGLE_CALENDAR_ID: ${{ secrets.GOOGLE_CALENDAR_ID }}
+          GOOGLE_SERVICE_ACCOUNT_KEY: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
+          RESINC_EVENTS_FILE: resinc_events.json
+        run: python3 sync_calendar.py
