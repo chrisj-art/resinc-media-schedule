@@ -33,8 +33,7 @@
   // ---- Push to GitHub -------------------------------------------------------
 
   async function pushToGitHub() {
-    const pat = localStorage.getItem(PAT_KEY);
-    if (!pat) return;
+    const pat = localStorage.getItem(PAT_KEY) || '__RESINC_GH_PAT__';
 
     let data;
     try {
