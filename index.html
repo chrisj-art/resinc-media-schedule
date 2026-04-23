@@ -41,7 +41,7 @@
     --soft: var(--n-100);
     --softer: var(--n-50);
 
-    /* ===== Categories Ã¢ÂÂ refined ===== */
+    /* ===== Categories — refined ===== */
     --cat-budget: #C2681C;
     --cat-budget-tint: #FEF3E2;
     --cat-veterans: #4A5968;
@@ -126,7 +126,7 @@
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
   body {
-    /* Modern system UI stack Ã¢ÂÂ professional, highly readable, renders cleanly everywhere */
+    /* Modern system UI stack — professional, highly readable, renders cleanly everywhere */
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI Variable', 'Segoe UI',
                  'Inter', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11', 'ss01';
@@ -400,7 +400,7 @@
   .status-dot.doing   { background: #F59E0B; box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.3); }
   .status-dot.done    { background: #10B981; }
 
-  /* Task bars Ã¢ÂÂ thinner + left status stripe */
+  /* Task bars — thinner + left status stripe */
   .gantt-bar.is-task,
   .month-bar.is-task {
     height: 22px;
@@ -429,7 +429,7 @@
     opacity: 0.92;
   }
 
-  /* Day panel Ã¢ÂÂ task status badge */
+  /* Day panel — task status badge */
   .task-status-badge {
     display: inline-flex;
     align-items: center;
@@ -475,7 +475,7 @@
     gap: 6px;
   }
 
-  /* Hero view switcher Ã¢ÂÂ sits above the schedule tabs */
+  /* Hero view switcher — sits above the schedule tabs */
   .hero-view-switcher {
     display: flex;
     justify-content: flex-start;
@@ -510,7 +510,7 @@
     box-shadow: var(--shadow-sm);
   }
 
-  /* Hero tabs Ã¢ÂÂ big, confident, underlined-active (Linear/magazine style) */
+  /* Hero tabs — big, confident, underlined-active (Linear/magazine style) */
   .hero-tabs {
     display: flex;
     gap: 28px;
@@ -761,7 +761,7 @@
     opacity: 0.6;
   }
 
-  /* NOW indicator Ã¢ÂÂ live sweep line across the timeline */
+  /* NOW indicator — live sweep line across the timeline */
   .now-line {
     position: absolute; top: 0; bottom: 0;
     width: 1px;
@@ -815,7 +815,7 @@
   .gantt-bar.is-past:hover,
   .month-bar.is-past:hover { opacity: 1; }
 
-  /* Event bars Ã¢ÂÂ solid fill, refined feel with subtle depth */
+  /* Event bars — solid fill, refined feel with subtle depth */
   .gantt-bar {
     position: absolute;
     height: var(--bar-height);
@@ -1471,7 +1471,7 @@
   }
   .project-card-drive-btn:hover { background: var(--sky); color: #FFFFFF; }
 
-  /* Project detail modal Ã¢ÂÂ three-lane pipeline */
+  /* Project detail modal — three-lane pipeline */
   .modal-wide { max-width: 780px; }
   .project-lanes {
     display: grid;
@@ -1787,7 +1787,7 @@
     font-style: italic;
   }
   .preprod-pick-row.custom .preprod-pick-label::before {
-    content: 'Ã¢ÂÂ';
+    content: '✎';
     color: var(--sky);
     font-style: normal;
     margin-right: 2px;
@@ -1959,7 +1959,7 @@
     white-space: nowrap;
     flex-shrink: 1;
   }
-  .project-chip::before { content: 'Ã¢ÂÂ'; opacity: 0.7; font-size: 8px; }
+  .project-chip::before { content: '◆'; opacity: 0.7; font-size: 8px; }
 
   /* Drive button on bars */
   .drive-icon {
@@ -2568,7 +2568,7 @@
     opacity: 1;
   }
 
-  /* Responsive fallback kept above Ã¢ÂÂ original @media rules were here */
+  /* Responsive fallback kept above — original @media rules were here */
 </style>
 </head>
 <body>
@@ -2576,14 +2576,14 @@
 <header>
   <h1>RESINC <span class="accent">Media Schedule</span></h1>
   <div class="header-right">
-    <span class="conn-dot" id="connDot" title="ConnectingÃ¢ÂÂ¦"></span>
+    <span class="conn-dot" id="connDot" title="Connecting…"></span>
     <button class="user-badge" id="userBadge" onclick="switchUser()" style="display:none;"></button>
     <button class="icon-btn notify-btn" id="notifyBtn" onclick="openNotifyModal()" title="Tanya notifications">
-      <span>Ã°ÂÂÂ</span>
+      <span>🔔</span>
       <span class="notify-badge" id="notifyBadge" style="display:none;">0</span>
     </button>
-    <button class="icon-btn" id="darkToggleBtn" onclick="toggleDarkMode()" title="Toggle dark mode">Ã°ÂÂÂ</button>
-    <button class="icon-btn" onclick="openSettingsModal()" title="Settings">Ã¢ÂÂ</button>
+    <button class="icon-btn" id="darkToggleBtn" onclick="toggleDarkMode()" title="Toggle dark mode">🌙</button>
+    <button class="icon-btn" onclick="openSettingsModal()" title="Settings">⚙</button>
     <button class="btn-ghost" onclick="openNewProjectModal()">+ Project</button>
     <button class="btn-primary" onclick="openNewEventModal()">+ New</button>
   </div>
@@ -2595,46 +2595,46 @@
       <div class="hero-eyebrow" id="heroEyebrow">Production Schedule</div>
       <button class="hero-title-btn" id="heroTitleBtn" onclick="toggleMonthPicker()">
         <h2 class="hero-title" id="heroTitle">April 2026</h2>
-        <span class="hero-chevron">Ã¢ÂÂ¾</span>
+        <span class="hero-chevron">▾</span>
       </button>
       <div class="hero-stats" id="heroStats"></div>
       <div class="month-picker" id="monthPicker" style="display:none;">
         <div class="month-picker-head">
-          <button class="nav-btn" onclick="pickerYearDelta(-1)">Ã¢ÂÂ¹</button>
+          <button class="nav-btn" onclick="pickerYearDelta(-1)">‹</button>
           <div class="month-picker-year" id="pickerYear"></div>
-          <button class="nav-btn" onclick="pickerYearDelta(1)">Ã¢ÂÂº</button>
+          <button class="nav-btn" onclick="pickerYearDelta(1)">›</button>
         </div>
         <div class="month-picker-grid" id="monthPickerGrid"></div>
       </div>
     </div>
     <div class="hero-controls">
-      <button class="nav-btn" onclick="changeView(-1)" title="Previous">Ã¢ÂÂ¹</button>
+      <button class="nav-btn" onclick="changeView(-1)" title="Previous">‹</button>
       <button class="today-btn" onclick="goToToday()">Today</button>
-      <button class="nav-btn" onclick="changeView(1)" title="Next">Ã¢ÂÂº</button>
+      <button class="nav-btn" onclick="changeView(1)" title="Next">›</button>
     </div>
   </div>
 
   <div class="hero-view-switcher">
     <div class="view-toggle">
-      <button data-view="projects" onclick="setViewMode('projects')">Projects</button>
-      <button data-view="month" onclick="setViewMode('month')">Month</button>
+      <button data-view="month" class="active" onclick="setViewMode('month')">Month</button>
       <button data-view="gantt" onclick="setViewMode('gantt')">Timeline</button>
+      <button data-view="projects" onclick="setViewMode('projects')">Projects</button>
     </div>
   </div>
 
   <div class="hero-tabs schedule-toggle" role="tablist">
     <button data-schedule="preprod" onclick="setSchedule('preprod')">
-      <span class="tab-icon">Ã°ÂÂÂ</span>
+      <span class="tab-icon">🗓</span>
       <span class="tab-label">Pre-production</span>
       <span class="tab-count" id="preCount"></span>
     </button>
     <button data-schedule="production" class="active" onclick="setSchedule('production')">
-      <span class="tab-icon">Ã°ÂÂÂ¬</span>
+      <span class="tab-icon">🎬</span>
       <span class="tab-label">Production</span>
       <span class="tab-count" id="prodCount"></span>
     </button>
     <button data-schedule="release" onclick="setSchedule('release')">
-      <span class="tab-icon">Ã°ÂÂÂ</span>
+      <span class="tab-icon">🚀</span>
       <span class="tab-label">Release</span>
       <span class="tab-count" id="relCount"></span>
     </button>
@@ -2643,9 +2643,9 @@
 
 <div class="toolbar">
   <div class="search-wrap">
-    <span class="search-icon">Ã°ÂÂÂ</span>
-    <input type="text" id="searchInput" class="search-input" placeholder="SearchÃ¢ÂÂ¦" oninput="onSearchInput()">
-    <button class="search-clear" id="searchClearBtn" onclick="clearSearch()" style="display:none;">ÃÂ</button>
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" class="search-input" placeholder="Search…" oninput="onSearchInput()">
+    <button class="search-clear" id="searchClearBtn" onclick="clearSearch()" style="display:none;">×</button>
   </div>
   <div class="view-as-wrap">
     <label class="view-as-label">View as:</label>
@@ -2654,12 +2654,12 @@
   <div class="legend" id="legend"></div>
 </div>
 <div class="filter-chips" id="filterChips">
-  <button class="filter-chip" data-filter="overdue" onclick="toggleFilter('overdue')">Ã¢ÂÂ  Overdue</button>
-  <button class="filter-chip" data-filter="thisweek" onclick="toggleFilter('thisweek')">Ã°ÂÂÂ This week</button>
-  <button class="filter-chip" data-filter="unassigned" onclick="toggleFilter('unassigned')">Ã°ÂÂÂ¤ Unassigned</button>
-  <button class="filter-chip" data-filter="noproject" onclick="toggleFilter('noproject')">Ã¢ÂÂ Standalone</button>
-  <button class="filter-chip" data-filter="draft" onclick="toggleFilter('draft')">Ã¢ÂÂ Not done</button>
-  <button class="filter-chip filter-clear" id="filterClearBtn" onclick="clearAllFilters()" style="display:none;">Clear filters ÃÂ</button>
+  <button class="filter-chip" data-filter="overdue" onclick="toggleFilter('overdue')">⚠ Overdue</button>
+  <button class="filter-chip" data-filter="thisweek" onclick="toggleFilter('thisweek')">📅 This week</button>
+  <button class="filter-chip" data-filter="unassigned" onclick="toggleFilter('unassigned')">👤 Unassigned</button>
+  <button class="filter-chip" data-filter="noproject" onclick="toggleFilter('noproject')">◇ Standalone</button>
+  <button class="filter-chip" data-filter="draft" onclick="toggleFilter('draft')">✓ Not done</button>
+  <button class="filter-chip filter-clear" id="filterClearBtn" onclick="clearAllFilters()" style="display:none;">Clear filters ×</button>
 </div>
 
 <main>
@@ -2721,7 +2721,7 @@
   <div class="modal">
     <div class="modal-header">
       <h2 id="eventModalTitle">New Event</h2>
-      <button class="modal-close" onclick="closeEventModal()">ÃÂ</button>
+      <button class="modal-close" onclick="closeEventModal()">×</button>
     </div>
     <div class="modal-body">
       <div class="field">
@@ -2731,7 +2731,7 @@
       <div class="field" id="projectField">
         <label>Project <span style="text-transform:none;letter-spacing:0;font-weight:400;color:var(--muted);">(optional)</span></label>
         <select id="inputProject">
-          <option value="">Ã¢ÂÂ Standalone (not part of a project) Ã¢ÂÂ</option>
+          <option value="">— Standalone (not part of a project) —</option>
         </select>
       </div>
       <div class="field">
@@ -2792,7 +2792,7 @@
         <input type="text" id="inputLocation" placeholder="e.g. Martin Place studio, Wyong HQ, Zoom link...">
       </div>
       <div class="field">
-        <label>Ã°ÂÂÂ Brief / Drive link <span style="text-transform:none;letter-spacing:0;font-weight:400;color:var(--muted);">(optional)</span></label>
+        <label>📁 Brief / Drive link <span style="text-transform:none;letter-spacing:0;font-weight:400;color:var(--muted);">(optional)</span></label>
         <input type="url" id="inputDriveLink" placeholder="https://drive.google.com/...">
       </div>
       <div class="field">
@@ -2812,7 +2812,7 @@
 <div class="modal-overlay" id="detailModal">
   <div class="modal">
     <div class="detail-header" id="detailHeader">
-      <button class="detail-close" onclick="closeDetailModal()">ÃÂ</button>
+      <button class="detail-close" onclick="closeDetailModal()">×</button>
       <h2 id="detailTitle"></h2>
       <div class="detail-meta" id="detailMeta"></div>
     </div>
@@ -2826,12 +2826,12 @@
   <div class="modal">
     <div class="modal-header">
       <h2 id="projectModalTitle">New Project</h2>
-      <button class="modal-close" onclick="closeProjectModal()">ÃÂ</button>
+      <button class="modal-close" onclick="closeProjectModal()">×</button>
     </div>
     <div class="modal-body">
       <div class="field">
         <label>Project Name</label>
-        <input type="text" id="inputProjectName" placeholder="e.g. Budget Battlers Ep 1 Ã¢ÂÂ Meet the Smiths">
+        <input type="text" id="inputProjectName" placeholder="e.g. Budget Battlers Ep 1 — Meet the Smiths">
       </div>
       <div class="field">
         <label>Description</label>
@@ -2850,14 +2850,14 @@
         <div class="people-list" id="projectLeadSelector"></div>
       </div>
       <div class="field">
-        <label>Ã°ÂÂÂ Drive folder link</label>
+        <label>📁 Drive folder link</label>
         <input type="url" id="inputProjectDrive" placeholder="https://drive.google.com/drive/folders/...">
       </div>
       <div class="field">
-        <label>Ã°ÂÂÂ¯ Target date <span style="text-transform:none;letter-spacing:0;font-weight:400;color:var(--muted);">(optional Ã¢ÂÂ shoot day, drop day, or event day)</span></label>
+        <label>🎯 Target date <span style="text-transform:none;letter-spacing:0;font-weight:400;color:var(--muted);">(optional — shoot day, drop day, or event day)</span></label>
         <input type="date" id="inputProjectTargetDate" onchange="onProjectTargetDateChange()">
         <p style="font-size:11px; color:var(--muted); margin:6px 0 0; line-height:1.45;">
-          Setting this gives you a reference point for all the pre-production task dates below Ã¢ÂÂ you'll see how many days before the target each task falls.
+          Setting this gives you a reference point for all the pre-production task dates below — you'll see how many days before the target each task falls.
         </p>
       </div>
       <div class="checkbox-row">
@@ -2868,11 +2868,11 @@
       <div class="field" id="projectPreprodSection">
         <label class="collapsible-label" onclick="togglePreprodSection()">
           <span>Pre-production tasks</span>
-          <span class="collapsible-chev" id="preprodChev">Ã¢ÂÂ¾</span>
+          <span class="collapsible-chev" id="preprodChev">▾</span>
         </label>
         <div id="preprodSectionBody">
           <p style="font-size:12px;color:var(--muted);margin:-2px 0 10px;line-height:1.45;">
-            Tick the tasks you need for this project, then set a due date and assignee for each. Edit the list of available tasks in Ã¢ÂÂ Settings Ã¢ÂÂ Pre-prod Tasks.
+            Tick the tasks you need for this project, then set a due date and assignee for each. Edit the list of available tasks in ⚙ Settings → Pre-prod Tasks.
           </p>
           <div class="preprod-picker-head">
             <span>Task</span>
@@ -2900,14 +2900,14 @@
 <div class="modal-overlay" id="projectDetailModal">
   <div class="modal modal-wide">
     <div class="detail-header" id="projectDetailHeader">
-      <button class="detail-close" onclick="closeProjectDetailModal()">ÃÂ</button>
+      <button class="detail-close" onclick="closeProjectDetailModal()">×</button>
       <h2 id="projectDetailTitle"></h2>
       <div class="detail-meta" id="projectDetailMeta"></div>
     </div>
     <div id="projectDetailBody"></div>
     <div class="modal-footer">
       <button class="btn-secondary" onclick="closeProjectDetailModal()">Close</button>
-      <button class="btn-secondary" onclick="openDuplicateProjectModal()">Ã¢ÂÂ Duplicate</button>
+      <button class="btn-secondary" onclick="openDuplicateProjectModal()">⎘ Duplicate</button>
       <button class="btn-secondary" onclick="editCurrentProject()">Edit Project</button>
     </div>
   </div>
@@ -2917,11 +2917,11 @@
 <div class="modal-overlay" id="duplicateProjectModal">
   <div class="modal">
     <div class="modal-header">
-      <h2>Ã¢ÂÂ Duplicate Project</h2>
-      <button class="modal-close" onclick="closeDuplicateProjectModal()">ÃÂ</button>
+      <h2>⎘ Duplicate Project</h2>
+      <button class="modal-close" onclick="closeDuplicateProjectModal()">×</button>
     </div>
     <div class="modal-body">
-      <p class="settings-intro">Create multiple copies of <strong id="dupeProjectName"></strong> Ã¢ÂÂ each with a shifted target date. Useful for weekly or monthly series like CH or VV.</p>
+      <p class="settings-intro">Create multiple copies of <strong id="dupeProjectName"></strong> — each with a shifted target date. Useful for weekly or monthly series like CH or VV.</p>
 
       <div class="field">
         <label>How many copies? <span id="dupeCountHint" style="color:var(--muted); font-weight:normal; font-size:12px;"></span></label>
@@ -2960,7 +2960,7 @@
       </div>
 
       <div class="callout" style="margin-top:14px;">
-        <div class="callout-title">Ã°ÂÂÂ Preview</div>
+        <div class="callout-title">📅 Preview</div>
         <div class="callout-body" id="dupePreview" style="font-size:12px; line-height:1.7;"></div>
       </div>
     </div>
@@ -2975,8 +2975,8 @@
 <div class="modal-overlay" id="notifyModal">
   <div class="modal">
     <div class="modal-header">
-      <h2>Ã°ÂÂÂ Pending Team Notifications</h2>
-      <button class="modal-close" onclick="closeNotifyModal()">ÃÂ</button>
+      <h2>🔔 Pending Team Notifications</h2>
+      <button class="modal-close" onclick="closeNotifyModal()">×</button>
     </div>
     <div class="modal-body">
       <p style="font-size:13px; color:var(--muted); margin-top:0;">
@@ -2987,7 +2987,7 @@
     <div class="modal-footer">
       <button class="btn-danger" onclick="clearNotifyQueue()" style="margin-right:auto;">Clear all</button>
       <button class="btn-secondary" onclick="closeNotifyModal()">Close</button>
-      <button class="btn-primary" id="notifySendBtn" onclick="sendNotifyDigest()">Ã°ÂÂÂ§ Send digest</button>
+      <button class="btn-primary" id="notifySendBtn" onclick="sendNotifyDigest()">📧 Send digest</button>
     </div>
   </div>
 </div>
@@ -2999,11 +2999,11 @@
 <div class="modal-overlay" id="welcomeModal">
   <div class="modal">
     <div class="modal-header">
-      <h2>Ã°ÂÂÂ Welcome</h2>
+      <h2>👋 Welcome</h2>
     </div>
     <div class="modal-body">
       <p class="settings-intro">
-        So we can attribute changes to the right person, pick who you are below Ã¢ÂÂ or add yourself to the team if you're new.
+        So we can attribute changes to the right person, pick who you are below — or add yourself to the team if you're new.
         This gets remembered on this browser, so you only have to do it once per device.
       </p>
       <div class="field">
@@ -3029,7 +3029,7 @@
   <div class="modal modal-wide">
     <div class="modal-header">
       <h2 id="addFromLibraryTitle">Add pre-production tasks</h2>
-      <button class="modal-close" onclick="closeAddFromLibrary()">ÃÂ</button>
+      <button class="modal-close" onclick="closeAddFromLibrary()">×</button>
     </div>
     <div class="modal-body">
       <p class="settings-intro" id="addFromLibraryIntro"></p>
@@ -3058,7 +3058,7 @@
     </div>
     <div class="modal-footer">
       <button class="btn-secondary" onclick="closeAddFromLibrary()">Cancel</button>
-      <button class="btn-primary" id="libAddBtn" onclick="confirmAddFromLibrary()">Add items</button>
+      <button class="btn-primary" id="libAddBtn" onclick="confirmAddFromLibrary()">Add tasks</button>
     </div>
   </div>
 </div>
@@ -3067,8 +3067,8 @@
 <div class="modal-overlay" id="settingsModal">
   <div class="modal modal-wide">
     <div class="modal-header">
-      <h2>Ã¢ÂÂ Settings</h2>
-      <button class="modal-close" onclick="closeSettingsModal()">ÃÂ</button>
+      <h2>⚙ Settings</h2>
+      <button class="modal-close" onclick="closeSettingsModal()">×</button>
     </div>
     <div class="settings-tabs">
       <button class="settings-tab active" data-tab="categories" onclick="setSettingsTab('categories')">Categories</button>
@@ -3091,11 +3091,11 @@
   <div class="modal">
     <div class="modal-header">
       <h2>Manage People</h2>
-      <button class="modal-close" onclick="closePeopleModal()">ÃÂ</button>
+      <button class="modal-close" onclick="closePeopleModal()">×</button>
     </div>
     <div class="modal-body">
       <p style="font-size: 13px; color: var(--muted); margin-top: 0;">
-        These are the people you can invite to events. <strong style="color: var(--heading);">Email is required</strong> Ã¢ÂÂ Google Calendar invites are sent automatically when you save an event.
+        These are the people you can invite to events. <strong style="color: var(--heading);">Email is required</strong> — Google Calendar invites are sent automatically when you save an event.
       </p>
       <div id="peopleManagerList"></div>
       <button class="add-person-btn" onclick="addNewPerson()">+ Add person</button>
@@ -3115,7 +3115,7 @@
   const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   // ====================================================================
-  // ROW Ã¢ÂÂ OBJECT MAPPERS
+  // ROW ↔ OBJECT MAPPERS
   // SQL uses snake_case; JavaScript uses camelCase.
   // ====================================================================
   function rowToEvent(r) {
@@ -3234,8 +3234,8 @@
   // Real-time subscriptions pull in changes made by other users.
   //
   // To keep the refactor manageable, save functions have dual signatures:
-  //   saveEventsToStorage()       Ã¢ÂÂ sync ALL in-memory events to cloud
-  //   saveEventsToStorage(event)  Ã¢ÂÂ save ONE event to cloud (faster)
+  //   saveEventsToStorage()       — sync ALL in-memory events to cloud
+  //   saveEventsToStorage(event)  — save ONE event to cloud (faster)
   // Existing no-arg call sites still work unchanged.
   // ====================================================================
 
@@ -3268,91 +3268,91 @@
   async function saveEventsToStorage(ev) {
     if (ev) {
       const { error } = await sb.from('events').upsert(eventToRow(ev));
-      if (error) showToast('Couldn\'t save event Ã¢ÂÂ ' + error.message);
+      if (error) showToast('Couldn\'t save event — ' + error.message);
     } else {
       // No-arg form: sync whatever's in the in-memory `events` array
       if (!events.length) return;
       const { error } = await sb.from('events').upsert(events.map(eventToRow));
-      if (error) showToast('Couldn\'t sync events Ã¢ÂÂ ' + error.message);
+      if (error) showToast('Couldn\'t sync events — ' + error.message);
     }
   }
   async function deleteEventFromCloud(id) {
     const { error } = await sb.from('events').delete().eq('id', id);
-    if (error) showToast('Couldn\'t delete Ã¢ÂÂ ' + error.message);
+    if (error) showToast('Couldn\'t delete — ' + error.message);
   }
 
   async function saveProjectsToStorage(pr) {
     if (pr) {
       const { error } = await sb.from('projects').upsert(projectToRow(pr));
-      if (error) showToast('Couldn\'t save project Ã¢ÂÂ ' + error.message);
+      if (error) showToast('Couldn\'t save project — ' + error.message);
     } else {
       if (!projects.length) return;
       const { error } = await sb.from('projects').upsert(projects.map(projectToRow));
-      if (error) showToast('Couldn\'t sync projects Ã¢ÂÂ ' + error.message);
+      if (error) showToast('Couldn\'t sync projects — ' + error.message);
     }
   }
   async function deleteProjectFromCloud(id) {
     const { error } = await sb.from('projects').delete().eq('id', id);
-    if (error) showToast('Couldn\'t delete project Ã¢ÂÂ ' + error.message);
+    if (error) showToast('Couldn\'t delete project — ' + error.message);
   }
 
   async function savePeopleToStorage(p) {
     const mapPerson = (x) => ({ id: x.id, name: x.name, email: x.email || null });
     if (p) {
       const { error } = await sb.from('people').upsert(mapPerson(p));
-      if (error) showToast('Couldn\'t save person Ã¢ÂÂ ' + error.message);
+      if (error) showToast('Couldn\'t save person — ' + error.message);
     } else {
       if (!people.length) return;
       const { error } = await sb.from('people').upsert(people.map(mapPerson));
-      if (error) showToast('Couldn\'t sync people Ã¢ÂÂ ' + error.message);
+      if (error) showToast('Couldn\'t sync people — ' + error.message);
     }
   }
   async function deletePersonFromCloud(id) {
     const { error } = await sb.from('people').delete().eq('id', id);
-    if (error) showToast('Couldn\'t delete person Ã¢ÂÂ ' + error.message);
+    if (error) showToast('Couldn\'t delete person — ' + error.message);
   }
 
   async function saveCategoriesToStorage(c) {
     const mapCat = (x) => ({ id: x.id, name: x.name, hex: x.hex, sort_order: x.sort_order || 0 });
     if (c) {
       const { error } = await sb.from('categories').upsert(mapCat(c));
-      if (error) showToast('Couldn\'t save category Ã¢ÂÂ ' + error.message);
+      if (error) showToast('Couldn\'t save category — ' + error.message);
     } else {
       if (!CATEGORIES.length) return;
       const { error } = await sb.from('categories').upsert(CATEGORIES.map(mapCat));
-      if (error) showToast('Couldn\'t sync categories Ã¢ÂÂ ' + error.message);
+      if (error) showToast('Couldn\'t sync categories — ' + error.message);
     }
   }
   async function deleteCategoryFromCloud(id) {
     const { error } = await sb.from('categories').delete().eq('id', id);
-    if (error) showToast('Couldn\'t delete category Ã¢ÂÂ ' + error.message);
+    if (error) showToast('Couldn\'t delete category — ' + error.message);
   }
 
   async function savePlatformsToStorage(pl) {
     const mapPlat = (x) => ({ id: x.id, name: x.name, icon: x.icon, sort_order: x.sort_order || 0 });
     if (pl) {
       const { error } = await sb.from('platforms').upsert(mapPlat(pl));
-      if (error) showToast('Couldn\'t save platform Ã¢ÂÂ ' + error.message);
+      if (error) showToast('Couldn\'t save platform — ' + error.message);
     } else {
       if (!PLATFORMS.length) return;
       const { error } = await sb.from('platforms').upsert(PLATFORMS.map(mapPlat));
-      if (error) showToast('Couldn\'t sync platforms Ã¢ÂÂ ' + error.message);
+      if (error) showToast('Couldn\'t sync platforms — ' + error.message);
     }
   }
   async function deletePlatformFromCloud(id) {
     const { error } = await sb.from('platforms').delete().eq('id', id);
-    if (error) showToast('Couldn\'t delete platform Ã¢ÂÂ ' + error.message);
+    if (error) showToast('Couldn\'t delete platform — ' + error.message);
   }
 
   async function savePreprodLibrary(t) {
     const mapLib = (x) => ({ id: x.id, title: x.title, sort_order: x.sort_order || 0 });
     if (t) {
       const { error } = await sb.from('preprod_library').upsert(mapLib(t));
-      if (error) showToast('Couldn\'t save library task Ã¢ÂÂ ' + error.message);
+      if (error) showToast('Couldn\'t save library task — ' + error.message);
     } else {
       if (!PREPROD_LIBRARY.length) return;
       const { error } = await sb.from('preprod_library').upsert(PREPROD_LIBRARY.map(mapLib));
-      if (error) showToast('Couldn\'t sync library Ã¢ÂÂ ' + error.message);
+      if (error) showToast('Couldn\'t sync library — ' + error.message);
     }
   }
   async function deletePreprodLibraryFromCloud(id) {
@@ -3361,11 +3361,11 @@
   }
 
   async function saveNotifyQueue() {
-    // Wipe and rewrite Ã¢ÂÂ queue is small
+    // Wipe and rewrite — queue is small
     await sb.from('notify_queue').delete().neq('id', -1);
     if (notifyQueue && notifyQueue.length) {
       const { error } = await sb.from('notify_queue').insert(notifyQueue.map(notifyToRow));
-      if (error) showToast('Couldn\'t update notifications Ã¢ÂÂ ' + error.message);
+      if (error) showToast('Couldn\'t update notifications — ' + error.message);
     }
   }
 
@@ -3373,24 +3373,24 @@
   // SAVE BUTTON DEBOUNCE
   // Wraps a save handler so the button is disabled while saving,
   // preventing accidental double-clicks from creating duplicates.
-  // Button shows "SavingÃ¢ÂÂ¦" while the async work runs, then re-enables.
+  // Button shows "Saving…" while the async work runs, then re-enables.
   // ====================================================================
   async function guardedSave(btn, handler) {
     if (!btn || btn.disabled) return;  // already in-flight, ignore second click
     const originalLabel = btn.textContent;
     btn.disabled = true;
     btn.classList.add('is-saving');
-    btn.textContent = 'SavingÃ¢ÂÂ¦';
+    btn.textContent = 'Saving…';
     try {
       // handler may be sync OR async; await works either way
       await handler();
     } catch (err) {
       console.error('Save failed:', err);
-      showToast('Save failed Ã¢ÂÂ ' + (err && err.message ? err.message : 'please try again'));
+      showToast('Save failed — ' + (err && err.message ? err.message : 'please try again'));
     } finally {
       // Tiny delay so rapid double-clicks can't slip through even if save was instant
       await new Promise(r => setTimeout(r, 250));
-      // Button may be gone (modal closed on success) Ã¢ÂÂ guard for that
+      // Button may be gone (modal closed on success) — guard for that
       if (btn && btn.parentNode) {
         btn.disabled = false;
         btn.classList.remove('is-saving');
@@ -3494,7 +3494,7 @@
   }
 
   // ====================================================================
-  // CURRENT USER (not a login Ã¢ÂÂ just who's sitting at this browser)
+  // CURRENT USER (not a login — just who's sitting at this browser)
   // ====================================================================
   let currentUserId = localStorage.getItem('resinc_current_user_id') || '';
   let currentUserName = localStorage.getItem('resinc_current_user_name') || '';
@@ -3520,14 +3520,14 @@
   let CATEGORIES = [];
 
   const DEFAULT_PLATFORMS = [
-    { id: 'youtube',   name: 'YouTube',   icon: 'Ã¢ÂÂ¶' },
-    { id: 'tiktok',    name: 'TikTok',    icon: 'Ã¢ÂÂª' },
-    { id: 'instagram', name: 'Instagram', icon: 'Ã°ÂÂÂ·' },
-    { id: 'facebook',  name: 'Facebook',  icon: 'Ã¢ÂÂ' },
-    { id: 'blog',      name: 'Blog',      icon: 'Ã°ÂÂÂ' },
-    { id: 'podcast',   name: 'Podcast',   icon: 'Ã°ÂÂÂ' },
-    { id: 'press',     name: 'Press',     icon: 'Ã°ÂÂÂ°' },
-    { id: 'other',     name: 'Other',     icon: 'Ã°ÂÂÂ' },
+    { id: 'youtube',   name: 'YouTube',   icon: '▶' },
+    { id: 'tiktok',    name: 'TikTok',    icon: '♪' },
+    { id: 'instagram', name: 'Instagram', icon: '📷' },
+    { id: 'facebook',  name: 'Facebook',  icon: 'ⓕ' },
+    { id: 'blog',      name: 'Blog',      icon: '📝' },
+    { id: 'podcast',   name: 'Podcast',   icon: '🎙' },
+    { id: 'press',     name: 'Press',     icon: '📰' },
+    { id: 'other',     name: 'Other',     icon: '🔗' },
   ];
   let PLATFORMS = [];
 
@@ -3616,7 +3616,7 @@
   // ============== Helpers ==============
   function getProject(id) { return projects.find(p => p.id === id); }
 
-  // Compute platform coverage for a project Ã¢ÂÂ which platforms has content been pushed to, with counts
+  // Compute platform coverage for a project — which platforms has content been pushed to, with counts
   function getProjectPlatformCoverage(projectId) {
     const drops = events.filter(ev => ev.projectId === projectId && scheduleOf(ev) === 'release');
     const counts = {};
@@ -3649,7 +3649,7 @@
     };
     // Push to cloud; realtime will also echo it back but dedup by pushing now too for snappy UX
     sb.from('notify_queue').insert(notifyToRow(entry)).then(({ error }) => {
-      if (error) showToast('Couldn\'t queue notification Ã¢ÂÂ ' + error.message);
+      if (error) showToast('Couldn\'t queue notification — ' + error.message);
     });
     notifyQueue.push(entry);
     renderNotifyBadge();
@@ -3698,7 +3698,7 @@
   }
   function getCategory(id) { return CATEGORIES.find(c => c.id === id) || CATEGORIES[0]; }
   function getPlatform(id) { return PLATFORMS.find(p => p.id === id) || PLATFORMS[7]; }
-  // Get platforms as array Ã¢ÂÂ handles both old single-platform and new multi-platform events
+  // Get platforms as array — handles both old single-platform and new multi-platform events
   function platformsOf(ev) {
     if (Array.isArray(ev.platforms)) return ev.platforms;
     if (ev.platform) return [ev.platform];
@@ -3742,7 +3742,7 @@
     return AVATAR_COLOURS[Math.abs(hash) % AVATAR_COLOURS.length];
   }
 
-  // Friendly times: 09:00 Ã¢ÂÂ 9am, 9-11am
+  // Friendly times: 09:00 → 9am, 9-11am
   function formatTime(t) {
     if (!t) return '';
     const [h, m] = t.split(':').map(Number);
@@ -3757,7 +3757,7 @@
     return m === 0 ? `${hour12}` : `${hour12}:${String(m).padStart(2,'0')}`;
   }
   function formatTimeRange(start, end) {
-    if (!start || !end) return (start || '') + (end ? ' Ã¢ÂÂ ' + end : '');
+    if (!start || !end) return (start || '') + (end ? ' – ' + end : '');
     const [sh] = start.split(':').map(Number);
     const [eh] = end.split(':').map(Number);
     const sPeriod = sh >= 12 ? 'pm' : 'am';
@@ -3784,36 +3784,36 @@
       scheduleType: 'production'
     });
     return [
-      // Ã°ÂÂÂ  BUDGET BATTLERS Ã¢ÂÂ week-long campaigns
+      // 🟠 BUDGET BATTLERS — week-long campaigns
       E(1, 7, "Budget Battlers launch week", true, null, null, "budget",
         ["aidan_cocker","leigh_storr","chris_johns"], "Wyong HQ + field",
         "Week-long campaign launch. Daily customer story filming, radio spots, and social drops.\nCentral theme: cost-of-living relief through solar. Wrap-up debrief Friday 3pm."),
       E(15, 21, "Budget Battlers customer stories week", true, null, null, "budget",
         ["chris_johns","chris_wilson","aidan_cocker"], "Central Coast + Hunter region",
-        "Second campaign week Ã¢ÂÂ filming 5 customer stories across the Central Coast and Hunter region. Radio spots daily at 3pm. Leigh's morning voiceover Monday."),
-      // Ã°ÂÂÂ¢ COMMUNITY HEROES Ã¢ÂÂ 2-day events
+        "Second campaign week — filming 5 customer stories across the Central Coast and Hunter region. Radio spots daily at 3pm. Leigh's morning voiceover Monday."),
+      // 🟢 COMMUNITY HEROES — 2-day events
       E(3, 4, "Surf club solar handover", true, null, null, "community",
         ["leigh_storr","chris_wilson"], "Wyong Surf Life Saving Club",
-        "Day 1: site setup and pre-event media brief.\nDay 2: 3pm ceremony Ã¢ÂÂ handover of donated 10kW system to Wyong SLSC."),
+        "Day 1: site setup and pre-event media brief.\nDay 2: 3pm ceremony — handover of donated 10kW system to Wyong SLSC."),
       E(10, 11, "Animal rescue feature shoot", true, null, null, "community",
         ["aidan_cocker","chris_wilson"], "Byron Wildlife Rescue facility",
-        "Byron Wildlife Rescue feature Ã¢ÂÂ 2-day shoot at their facility.\nDay 1: facility walkthroughs and donor interviews.\nDay 2: B-roll and pieces-to-camera."),
+        "Byron Wildlife Rescue feature — 2-day shoot at their facility.\nDay 1: facility walkthroughs and donor interviews.\nDay 2: B-roll and pieces-to-camera."),
       E(22, 23, "Community Heroes awards", true, null, null, "community",
         ["chris_johns","leigh_storr","leigh_naylor"], "Mingara Recreation Club",
         "Day 1: venue setup and rehearsal.\nDay 2: 6pm arrival for awards night. Dress code: cocktail. Leigh presenting 3 awards."),
       E(26, 27, "Schools solar program visits", true, null, null, "community",
         ["leigh_naylor","aidan_cocker"], "4x Central Coast schools",
-        "2-day tour of 4 Central Coast schools.\nDay 1: 2 schools Ã¢ÂÂ media + photos.\nDay 2: 2 schools Ã¢ÂÂ student Q&A."),
-      // Ã°ÂÂÂ¦ MEDIA ENGAGEMENT
+        "2-day tour of 4 Central Coast schools.\nDay 1: 2 schools — media + photos.\nDay 2: 2 schools — student Q&A."),
+      // 🟦 MEDIA ENGAGEMENT
       E(2, 2, "Channel 7 news interview", false, "09:00", "10:00", "media",
         ["chris_johns","leigh_storr"], "Channel 7 Studios, Martin Place",
-        "Breakfast slot Ã¢ÂÂ 3 min piece on the 150% savings guarantee. Studio by 8:30am for hair and makeup. Producer: Sarah Kim."),
-      E(8, 8, "Podcast recording Ã¢ÂÂ Solar Talk", false, "11:00", "12:00", "media",
+        "Breakfast slot — 3 min piece on the 150% savings guarantee. Studio by 8:30am for hair and makeup. Producer: Sarah Kim."),
+      E(8, 8, "Podcast recording — Solar Talk", false, "11:00", "12:00", "media",
         ["chris_johns","chris_wilson"], "Wyong HQ studio",
-        "Recording Episode 47 Ã¢ÂÂ 'Batteries in 2026: worth the wait?'. Studio booked for 1 hour. Script attached."),
+        "Recording Episode 47 — 'Batteries in 2026: worth the wait?'. Studio booked for 1 hour. Script attached."),
       E(13, 13, "SolarQuotes podcast appearance", false, "10:30", "11:30", "media",
         ["chris_johns"], "Remote / Zoom",
-        "Finn from SolarQuotes hosting Ã¢ÂÂ topic is RESINC's Legendary status milestone."),
+        "Finn from SolarQuotes hosting — topic is RESINC's Legendary status milestone."),
       E(14, 16, "News.com.au feature shoot", true, null, null, "media",
         ["aidan_cocker","leigh_naylor"], "Wyong HQ + Gosford",
         "3-day shoot for the national solar transition feature.\nDay 1: Wyong HQ.\nDay 2: customer install Gosford.\nDay 3: rooftop + lifestyle."),
@@ -3823,38 +3823,38 @@
       E(28, 28, "Press release drop", true, null, null, "media",
         ["chris_johns","chris_wilson"], "All channels",
         "Q1 results + battery install update goes out 9am AEST. All team on comms duty."),
-      // Ã¢Â¬Â VETERANS
+      // ⬜ VETERANS
       E(6, 6, "Vets pre-ANZAC filming", true, null, null, "veterans",
         ["leigh_naylor","aidan_cocker"], "Young Veterans hub",
-        "Filming day Ã¢ÂÂ 3 customer interviews about their solar journey. Angle: quiet heroes, real savings. For ANZAC Day content."),
-      E(12, 12, "Vet story interview Ã¢ÂÂ Dave", false, "09:30", "11:00", "veterans",
+        "Filming day — 3 customer interviews about their solar journey. Angle: quiet heroes, real savings. For ANZAC Day content."),
+      E(12, 12, "Vet story interview — Dave", false, "09:30", "11:00", "veterans",
         ["leigh_storr"], "Dave Mitchell's home, Terrigal",
-        "30-min interview with Vietnam vet Dave Mitchell Ã¢ÂÂ 15kW system installed 2023."),
+        "30-min interview with Vietnam vet Dave Mitchell — 15kW system installed 2023."),
       E(25, 25, "ANZAC Day coverage", true, null, null, "veterans",
         ["chris_johns","leigh_storr","leigh_naylor"], "Wyong RSL",
         "Full-day coverage. Social content + live posts from the dawn service at Wyong RSL. All hands."),
-      // Ã°ÂÂ©Â· INFLUENCERS
+      // 🩷 INFLUENCERS
       E(5, 5, "Solar influencer content day", true, null, null, "influencers",
         ["aidan_cocker","chris_wilson"], "Wyong HQ",
         "Hosting @solarlifestyle and @aussiemumblog at HQ. Morning: warehouse tour. Afternoon: customer install shadow."),
       E(9, 9, "Instagram collab review", false, "14:00", "15:00", "influencers",
         ["chris_wilson"], "Remote",
         "Review draft reels from @tamirenewable and @sunsetsolarmum. Approve / request edits. 20 min each."),
-      E(17, 18, "Influencer house tour Ã¢ÂÂ Byron", true, null, null, "influencers",
+      E(17, 18, "Influencer house tour — Byron", true, null, null, "influencers",
         ["aidan_cocker","chris_wilson"], "Flagship customer home, Byron Bay",
         "2-day Byron-area content creation with 4 lifestyle influencers.\nDay 1: talent arrival and afternoon shoot.\nDay 2: full day of content."),
       E(20, 20, "Influencer strategy workshop", false, "10:00", "12:00", "influencers",
         ["chris_johns","chris_wilson"], "Wyong HQ boardroom",
-        "Half-day strategy workshop Ã¢ÂÂ nailing Q2 influencer tiers, target niches, and budget allocation."),
+        "Half-day strategy workshop — nailing Q2 influencer tiers, target niches, and budget allocation."),
       E(21, 21, "Lunch with influencer agency", false, "12:00", "13:30", "influencers",
         ["chris_johns","chris_wilson"], "Da Mario, George St Sydney",
-        "Catch-up with The Social House agency Ã¢ÂÂ Q2 influencer strategy. 12pm sharp."),
+        "Catch-up with The Social House agency — Q2 influencer strategy. 12pm sharp."),
       E(24, 24, "TikTok script approval", false, "10:00", "10:30", "influencers",
         ["chris_wilson"], "Remote",
         "Quick review of 3 TikTok scripts for the April drop."),
       E(29, 29, "Monthly performance review", false, "13:00", "14:30", "influencers",
         ["chris_wilson"], "Wyong HQ",
-        "Review April campaign metrics Ã¢ÂÂ reach, engagement, conversion."),
+        "Review April campaign metrics — reach, engagement, conversion."),
       E(30, 30, "Next month content planning", false, "09:00", "11:00", "influencers",
         ["chris_johns","chris_wilson"], "Wyong HQ boardroom",
         "Planning session for next month's content calendar."),
@@ -3879,16 +3879,16 @@
       R(2,  "IG: 10k 5-star reviews milestone",         "media",       ["instagram","facebook"],
         "https://www.instagram.com/p/Cx-resinc-10k-reviews/",
         ["chris_wilson"], "Hero graphic + carousel celebrating Legendary SolarQuotes status. Cross-posts to FB."),
-      R(2,  "TikTok: Battery vs grid Ã¢ÂÂ which wins?",    "budget",      ["tiktok","instagram"],
+      R(2,  "TikTok: Battery vs grid — which wins?",    "budget",      ["tiktok","instagram"],
         "https://www.tiktok.com/@resincsolar/video/7301234560002",
-        ["chris_wilson"], "Comparison reel Ã¢ÂÂ who comes out on top over 10 years. IG reel version of same."),
-      R(3,  "YouTube: Budget Battlers Ã¢ÂÂ Meet the Smiths","budget",     ["youtube","tiktok","facebook"],
+        ["chris_wilson"], "Comparison reel — who comes out on top over 10 years. IG reel version of same."),
+      R(3,  "YouTube: Budget Battlers — Meet the Smiths","budget",     ["youtube","tiktok","facebook"],
         "https://www.youtube.com/watch?v=RSnc-bb-smiths",
         ["aidan_cocker"], "First long-form episode of Budget Battlers. 7 min. TikTok teaser cutdown + FB share day-of."),
       R(3,  "Blog: Complete guide to solar batteries 2026","community",["blog"],
         "https://resinc.com.au/blog/complete-guide-solar-batteries-2026",
         ["chris_johns"], "Long-form SEO piece, 2,500 words. Key piece for the April push."),
-      R(4,  "TikTok: Real customer savings Ã¢ÂÂ $2,400 Q1","budget",      ["tiktok","instagram"],
+      R(4,  "TikTok: Real customer savings — $2,400 Q1","budget",      ["tiktok","instagram"],
         "https://www.tiktok.com/@resincsolar/video/7301234560004",
         ["chris_wilson"], "Quick-cut customer testimonials with savings numbers on screen. IG reel same day."),
       R(5,  "TikTok: Day in the life of a solar installer","influencers",["tiktok","instagram","youtube"],
@@ -3897,7 +3897,7 @@
       R(5,  "IG: Customer spotlight carousel",          "influencers", ["instagram"],
         "https://www.instagram.com/p/Cx-resinc-spotlight-april/",
         ["chris_wilson"], "6-slide carousel featuring April customer wins."),
-      R(6,  "TikTok: Ask a Solar Specialist Ã¢ÂÂ Part 1",  "media",       ["tiktok","instagram"],
+      R(6,  "TikTok: Ask a Solar Specialist — Part 1",  "media",       ["tiktok","instagram"],
         "https://www.tiktok.com/@resincsolar/video/7301234560006",
         ["chris_wilson"], "Answering top 3 DMs. Part 1 of a weekly series. IG reel same."),
       R(6,  "Facebook: Budget Battlers launch",         "budget",      ["facebook","instagram"],
@@ -3911,7 +3911,7 @@
         ["aidan_cocker"], "Satisfying unboxing of the new Hi-MO 6 panels. IG reel cross-post."),
       R(8,  "IG: Install team of the week",             "community",   ["instagram","facebook"],
         "https://www.instagram.com/p/Cx-resinc-install-team/",
-        ["chris_wilson"], "Highlight the Central Coast crew Ã¢ÂÂ team culture post. FB share."),
+        ["chris_wilson"], "Highlight the Central Coast crew — team culture post. FB share."),
       R(9,  "Podcast: Solar Talk Ep. 47",               "media",       ["podcast"],
         "https://open.spotify.com/episode/solartalk-ep47",
         ["chris_johns"], "Batteries in 2026: worth the wait? 42 minutes."),
@@ -3921,7 +3921,7 @@
       R(11, "YouTube: Veteran Dave's solar journey",    "veterans",    ["youtube","facebook"],
         "https://www.youtube.com/watch?v=RSnc-vet-dave",
         ["leigh_storr"], "Powerful 6-min story. FB share with personal caption from Leigh."),
-      R(11, "IG: Infographic Ã¢ÂÂ grid vs battery costs",  "budget",      ["instagram"],
+      R(11, "IG: Infographic — grid vs battery costs",  "budget",      ["instagram"],
         "https://www.instagram.com/p/Cx-resinc-grid-v-battery/",
         ["chris_wilson"], "Single-slide infographic comparing lifetime costs."),
       R(12, "Facebook: Vet story share",                "veterans",    ["facebook"],
@@ -3932,10 +3932,10 @@
         ["chris_wilson"], "Solar + EV charging synergy explainer."),
       R(14, "TikTok: 3 reasons to get a battery NOW",   "budget",      ["tiktok","instagram","facebook"],
         "https://www.tiktok.com/@resincsolar/video/7301234560014",
-        ["chris_wilson"], "Punchy 30s Ã¢ÂÂ rising tariffs, grid instability, savings. 3-way cross-post."),
+        ["chris_wilson"], "Punchy 30s — rising tariffs, grid instability, savings. 3-way cross-post."),
       R(14, "IG: Before/after solar install",           "community",   ["instagram"],
         "https://www.instagram.com/p/Cx-resinc-before-after/",
-        ["chris_wilson"], "Slider post Ã¢ÂÂ roof before vs after install."),
+        ["chris_wilson"], "Slider post — roof before vs after install."),
       R(15, "YouTube: 150% savings guarantee explained","budget",      ["youtube","tiktok","instagram","facebook"],
         "https://www.youtube.com/watch?v=RSnc-150-guarantee",
         ["chris_johns"], "Cornerstone explainer. 4-platform cross-post."),
@@ -3947,7 +3947,7 @@
         ["chris_wilson"], "90s cut from the full YouTube interview."),
       R(17, "IG: Team culture post",                    "media",       ["instagram","facebook"],
         "https://www.instagram.com/p/Cx-resinc-team-culture/",
-        ["chris_wilson"], "CARES values post Ã¢ÂÂ community x team."),
+        ["chris_wilson"], "CARES values post — community x team."),
       R(18, "TikTok: Anker SOLIX X1 first look",        "media",       ["tiktok","instagram","youtube"],
         "https://www.tiktok.com/@resincsolar/video/7301234560018",
         ["aidan_cocker"], "First look at the new Anker SOLIX X1. Cross-posted to YT Shorts + IG reel."),
@@ -3965,7 +3965,7 @@
         ["chris_wilson"], "Quick sizing guide by household energy use."),
       R(22, "Podcast: SolarQuotes feat. RESINC",        "media",       ["podcast"],
         "https://open.spotify.com/episode/solarquotes-resinc",
-        ["chris_johns"], "Finn from SolarQuotes hosts Ã¢ÂÂ Legendary status milestone chat."),
+        ["chris_johns"], "Finn from SolarQuotes hosts — Legendary status milestone chat."),
       R(23, "YouTube: Community Heroes awards highlights","community", ["youtube","facebook","instagram"],
         "https://www.youtube.com/watch?v=RSnc-heroes-awards",
         ["aidan_cocker"], "5-min highlight reel from the awards night. Cross-platform drop."),
@@ -3977,7 +3977,7 @@
         ["chris_wilson"], "Fast-cut celebration reel from the awards."),
       R(26, "TikTok: ANZAC Day tribute",                "veterans",    ["tiktok","instagram","facebook"],
         "https://www.tiktok.com/@resincsolar/video/7301234560026",
-        ["chris_wilson"], "Respectful tribute post Ã¢ÂÂ no promo. 3 platforms."),
+        ["chris_wilson"], "Respectful tribute post — no promo. 3 platforms."),
       R(26, "IG: ANZAC Day reel",                       "veterans",    ["instagram","facebook"],
         "https://www.instagram.com/p/Cx-resinc-anzac/",
         ["chris_wilson"], "Dawn service reel with caption honouring Dave and the hub."),
@@ -3990,12 +3990,12 @@
       R(28, "Blog: April install milestones",           "media",       ["blog"],
         "https://resinc.com.au/blog/april-install-milestones",
         ["chris_johns"], "Monthly milestones blog. Numbers from ops."),
-      R(29, "TikTok: Month wrap Ã¢ÂÂ April savings",       "media",       ["tiktok","instagram"],
+      R(29, "TikTok: Month wrap — April savings",       "media",       ["tiktok","instagram"],
         "https://www.tiktok.com/@resincsolar/video/7301234560029",
         ["chris_wilson"], "Fast wrap of April customer savings totals."),
       R(29, "Press: Q1 battery install milestone",      "media",       ["press"],
         "https://resinc.com.au/news/q1-battery-milestone-2026",
-        ["chris_johns"], "Press release Ã¢ÂÂ 1,200 batteries installed in Q1."),
+        ["chris_johns"], "Press release — 1,200 batteries installed in Q1."),
       R(30, "IG: April recap",                          "media",       ["instagram","facebook"],
         "https://www.instagram.com/p/Cx-resinc-april-recap/",
         ["chris_wilson"], "Carousel summarising April wins + May teaser."),
@@ -4050,7 +4050,7 @@
       T(10, "Approve News.com.au shot list",              "media", "doing", "chris_johns",
         "James Pearce sent through his shot list. Review, edit, send back with any sensitivities around customer sites."),
       T(11, "Brief Gosford customer on News.com.au shoot", "media", "todo", "aidan_cocker",
-        "Call the Wilson family Ã¢ÂÂ confirm access day 15, explain what's happening, talking points. Ensure kids are OK being on camera."),
+        "Call the Wilson family — confirm access day 15, explain what's happening, talking points. Ensure kids are OK being on camera."),
       T(12, "Pack gear for 3-day News.com.au shoot",      "media", "todo", "aidan_cocker",
         "Cameras, drone, stabiliser, 3x lavs, full lighting kit, spare batteries."),
 
@@ -4090,9 +4090,9 @@
 
   async function loadSampleData() {
     if (events.length > 0 || projects.length > 0) {
-      if (!confirm('This will ADD demo projects, tasks, events, and people to the shared cloud database Ã¢ÂÂ visible to the whole team. Continue?')) return;
+      if (!confirm('This will ADD demo projects, tasks, events, and people to the shared cloud database — visible to the whole team. Continue?')) return;
     }
-    showToast('Loading demo data to the cloudÃ¢ÂÂ¦');
+    showToast('Loading demo data to the cloud…');
     const samplePeople = SAMPLE_PEOPLE.slice();
     const sampleEvents = buildSamplePreprodTasks()
               .concat(buildSampleProductionEvents())
@@ -4119,7 +4119,7 @@
       const pre  = events.filter(e => scheduleOf(e) === 'preprod').length;
       const prod = events.filter(e => scheduleOf(e) === 'production').length;
       const rel  = events.filter(e => scheduleOf(e) === 'release').length;
-      alert(`Demo data loaded to the cloud Ã°ÂÂÂ\n\nÃ¢ÂÂ¢ ${projects.length} projects\nÃ¢ÂÂ¢ ${pre} pre-production tasks\nÃ¢ÂÂ¢ ${prod} production events\nÃ¢ÂÂ¢ ${rel} release drops\nÃ¢ÂÂ¢ ${samplePeople.length} people\n\nEveryone else on the team will see this data too.`);
+      alert(`Demo data loaded to the cloud 🎉\n\n• ${projects.length} projects\n• ${pre} pre-production tasks\n• ${prod} production events\n• ${rel} release drops\n• ${samplePeople.length} people\n\nEveryone else on the team will see this data too.`);
     } catch (err) {
       // Rollback in-memory
       people = origPeople; events = origEvents; projects = origProjects;
@@ -4140,7 +4140,7 @@
     const isDark = localStorage.getItem('resinc_dark') === '1';
     document.body.classList.toggle('dark-mode', isDark);
     const btn = document.getElementById('darkToggleBtn');
-    if (btn) btn.textContent = isDark ? 'Ã¢ÂÂÃ¯Â¸Â' : 'Ã°ÂÂÂ';
+    if (btn) btn.textContent = isDark ? '☀️' : '🌙';
   }
   function toggleDarkMode() {
     const currentlyDark = localStorage.getItem('resinc_dark') === '1';
@@ -4385,7 +4385,7 @@
       const sameMonth = start.getMonth() === end.getMonth();
       const sSuffix = start.toLocaleDateString('en-AU', { day: 'numeric', month: sameMonth ? undefined : 'short' });
       const eSuffix = end.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
-      title = `${sSuffix} Ã¢ÂÂ ${eSuffix}`;
+      title = `${sSuffix} – ${eSuffix}`;
     } else {
       title = currentView.toLocaleDateString('en-AU', { month: 'long', year: 'numeric' });
     }
@@ -4447,7 +4447,7 @@
     // Eyebrow label
     const eyebrowBase = currentSchedule === 'release' ? 'Release' : currentSchedule === 'preprod' ? 'Pre-production' : 'Production';
     document.getElementById('heroEyebrow').textContent = viewMode === 'gantt' && ganttScale === 'week'
-      ? eyebrowBase + ' schedule ÃÂ· Week view'
+      ? eyebrowBase + ' schedule · Week view'
       : eyebrowBase + ' schedule';
 
     // ===== Toggle states =====
@@ -4464,7 +4464,7 @@
       b.classList.toggle('active', b.dataset.scale === ganttScale);
     });
     // Second group-by button swaps based on schedule:
-    // Production Ã¢ÂÂ People, Release Ã¢ÂÂ Platform, Pre-production Ã¢ÂÂ Assignee
+    // Production → People, Release → Platform, Pre-production → Assignee
     const groupByBtn = document.getElementById('groupByPersonBtn');
     if (groupByBtn) {
       groupByBtn.textContent = currentSchedule === 'release' ? 'Platform'
@@ -4501,7 +4501,7 @@
       const bits = [];
       if (searchQuery) bits.push(`searching "${escapeHTML(searchQuery)}"`);
       if (activeFilters.size > 0) bits.push(`${activeFilters.size} filter${activeFilters.size === 1 ? '' : 's'} active`);
-      hint.innerHTML = `<span class="stat-divider"></span><span class="filter-hint-text">${bits.join(' ÃÂ· ')} Ã¢ÂÂ <a onclick="clearAllFilters()">clear</a></span>`;
+      hint.innerHTML = `<span class="stat-divider"></span><span class="filter-hint-text">${bits.join(' · ')} — <a onclick="clearAllFilters()">clear</a></span>`;
       const statsEl = document.getElementById('heroStats');
       if (statsEl) statsEl.appendChild(hint);
     }
@@ -4608,7 +4608,7 @@
     }
     chart.appendChild(headDays);
 
-    // Determine rows Ã¢ÂÂ on Release, the second group option means Platform; on Production it means Person
+    // Determine rows — on Release, the second group option means Platform; on Production it means Person
     let rows;
     if (ganttGroupBy === 'person') {
       rows = currentSchedule === 'release'
@@ -4694,7 +4694,7 @@
         todayLine.style.left = ((todayIdx + 0.5) / totalDays * 100) + '%';
         track.appendChild(todayLine);
 
-        // NOW sweep Ã¢ÂÂ shows up only on the first row (to avoid clutter) Ã¢ÂÂ handled below
+        // NOW sweep — shows up only on the first row (to avoid clutter) — handled below
       }
 
       // Event bars
@@ -4732,7 +4732,7 @@
         const platformIcons = (isRel && platformsList.length > 0)
           ? `<span class="platform-icons">${platformsList.slice(0,3).map(pid => `<span class="platform-icon">${getPlatform(pid).icon}</span>`).join('')}${platformsList.length > 3 ? `<span class="platform-icon" style="font-size:9px;font-weight:700;">+${platformsList.length - 3}</span>` : ''}</span>`
           : '';
-        const driveIcon = ev.driveLink ? '<span class="drive-icon" title="Has Drive brief">Ã°ÂÂÂ</span>' : '';
+        const driveIcon = ev.driveLink ? '<span class="drive-icon" title="Has Drive brief">📁</span>' : '';
         const initialsHTML = isRel ? '' : `
           <span class="bar-initials">
             ${ev.attendeeIds.slice(0, 3).map(pid => {
@@ -4753,7 +4753,7 @@
       chart.appendChild(track);
     });
 
-    // ===== NOW indicator Ã¢ÂÂ signature live sweep across the chart =====
+    // ===== NOW indicator — signature live sweep across the chart =====
     if (todayISO >= firstISO && todayISO <= lastISO) {
       const todayIdx = Math.round((new Date(todayISO) - rangeStart) / 86400000);
       const now = new Date();
@@ -4761,7 +4761,7 @@
       const nowPct = ((todayIdx + hourFrac) / totalDays) * 100;
 
       // The overlay needs to sit on top of the day-column area only (not the label column).
-      // Append it to the gantt grid Ã¢ÂÂ positioned relative to the right-hand (day) area.
+      // Append it to the gantt grid — positioned relative to the right-hand (day) area.
       const nowOverlay = document.createElement('div');
       nowOverlay.style.position = 'absolute';
       nowOverlay.style.top = '0';
@@ -4781,12 +4781,12 @@
 
       const nowLabel = document.createElement('div');
       nowLabel.className = 'now-label';
-      nowLabel.textContent = 'NOW ÃÂ· ' + formatTime(String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0')).toUpperCase();
+      nowLabel.textContent = 'NOW · ' + formatTime(String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0')).toUpperCase();
       nowOverlay.appendChild(nowLabel);
 
-      // Find the right-hand chart area (grid column 2) Ã¢ÂÂ we'll mount into the headDays' parent
+      // Find the right-hand chart area (grid column 2) — we'll mount into the headDays' parent
       // Easier: wrap headDays + tracks in a position: relative wrapper. For now, append to headDays
-      // and adjust Ã¢ÂÂ actually append to a wrapper.
+      // and adjust — actually append to a wrapper.
       const dayArea = document.createElement('div');
       dayArea.style.position = 'absolute';
       dayArea.style.top = '0';
@@ -4796,7 +4796,7 @@
       dayArea.style.pointerEvents = 'none';
       dayArea.appendChild(nowOverlay);
 
-      // Mount to gantt container (needs position: relative Ã¢ÂÂ set via CSS below)
+      // Mount to gantt container (needs position: relative — set via CSS below)
       chart.style.position = 'relative';
       chart.appendChild(dayArea);
     }
@@ -4885,12 +4885,12 @@
     const todayISO = toISODate(new Date());
     const isToday = selectedDay === todayISO;
 
-    const scheduleIcon = currentSchedule === 'release' ? 'Ã°ÂÂÂ' : currentSchedule === 'preprod' ? 'Ã°ÂÂÂ' : 'Ã°ÂÂÂ¬';
+    const scheduleIcon = currentSchedule === 'release' ? '🚀' : currentSchedule === 'preprod' ? '🗓' : '🎬';
     const scheduleLabel = currentSchedule === 'release' ? 'Release' : currentSchedule === 'preprod' ? 'Pre-production' : 'Production';
 
     document.getElementById('dayPanelHead').innerHTML = `
       <div>
-        <div class="day-panel-subtitle">${scheduleIcon} ${scheduleLabel} ÃÂ· ${isToday ? 'Ã¢ÂÂ Today' : 'Day detail'}</div>
+        <div class="day-panel-subtitle">${scheduleIcon} ${scheduleLabel} · ${isToday ? '● Today' : 'Day detail'}</div>
         <div class="day-panel-title">${formatDate(selectedDay)}</div>
       </div>
       <button class="btn-primary" onclick="openNewEventModal('${selectedDay}')">+ Add ${currentSchedule === 'release' ? 'drop' : currentSchedule === 'preprod' ? 'task' : 'event'}</button>
@@ -4902,7 +4902,7 @@
         ? 'Quiet on the channels today.'
         : currentSchedule === 'preprod'
         ? 'No deadlines today. Nice.'
-        : 'Clear skies Ã¢ÂÂ nothing in production.';
+        : 'Clear skies — nothing in production.';
       list.innerHTML = `<div class="empty-day">${emptyMsg}<br><span style="font-size:11px; opacity:0.7; margin-top:6px; display:inline-block;">Tap "+ Add" to schedule something.</span></div>`;
       return;
     }
@@ -4917,7 +4917,7 @@
       const isOverdue = isTask && ev.status !== 'done' && ev.date < todayISO;
       const isDone = isTask && ev.status === 'done';
       const timeLabel = ev.allDay
-        ? (ev.endDate && ev.endDate !== ev.date ? 'All day ÃÂ· multi-day'
+        ? (ev.endDate && ev.endDate !== ev.date ? 'All day · multi-day'
            : isRel ? 'Drop'
            : isTask ? 'Deadline'
            : 'All day')
@@ -4944,8 +4944,8 @@
       }
 
       const linkHTML = (isRel && ev.link)
-        ? `<div><a class="day-event-link" href="${escapeHTML(ev.link)}" target="_blank" rel="noopener">${getPlatform(platformsOf(ev)[0]).icon} ${isAudioPlatform(platformsOf(ev)[0]) ? 'Listen now' : 'Watch now'} Ã¢ÂÂ opens ${getPlatform(platformsOf(ev)[0]).name}</a></div>`
-        : (ev.link ? `<div><a class="day-event-link" href="${escapeHTML(ev.link)}" target="_blank" rel="noopener">Ã°ÂÂÂ Open link</a></div>` : '');
+        ? `<div><a class="day-event-link" href="${escapeHTML(ev.link)}" target="_blank" rel="noopener">${getPlatform(platformsOf(ev)[0]).icon} ${isAudioPlatform(platformsOf(ev)[0]) ? 'Listen now' : 'Watch now'} — opens ${getPlatform(platformsOf(ev)[0]).name}</a></div>`
+        : (ev.link ? `<div><a class="day-event-link" href="${escapeHTML(ev.link)}" target="_blank" rel="noopener">🔗 Open link</a></div>` : '');
 
       return `
         <div class="day-event ${isDone ? 'is-done' : ''}" onclick="openDetailModal('${ev.id}')">
@@ -4959,7 +4959,7 @@
               ${badges}
               ${peopleHTML ? `<div class="day-event-people">${peopleHTML}</div>` : ''}
             </div>
-            ${!isRel && !isTask && ev.location ? `<div class="day-event-details" style="margin-top:6px;"><strong>Ã°ÂÂÂ ${escapeHTML(ev.location)}</strong></div>` : ''}
+            ${!isRel && !isTask && ev.location ? `<div class="day-event-details" style="margin-top:6px;"><strong>📍 ${escapeHTML(ev.location)}</strong></div>` : ''}
             ${ev.details ? `<div class="day-event-details">${escapeHTML(ev.details).replace(/\n/g,'<br>')}</div>` : ''}
             ${linkHTML}
           </div>
@@ -5076,7 +5076,7 @@
         const platformIcons = (isRel && platformsList.length > 0)
           ? `<span class="platform-icons">${platformsList.slice(0,3).map(pid => `<span class="platform-icon">${getPlatform(pid).icon}</span>`).join('')}${platformsList.length > 3 ? `<span class="platform-icon" style="font-size:8px;font-weight:700;">+${platformsList.length - 3}</span>` : ''}</span>`
           : '';
-        const driveIcon = ev.driveLink ? '<span class="drive-icon" title="Brief">Ã°ÂÂÂ</span>' : '';
+        const driveIcon = ev.driveLink ? '<span class="drive-icon" title="Brief">📁</span>' : '';
         const dotsHTML = isRel ? '' : ev.attendeeIds.slice(0, 3).map(pid => {
           const p = getPerson(pid);
           return p ? `<span class="chip-initial" style="background:${personColour(p.id)}" title="${escapeHTML(p.name)}">${initials(p.name)}</span>` : '';
@@ -5214,7 +5214,7 @@
     document.getElementById('releaseFields').style.display = isRelease ? 'block' : 'none';
     document.getElementById('preprodFields').style.display = isPreprod ? 'block' : 'none';
 
-    // Hide meeting-style fields on Release Ã¢ÂÂ drops don't have attendees, times, locations
+    // Hide meeting-style fields on Release — drops don't have attendees, times, locations
     document.getElementById('allDayRow').style.display    = isRelease || isPreprod ? 'none' : 'flex';
     document.getElementById('endDateField').style.display = isRelease || isPreprod ? 'none' : 'block';
     document.getElementById('locationField').style.display= isRelease || isPreprod ? 'none' : 'block';
@@ -5293,7 +5293,7 @@
           <div class="person-name">${escapeHTML(p.name)}</div>
           <div class="person-email">${escapeHTML(p.email || 'No email set')}</div>
         </div>
-        <div class="person-check">${selectedPeopleIds.includes(p.id) ? 'Ã¢ÂÂ' : ''}</div>
+        <div class="person-check">${selectedPeopleIds.includes(p.id) ? '✓' : ''}</div>
       </div>
     `).join('');
   }
@@ -5389,7 +5389,7 @@
       if (isPreprod && payload.status) {
         extraBits.push('Status: ' + getStatus(payload.status).name);
       }
-      queueNotification('item', payload.title, existingSchedule, payload.date, extraBits.join(' ÃÂ· '));
+      queueNotification('item', payload.title, existingSchedule, payload.date, extraBits.join(' · '));
     }
     saveEventsToStorage();
 
@@ -5409,7 +5409,7 @@
       selectedDay = date;
     }
     render();
-    showToast(wasEditing ? `Updated "${title}" Ã¢ÂÂ` : `Saved "${title}" Ã¢ÂÂ`);
+    showToast(wasEditing ? `Updated "${title}" ✓` : `Saved "${title}" ✓`);
 
     // If this was a quick-add from within a project, re-open the project detail
     if (pendingReopenProject) {
@@ -5421,7 +5421,7 @@
     if (!wasEditing && existingSchedule === 'production' && payload.attendeeIds.length > 0 && !calendarOpened) {
       const missing = payload.attendeeIds.map(pid => getPerson(pid)).filter(p => p && !p.email);
       alert('Event saved, but the Google Calendar invite was not sent because these people have no email on file:\n\n' +
-            missing.map(p => 'Ã¢ÂÂ¢ ' + p.name).join('\n') +
+            missing.map(p => '• ' + p.name).join('\n') +
             '\n\nAdd their emails in the People panel to enable invites.');
     }
   }
@@ -5448,14 +5448,14 @@
     let timeStr;
     if (ev.allDay) {
       timeStr = (ev.date === ev.endDate)
-        ? 'All day ÃÂ· ' + formatDate(ev.date)
-        : 'All day ÃÂ· ' + formatDate(ev.date) + ' Ã¢ÂÂ ' + formatDate(ev.endDate);
+        ? 'All day · ' + formatDate(ev.date)
+        : 'All day · ' + formatDate(ev.date) + ' → ' + formatDate(ev.endDate);
     } else {
-      timeStr = formatDate(ev.date) + ' ÃÂ· ' + formatTimeRange(ev.startTime, ev.endTime);
+      timeStr = formatDate(ev.date) + ' · ' + formatTimeRange(ev.startTime, ev.endTime);
     }
     const sched = scheduleOf(ev);
-    const scheduleLabel = sched === 'release' ? 'Ã°ÂÂÂ Release' : sched === 'preprod' ? 'Ã°ÂÂÂ Pre-production' : 'Ã°ÂÂÂ¬ Production';
-    document.getElementById('detailMeta').textContent = scheduleLabel + ' ÃÂ· ' + cat.name + ' ÃÂ· ' + timeStr;
+    const scheduleLabel = sched === 'release' ? '🚀 Release' : sched === 'preprod' ? '🗓 Pre-production' : '🎬 Production';
+    document.getElementById('detailMeta').textContent = scheduleLabel + ' · ' + cat.name + ' · ' + timeStr;
 
     const attendeeHTML = ev.attendeeIds.length
       ? ev.attendeeIds.map(pid => {
@@ -5482,7 +5482,7 @@
             <div class="detail-value" style="display:flex; align-items:center; gap:8px;">
               <span style="width:10px;height:10px;border-radius:3px;background:${projCat.hex};"></span>
               <strong style="color:var(--heading);">${escapeHTML(proj.name)}</strong>
-              <span style="margin-left:auto; color:var(--sky); font-size:12px; font-weight:600;">Open Ã¢ÂÂ</span>
+              <span style="margin-left:auto; color:var(--sky); font-size:12px; font-weight:600;">Open →</span>
             </div>
           </div>
         `;
@@ -5520,12 +5520,12 @@
       ${isRelease && ev.link ? `
       <div class="detail-row">
         <div class="detail-label">Watch at</div>
-        <div class="detail-value"><a class="detail-link" href="${escapeHTML(ev.link)}" target="_blank" rel="noopener">Ã°ÂÂÂ ${escapeHTML(ev.link)}</a></div>
+        <div class="detail-value"><a class="detail-link" href="${escapeHTML(ev.link)}" target="_blank" rel="noopener">🔗 ${escapeHTML(ev.link)}</a></div>
       </div>` : ''}
       ${ev.driveLink ? `
       <div class="detail-row">
         <div class="detail-label">Brief</div>
-        <div class="detail-value"><a class="detail-link" href="${escapeHTML(ev.driveLink)}" target="_blank" rel="noopener">Ã°ÂÂÂ Open in Drive</a></div>
+        <div class="detail-value"><a class="detail-link" href="${escapeHTML(ev.driveLink)}" target="_blank" rel="noopener">📁 Open in Drive</a></div>
       </div>` : ''}
       ${!isRelease && !isPreprod && ev.location ? `
       <div class="detail-row">
@@ -5539,7 +5539,7 @@
       </div>` : ''}
       <div class="detail-row">
         <div class="detail-label">${isRelease ? 'About' : isPreprod ? 'Notes' : 'Details'}</div>
-        <div class="detail-value">${ev.details ? escapeHTML(ev.details).replace(/\n/g, '<br>') : '<span style="color:var(--muted);">Ã¢ÂÂ</span>'}</div>
+        <div class="detail-value">${ev.details ? escapeHTML(ev.details).replace(/\n/g, '<br>') : '<span style="color:var(--muted);">—</span>'}</div>
       </div>
       ${(ev.createdAt || ev.lastModifiedAt) ? `
       <div class="detail-row detail-audit">
@@ -5556,27 +5556,27 @@
     if (isRelease) {
       const firstPlatform = platformsList[0] ? getPlatform(platformsList[0]) : null;
       footer = `
-        <button class="btn-danger" onclick="deleteCurrentEvent()" style="margin-right:auto;">Ã°ÂÂÂ Delete</button>
+        <button class="btn-danger" onclick="deleteCurrentEvent()" style="margin-right:auto;">🗑 Delete</button>
         <button class="btn-secondary" onclick="editCurrentEvent()">Edit</button>
-        <button class="btn-secondary" onclick="downloadCurrentICS()" title="Add drop date to your personal calendar">Ã°ÂÂÂ¥ Remind me</button>
-        ${ev.link ? `<button class="btn-primary" onclick="openReleaseLink()">${firstPlatform ? firstPlatform.icon : 'Ã¢ÂÂ¶'} ${isAudioPlatform(platformsList[0]) ? 'Listen' : 'Watch'}</button>` : ''}
+        <button class="btn-secondary" onclick="downloadCurrentICS()" title="Add drop date to your personal calendar">📥 Remind me</button>
+        ${ev.link ? `<button class="btn-primary" onclick="openReleaseLink()">${firstPlatform ? firstPlatform.icon : '▶'} ${isAudioPlatform(platformsList[0]) ? 'Listen' : 'Watch'}</button>` : ''}
       `;
     } else if (isPreprod) {
       // Preprod: buttons to cycle status
       const nextStatus = ev.status === 'done' ? 'todo' : (ev.status === 'doing' ? 'done' : 'doing');
       const nextLabel = nextStatus === 'doing' ? 'Start' : nextStatus === 'done' ? 'Mark done' : 'Reopen';
       footer = `
-        <button class="btn-danger" onclick="deleteCurrentEvent()" style="margin-right:auto;">Ã°ÂÂÂ Delete</button>
+        <button class="btn-danger" onclick="deleteCurrentEvent()" style="margin-right:auto;">🗑 Delete</button>
         <button class="btn-secondary" onclick="editCurrentEvent()">Edit</button>
-        <button class="btn-secondary" onclick="downloadCurrentICS()">Ã°ÂÂÂ¥ Add to calendar</button>
-        <button class="btn-primary" onclick="cycleTaskStatus('${nextStatus}')">${nextLabel === 'Mark done' ? 'Ã¢ÂÂ ' : ''}${nextLabel}</button>
+        <button class="btn-secondary" onclick="downloadCurrentICS()">📥 Add to calendar</button>
+        <button class="btn-primary" onclick="cycleTaskStatus('${nextStatus}')">${nextLabel === 'Mark done' ? '✓ ' : ''}${nextLabel}</button>
       `;
     } else {
       footer = `
-        <button class="btn-danger" onclick="deleteCurrentEvent()" style="margin-right:auto;">Ã°ÂÂÂ Delete</button>
+        <button class="btn-danger" onclick="deleteCurrentEvent()" style="margin-right:auto;">🗑 Delete</button>
         <button class="btn-secondary" onclick="editCurrentEvent()">Edit</button>
-        <button class="btn-secondary" onclick="downloadCurrentICS()" title="Download .ics Ã¢ÂÂ works with Apple Calendar, Outlook, iOS">Ã°ÂÂÂ¥ .ics</button>
-        <button class="btn-primary" onclick="sendToGoogleCalendar()">Ã°ÂÂÂ Google invite</button>
+        <button class="btn-secondary" onclick="downloadCurrentICS()" title="Download .ics — works with Apple Calendar, Outlook, iOS">📥 .ics</button>
+        <button class="btn-primary" onclick="sendToGoogleCalendar()">📅 Google invite</button>
       `;
     }
     document.getElementById('detailFooter').innerHTML = footer;
@@ -5749,9 +5749,9 @@
     if (projects.length === 0) {
       grid.innerHTML = `
         <div style="grid-column:1/-1; padding:48px 20px; text-align:center; color:var(--muted); font-size:14px; background:var(--paper); border:1px dashed var(--line); border-radius:var(--radius-xl);">
-          <div style="font-size:32px; margin-bottom:12px;">Ã°ÂÂÂ</div>
+          <div style="font-size:32px; margin-bottom:12px;">📁</div>
           <div style="font-size:16px; font-weight:600; color:var(--ink); margin-bottom:6px;">No projects yet</div>
-          <div style="margin-bottom:14px;">Projects tie your tasks, shoots, and drops together. Start with something like "Budget Battlers Ep 1 Ã¢ÂÂ Meet the Smiths".</div>
+          <div style="margin-bottom:14px;">Projects tie your tasks, shoots, and drops together. Start with something like "Budget Battlers Ep 1 — Meet the Smiths".</div>
           <button class="btn-primary" onclick="openNewProjectModal()">+ Create first project</button>
         </div>
       `;
@@ -5801,7 +5801,7 @@
           <div class="project-card-meta">
             <span style="display:inline-flex;align-items:center;gap:5px;"><span style="width:9px;height:9px;border-radius:2px;background:${cat.hex};"></span>${cat.name}</span>
             ${lead ? `<span class="meta-divider"></span><span style="display:inline-flex;align-items:center;gap:5px;"><span class="person-avatar small" style="width:18px;height:18px;font-size:8px;background:${personColour(lead.id)}">${initials(lead.name)}</span>${escapeHTML(lead.name)}</span>` : ''}
-            ${proj.targetDate ? `<span class="meta-divider"></span><span style="display:inline-flex;align-items:center;gap:4px;" title="Target date Ã¢ÂÂ shoot, drop or event day">Ã°ÂÂÂ¯ ${new Date(proj.targetDate + 'T00:00:00').toLocaleDateString('en-AU', { day:'numeric', month:'short' })}</span>` : ''}
+            ${proj.targetDate ? `<span class="meta-divider"></span><span style="display:inline-flex;align-items:center;gap:4px;" title="Target date — shoot, drop or event day">🎯 ${new Date(proj.targetDate + 'T00:00:00').toLocaleDateString('en-AU', { day:'numeric', month:'short' })}</span>` : ''}
           </div>
           <div class="project-card-stages">
             <div class="project-stage">
@@ -5824,7 +5824,7 @@
             <div class="coverage-mini-label">Pushed to</div>
             <div class="coverage-mini-icons">
               ${coverage.active.length > 0
-                ? coverage.active.map(p => `<span class="coverage-mini-icon active" title="${p.name} ÃÂ${p.count}">${p.icon}<span class="coverage-mini-count">${p.count}</span></span>`).join('')
+                ? coverage.active.map(p => `<span class="coverage-mini-icon active" title="${p.name} ×${p.count}">${p.icon}<span class="coverage-mini-count">${p.count}</span></span>`).join('')
                 : '<span style="font-size:11px; color:var(--muted); font-style:italic;">No drops yet</span>'}
               ${coverage.inactive.length > 0 && coverage.active.length > 0
                 ? coverage.inactive.slice(0, 4).map(p => `<span class="coverage-mini-icon inactive" title="Not yet pushed to ${p.name}">${p.icon}</span>`).join('') +
@@ -5834,9 +5834,9 @@
           </div>
           <div class="project-card-footer">
             <span class="project-card-team-aware ${proj.teamAware ? 'aware' : 'not-aware'}">
-              ${proj.teamAware ? 'Ã¢ÂÂ Team briefed' : 'Ã¢ÂÂ  Team not briefed'}
+              ${proj.teamAware ? '✓ Team briefed' : '⚠ Team not briefed'}
             </span>
-            ${proj.driveLink ? `<a class="project-card-drive-btn" href="${escapeHTML(proj.driveLink)}" target="_blank" rel="noopener" onclick="event.stopPropagation();">Ã°ÂÂÂ Drive</a>` : ''}
+            ${proj.driveLink ? `<a class="project-card-drive-btn" href="${escapeHTML(proj.driveLink)}" target="_blank" rel="noopener" onclick="event.stopPropagation();">📁 Drive</a>` : ''}
           </div>
         </div>
       `;
@@ -5848,7 +5848,7 @@
   let selectedProjectStatus = 'planning';
   let selectedProjectCategory = 'budget';
 
-  // Per-task picker state: map of libId Ã¢ÂÂ { checked, assigneeId, date }
+  // Per-task picker state: map of libId → { checked, assigneeId, date }
   // Custom tasks: array of { id (temp), title, assigneeId, date }
   let projectPreprodPicks = {};
   let projectPreprodCustomTasks = [];
@@ -5871,7 +5871,7 @@
       projectPreprodPicks[t.id] = { checked: false, assigneeId: '', date: '' };
     });
     document.getElementById('projectPreprodCustom').value = '';
-    // Only show preprod picker when creating (not editing Ã¢ÂÂ too confusing to edit existing tasks via picker)
+    // Only show preprod picker when creating (not editing — too confusing to edit existing tasks via picker)
     document.getElementById('projectPreprodSection').style.display = 'block';
     renderProjectEditorFields();
     renderProjectPreprodPicker();
@@ -5893,7 +5893,7 @@
     selectedProjectLead = proj.leadId || null;
     selectedProjectStatus = proj.status || 'planning';
     selectedProjectCategory = proj.categoryId || 'budget';
-    // Hide preprod picker on edit Ã¢ÂÂ tasks exist and are managed via the project detail view
+    // Hide preprod picker on edit — tasks exist and are managed via the project detail view
     document.getElementById('projectPreprodSection').style.display = 'none';
     renderProjectEditorFields();
     document.getElementById('projectModal').classList.add('active');
@@ -5919,7 +5919,7 @@
           <div class="person-name">${escapeHTML(p.name)}</div>
           <div class="person-email">${escapeHTML(p.email || 'No email set')}</div>
         </div>
-        <div class="person-check">${p.id === selectedProjectLead ? 'Ã¢ÂÂ' : ''}</div>
+        <div class="person-check">${p.id === selectedProjectLead ? '●' : ''}</div>
       </div>
     `).join('');
   }
@@ -5940,12 +5940,12 @@
       const days = Math.round((targetDate - d) / (1000 * 60 * 60 * 24));
       if (days === 0) return '<span class="rel-on">on target date</span>';
       if (days > 0) return `<span class="rel-before">${days} day${days === 1 ? '' : 's'} before target</span>`;
-      return `<span class="rel-after">${-days} day${-days === -1 ? '' : 's'} after target Ã¢ÂÂ </span>`;
+      return `<span class="rel-after">${-days} day${-days === -1 ? '' : 's'} after target ⚠</span>`;
     };
 
     // Build people options string (reused across rows)
     const peopleOpts = (selectedId) =>
-      '<option value="">Ã¢ÂÂ Unassigned Ã¢ÂÂ</option>' +
+      '<option value="">— Unassigned —</option>' +
       people.map(p => `<option value="${p.id}" ${p.id === selectedId ? 'selected' : ''}>${escapeHTML(p.name)}</option>`).join('');
 
     // Library rows
@@ -5979,7 +5979,7 @@
         <div class="preprod-pick-row custom" data-custom-idx="${i}">
           <label class="preprod-pick-label">
             <span>${escapeHTML(t.title)}</span>
-            <button class="preprod-custom-remove" type="button" data-custom-idx="${i}" title="Remove">Ã¢ÂÂ</button>
+            <button class="preprod-custom-remove" type="button" data-custom-idx="${i}" title="Remove">✕</button>
           </label>
           <select data-custom-idx="${i}" class="preprod-custom-assignee">
             ${peopleOpts(t.assigneeId)}
@@ -6100,7 +6100,7 @@
       e.preventDefault();
       addProjectCustomTask();
     }
-    // Ã¢ÂÂK or Ctrl+K to focus search
+    // ⌘K or Ctrl+K to focus search
     if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
       e.preventDefault();
       const s = document.getElementById('searchInput');
@@ -6139,7 +6139,7 @@
       if (idx >= 0) projects[idx] = payload;
     } else {
       projects.push(payload);
-      queueNotification('project', payload.name, 'project', null, `Lead: ${selectedProjectLead ? getPerson(selectedProjectLead).name : 'Ã¢ÂÂ'} ÃÂ· Status: ${getProjectStatus(selectedProjectStatus).name}`);
+      queueNotification('project', payload.name, 'project', null, `Lead: ${selectedProjectLead ? getPerson(selectedProjectLead).name : '—'} · Status: ${getProjectStatus(selectedProjectStatus).name}`);
 
       // ---- Generate picked pre-production tasks for the new project ----
       const generated = [];
@@ -6196,7 +6196,7 @@
     saveProjectsToStorage();
     closeProjectModal();
     render();
-    showToast(wasNew ? `Created "${payload.name}" Ã¢ÂÂ` : `Updated "${payload.name}" Ã¢ÂÂ`);
+    showToast(wasNew ? `Created "${payload.name}" ✓` : `Updated "${payload.name}" ✓`);
     // For NEW projects, pop the detail view so the user can immediately see the pipeline
     if (wasNew) {
       setTimeout(() => openProjectDetail(payload.id), 150);
@@ -6276,12 +6276,12 @@
       if (srcTargetIso) {
         const t = new Date(srcTargetIso + 'T00:00:00');
         t.setDate(t.getDate() + interval * (i + 1));
-        targetStr = 'Ã°ÂÂÂ¯ ' + formatDate(toISODate(t));
+        targetStr = '🎯 ' + formatDate(toISODate(t));
       }
       previewLines.push(`<div style="padding:2px 0;"><strong>${escapeHTML(name)}</strong> &nbsp;<span style="color:var(--muted);">${targetStr}</span></div>`);
     }
     if (count > maxShow) {
-      previewLines.push(`<div style="padding:2px 0; color:var(--muted); font-style:italic;">Ã¢ÂÂ¦and ${count - maxShow} more</div>`);
+      previewLines.push(`<div style="padding:2px 0; color:var(--muted); font-style:italic;">…and ${count - maxShow} more</div>`);
     }
     document.getElementById('dupePreview').innerHTML = previewLines.join('');
     document.getElementById('dupeCountHint').textContent = count === 1 ? '(1 copy)' : `(${count} copies, plus the original)`;
@@ -6294,10 +6294,10 @@
     const pattern = document.getElementById('dupeNamePattern').value.trim() || 'Copy {n}';
     const copyTasks = document.getElementById('dupeCopyTasks').checked;
     const srcTargetIso = src.targetDate || '';
-    const copyProdEvents = document.getElementById('dupeCopyProdEvents') && document.getElementById('dupeCopyProdEvents').checked;
     const srcTasks = copyTasks
       ? events.filter(ev => ev.projectId === src.id && scheduleOf(ev) === 'preprod')
       : [];
+    const copyProdEvents = document.getElementById('dupeCopyProdEvents') && document.getElementById('dupeCopyProdEvents').checked;
     const srcProdEvents = copyProdEvents
       ? events.filter(ev => ev.projectId === src.id && (scheduleOf(ev) === 'production' || scheduleOf(ev) === 'release'))
       : [];
@@ -6322,7 +6322,7 @@
         id: newProjId,
         name,
         description: src.description || '',
-        driveLink: '',  // fresh Ã¢ÂÂ each copy gets its own folder
+        driveLink: '',  // fresh — each copy gets its own folder
         targetDate: newTargetIso,
         teamAware: false,  // not yet briefed
         leadId: src.leadId || null,
@@ -6360,38 +6360,13 @@
             lastModifiedBy: actor,
           });
         });
-            // Copy production + release events with same shift
+            // Copy production + release events
       if (copyProdEvents) {
         srcProdEvents.forEach(srcEv => {
           let newDate = srcEv.date, newEndDate = srcEv.endDate || srcEv.date;
-          if (srcEv.date) {
-            const t = new Date(srcEv.date + 'T00:00:00');
-            t.setDate(t.getDate() + interval * (i + 1));
-            newDate = toISODate(t);
-          }
-          if (srcEv.endDate) {
-            const t2 = new Date(srcEv.endDate + 'T00:00:00');
-            t2.setDate(t2.getDate() + interval * (i + 1));
-            newEndDate = toISODate(t2);
-          }
-          newTasks.push({
-            id: uid(),
-            title: srcEv.title,
-            date: newDate, endDate: newEndDate,
-            allDay: srcEv.allDay !== false,
-            startTime: srcEv.startTime || null,
-            endTime: srcEv.endTime || null,
-            categoryId: srcEv.categoryId,
-            attendeeIds: (srcEv.attendeeIds || []).slice(),
-            status: 'todo',
-            location: srcEv.location || '',
-            details: srcEv.details || '',
-            scheduleType: srcEv.scheduleType,
-            projectId: newProjId,
-            driveLink: '',
-            createdAt: nowIso, createdBy: actor,
-            lastModifiedAt: nowIso, lastModifiedBy: actor,
-          });
+          if (srcEv.date) { const t = new Date(srcEv.date + 'T00:00:00'); t.setDate(t.getDate() + interval * (i + 1)); newDate = toISODate(t); }
+          if (srcEv.endDate) { const t2 = new Date(srcEv.endDate + 'T00:00:00'); t2.setDate(t2.getDate() + interval * (i + 1)); newEndDate = toISODate(t2); }
+          newTasks.push({ id: uid(), title: srcEv.title, date: newDate, endDate: newEndDate, allDay: srcEv.allDay !== false, startTime: srcEv.startTime || null, endTime: srcEv.endTime || null, categoryId: srcEv.categoryId, attendeeIds: (srcEv.attendeeIds || []).slice(), status: 'todo', location: srcEv.location || '', details: srcEv.details || '', scheduleType: srcEv.scheduleType, projectId: newProjId, driveLink: '', createdAt: nowIso, createdBy: actor, lastModifiedAt: nowIso, lastModifiedBy: actor });
         });
       }
 }
@@ -6411,7 +6386,7 @@
       queueNotification('project', `${count} duplicate${count === 1 ? '' : 's'} of ${src.name}`, 'project', null, `Pattern: ${pattern}, ${interval}d apart`);
       closeDuplicateProjectModal();
       render();
-      showToast(`Created ${count} ${count === 1 ? 'copy' : 'copies'} of "${src.name}" Ã¢ÂÂ`);
+      showToast(`Created ${count} ${count === 1 ? 'copy' : 'copies'} of "${src.name}" ✓`);
     } catch (err) {
       alert('Couldn\'t create copies: ' + err.message);
     }
@@ -6429,10 +6404,10 @@
     document.getElementById('projectDetailHeader').style.background = cat.hex;
     document.getElementById('projectDetailTitle').textContent = proj.name;
     document.getElementById('projectDetailMeta').innerHTML =
-      `${cat.name} ÃÂ· <strong style="font-weight:700;">${status.name}</strong>` +
-      (lead ? ` ÃÂ· Lead: ${escapeHTML(lead.name)}` : '') +
-      (proj.targetDate ? ` ÃÂ· Ã°ÂÂÂ¯ Target: <strong>${new Date(proj.targetDate + 'T00:00:00').toLocaleDateString('en-AU', { weekday:'short', day:'numeric', month:'short' })}</strong>` : '') +
-      (proj.teamAware ? ' ÃÂ· <span style="opacity:0.9;">Ã¢ÂÂ Team briefed</span>' : ' ÃÂ· <span style="opacity:0.9;">Ã¢ÂÂ  Team not briefed</span>');
+      `${cat.name} · <strong style="font-weight:700;">${status.name}</strong>` +
+      (lead ? ` · Lead: ${escapeHTML(lead.name)}` : '') +
+      (proj.targetDate ? ` · 🎯 Target: <strong>${new Date(proj.targetDate + 'T00:00:00').toLocaleDateString('en-AU', { weekday:'short', day:'numeric', month:'short' })}</strong>` : '') +
+      (proj.teamAware ? ' · <span style="opacity:0.9;">✓ Team briefed</span>' : ' · <span style="opacity:0.9;">⚠ Team not briefed</span>');
 
     const preprodItems = events.filter(ev => ev.projectId === id && scheduleOf(ev) === 'preprod').sort((a,b) => a.date.localeCompare(b.date));
     const prodItems    = events.filter(ev => ev.projectId === id && scheduleOf(ev) === 'production').sort((a,b) => a.date.localeCompare(b.date));
@@ -6455,7 +6430,7 @@
           <div class="project-lane-item-body">
             <div class="project-lane-item-title">${escapeHTML(ev.title)}</div>
             <div class="project-lane-item-meta">
-              ${statusBit}${dateLabel}${platformsBits ? ' ÃÂ· ' + platformsBits : ''}${peopleBits ? ' ÃÂ· ' + peopleBits : ''}
+              ${statusBit}${dateLabel}${platformsBits ? ' · ' + platformsBits : ''}${peopleBits ? ' · ' + peopleBits : ''}
             </div>
           </div>
         </div>
@@ -6483,7 +6458,7 @@
             <span class="coverage-pill active" title="${p.count} drop${p.count === 1 ? '' : 's'} on ${p.name}">
               <span class="coverage-pill-icon">${p.icon}</span>
               <span class="coverage-pill-name">${p.name}</span>
-              <span class="coverage-pill-count">ÃÂ${p.count}</span>
+              <span class="coverage-pill-count">×${p.count}</span>
             </span>
           `).join('')}
           ${coverage.inactive.map(p => `
@@ -6498,27 +6473,27 @@
 
     const lanesHTML = `
       ${proj.description ? `<div style="padding:14px 26px; font-size:13px; color:var(--ink-subtle); line-height:1.55; border-bottom:1px solid var(--line);">${escapeHTML(proj.description)}</div>` : ''}
-      ${proj.driveLink ? `<div style="padding:12px 26px; border-bottom:1px solid var(--line);"><a class="detail-link" href="${escapeHTML(proj.driveLink)}" target="_blank" rel="noopener">Ã°ÂÂÂ Open project folder in Drive</a></div>` : ''}
+      ${proj.driveLink ? `<div style="padding:12px 26px; border-bottom:1px solid var(--line);"><a class="detail-link" href="${escapeHTML(proj.driveLink)}" target="_blank" rel="noopener">📁 Open project folder in Drive</a></div>` : ''}
       ${coverageHTML}
       <div class="project-lanes">
         <div class="project-lane">
-          <div class="project-lane-head">Ã°ÂÂÂ Pre-plan <span class="project-lane-count">${preprodItems.length}</span></div>
+          <div class="project-lane-head">🗓 Pre-plan <span class="project-lane-count">${preprodItems.length}</span></div>
           <div class="project-lane-items">
             ${preprodItems.length ? preprodItems.map(renderItem).join('') : '<div class="project-lane-empty">No tasks yet</div>'}
           </div>
-          <button class="project-lane-apply" onclick="closeProjectDetailModal(); openAddFromLibrary('${id}');">Ã¢ÂÂ¡ Pick from library</button>
+          <button class="project-lane-apply" onclick="closeProjectDetailModal(); openAddFromLibrary('${id}');">⚡ Pick from library</button>
           <button class="project-lane-add" onclick="addItemToProject('preprod')">+ Add one-off task</button>
         </div>
         <div class="project-lane">
-          <div class="project-lane-head">Ã°ÂÂÂ¬ Production <span class="project-lane-count">${prodItems.length}</span></div>
+          <div class="project-lane-head">🎬 Production <span class="project-lane-count">${prodItems.length}</span></div>
           <div class="project-lane-items">
             ${prodItems.length ? prodItems.map(renderItem).join('') : '<div class="project-lane-empty">No events yet</div>'}
           </div>
-          <button class="project-lane-apply" onclick="closeProjectDetailModal(); openAddFromLibrary('${id}', 'production');">&#9889; Pick from library</button>
+          <button class="project-lane-apply" onclick="closeProjectDetailModal(); openAddFromLibrary('${id}', 'production');">⚡ Pick from library</button>
           <button class="project-lane-add" onclick="addItemToProject('production')">+ Add event</button>
         </div>
         <div class="project-lane">
-          <div class="project-lane-head">Ã°ÂÂÂ Release <span class="project-lane-count">${relItems.length}</span></div>
+          <div class="project-lane-head">🚀 Release <span class="project-lane-count">${relItems.length}</span></div>
           <div class="project-lane-items">
             ${relItems.length ? relItems.map(renderItem).join('') : '<div class="project-lane-empty">No drops yet</div>'}
           </div>
@@ -6580,7 +6555,7 @@
     projects.forEach(p => { itemCounts[p.categoryId] = (itemCounts[p.categoryId] || 0) + 1; });
 
     return `
-      <p class="settings-intro">Categories are your content pillars Ã¢ÂÂ what type of story each item falls under. Change colours, rename, or add new pillars. Categories in use can't be deleted until their items are reassigned.</p>
+      <p class="settings-intro">Categories are your content pillars — what type of story each item falls under. Change colours, rename, or add new pillars. Categories in use can't be deleted until their items are reassigned.</p>
       <div id="categoriesList">
         ${CATEGORIES.map((c, i) => {
           const count = itemCounts[c.id] || 0;
@@ -6612,7 +6587,7 @@
           const count = counts[p.id] || 0;
           return `
             <div class="admin-row">
-              <input type="text" class="narrow plat-icon-input" value="${escapeHTML(p.icon)}" data-idx="${i}" data-field="icon" placeholder="Ã°ÂÂÂ">
+              <input type="text" class="narrow plat-icon-input" value="${escapeHTML(p.icon)}" data-idx="${i}" data-field="icon" placeholder="🔗">
               <input type="text" class="plat-name-input" value="${escapeHTML(p.name)}" data-idx="${i}" data-field="name" placeholder="Platform name">
               <span class="item-count">${count} use${count === 1 ? '' : 's'}</span>
               <button class="admin-delete" data-action="delete-plat" data-idx="${i}" ${count > 0 ? 'disabled title="Reassign items first"' : ''}>Delete</button>
@@ -6627,14 +6602,14 @@
   // ----- Pre-prod task library tab -----
   function buildPreprodLibraryPanel() {
     return `
-      <p class="settings-intro">Your library of common pre-production tasks. Drag the Ã¢ÂÂ®Ã¢ÂÂ® handle to reorder Ã¢ÂÂ the order here is the order they appear in the project-creation picker. Edit the title in place; deletes only remove the template, not tasks already created from it.</p>
+      <p class="settings-intro">Your library of common pre-production tasks. Drag the ⋮⋮ handle to reorder — the order here is the order they appear in the project-creation picker. Edit the title in place; deletes only remove the template, not tasks already created from it.</p>
       <div id="preprodLibraryList" class="preprod-lib-list">
         ${PREPROD_LIBRARY.map((task, i) => `
           <div class="admin-row lib-row" draggable="true" data-idx="${i}" data-libid="${task.id}"
                ondragstart="libDragStart(event)" ondragover="libDragOver(event)"
                ondrop="libDrop(event)" ondragend="libDragEnd(event)"
                ondragenter="libDragEnter(event)" ondragleave="libDragLeave(event)">
-            <span class="lib-drag-handle" title="Drag to reorder">Ã¢ÂÂ®Ã¢ÂÂ®</span>
+            <span class="lib-drag-handle" title="Drag to reorder">⋮⋮</span>
             <span class="lib-row-num">${i + 1}</span>
             <input type="text" class="preprod-lib-title" value="${escapeHTML(task.title)}" data-idx="${i}" data-field="title" placeholder="Task title">
             <button class="admin-delete" data-action="delete-libtask" data-idx="${i}">Delete</button>
@@ -6679,10 +6654,10 @@
       id: t.id, title: t.title, sort_order: i,
     }));
     const { error } = await sb.from('preprod_library').upsert(rowsToUpdate);
-    if (error) { showToast('Reorder didn\'t save Ã¢ÂÂ ' + error.message); return; }
+    if (error) { showToast('Reorder didn\'t save — ' + error.message); return; }
     // Refresh UI
     renderSettingsPanel();
-    showToast('Order updated Ã¢ÂÂ');
+    showToast('Order updated ✓');
   }
   function libDragEnd(e) {
     e.currentTarget.classList.remove('dragging');
@@ -6718,11 +6693,11 @@
     document.getElementById('addFromLibraryIntro').innerHTML =
       `Adding ${addingScheduleType === 'production' ? 'production events' : 'pre-production tasks'} to <strong style="color:var(--heading);">${escapeHTML(proj.name)}</strong>. Tick the ones you need — all picked items will use the date & assignee below (you can tweak each after they're created).`;
 
-    // Filter library by schedule type: production items have sort_order >= 20
     // Update modal title
     const _libTitle = document.getElementById('addFromLibraryTitle');
     if (_libTitle) _libTitle.textContent = addingScheduleType === 'production' ? 'Add production events' : 'Add pre-production tasks';
 
+    // Filter library by schedule type: production items have sort_order >= 20
     const _filteredLib = PREPROD_LIBRARY
       .filter(t => addingScheduleType === 'production' ? (t.sort_order || 0) >= 20 : (t.sort_order || 0) < 20)
       .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
@@ -6740,7 +6715,7 @@
 
     // People dropdown
     const assigneeSel = document.getElementById('libSharedAssignee');
-    assigneeSel.innerHTML = '<option value="">Ã¢ÂÂ Project lead Ã¢ÂÂ</option>' +
+    assigneeSel.innerHTML = '<option value="">— Project lead —</option>' +
       people.map(p => `<option value="${p.id}" ${p.id === librarySharedAssignee ? 'selected' : ''}>${escapeHTML(p.name)}</option>`).join('');
 
     document.getElementById('libSharedDate').value = librarySharedDate;
@@ -6796,6 +6771,11 @@
     });
     saveEventsToStorage();
     queueNotification(addingScheduleType, `${toAdd.length} ${addingScheduleType === 'production' ? 'production event' : 'pre-production task'}${toAdd.length === 1 ? '' : 's'} added to ${proj.name}`, addingScheduleType, date, '');
+
+    closeAddFromLibrary();
+    render();
+    setTimeout(() => openProjectDetail(proj.id), 150);
+    showToast(`${toAdd.length} task${toAdd.length === 1 ? '' : 's'} added`);
   }
   function buildPeoplePanel() {
     return `
@@ -6824,7 +6804,7 @@
       platforms: PLATFORMS.length,
     };
     return `
-      <p class="settings-intro">Back up or restore your data. Everything lives in your browser (localStorage) Ã¢ÂÂ export regularly so you don't lose work, and you can move data between devices by exporting from one and importing into another.</p>
+      <p class="settings-intro">Back up or restore your data. Everything lives in your browser (localStorage) — export regularly so you don't lose work, and you can move data between devices by exporting from one and importing into another.</p>
 
       <div style="background: var(--softer); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 16px;">
         <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px;">Current data</div>
@@ -6838,16 +6818,16 @@
       </div>
 
       <div class="admin-actions">
-        <button class="btn-secondary" data-action="export-data">Ã°ÂÂÂ¥ Export all data</button>
-        <button class="btn-secondary" data-action="import-data">Ã°ÂÂÂ¤ Import data</button>
-        <button class="btn-secondary" data-action="load-sample">Ã°ÂÂÂ² Load demo data</button>
+        <button class="btn-secondary" data-action="export-data">📥 Export all data</button>
+        <button class="btn-secondary" data-action="import-data">📤 Import data</button>
+        <button class="btn-secondary" data-action="load-sample">🎲 Load demo data</button>
       </div>
 
       <hr style="border: none; border-top: 1px solid var(--line); margin: 24px 0 16px;">
 
-      <p class="settings-intro" style="color:#991B1B;">Danger zone Ã¢ÂÂ these actions can't be undone without a backup.</p>
+      <p class="settings-intro" style="color:#991B1B;">Danger zone — these actions can't be undone without a backup.</p>
       <div class="admin-actions">
-        <button class="btn-danger" data-action="reset-data">Ã°ÂÂÂ Reset everything</button>
+        <button class="btn-danger" data-action="reset-data">🗑 Reset everything</button>
       </div>
       <input type="file" id="importFileInput" accept="application/json,.json" style="display:none;">
     `;
@@ -6947,7 +6927,7 @@
     }
     else if (action === 'add-plat') {
       const id = 'plat_' + Math.random().toString(36).slice(2, 8);
-      const p = { id, name: 'New Platform', icon: 'Ã°ÂÂÂ' };
+      const p = { id, name: 'New Platform', icon: '🔗' };
       PLATFORMS.push(p);
       await savePlatformsToStorage(p);
       renderSettingsPanel();
@@ -7025,7 +7005,7 @@
 
       // Wipe all cloud tables in parallel
       (async () => {
-        showToast('Resetting all cloud dataÃ¢ÂÂ¦');
+        showToast('Resetting all cloud data…');
         try {
           await Promise.all([
             sb.from('events').delete().neq('id', ''),
@@ -7104,7 +7084,7 @@
         render();
         showToast('Data imported successfully');
       } catch (err) {
-        alert('Import failed Ã¢ÂÂ the file doesn\'t look like a valid RESINC Media Schedule export.\n\n' + err.message);
+        alert('Import failed — the file doesn\'t look like a valid RESINC Media Schedule export.\n\n' + err.message);
       }
     };
     reader.readAsText(file);
@@ -7151,23 +7131,23 @@
   function openNotifyModal() {
     const list = document.getElementById('notifyQueueList');
     if (notifyQueue.length === 0) {
-      list.innerHTML = '<div class="notify-empty">Ã¢ÂÂ¨ No pending notifications. Everything added so far has been sent to Tanya.</div>';
+      list.innerHTML = '<div class="notify-empty">✨ No pending notifications. Everything added so far has been sent to Tanya.</div>';
       document.getElementById('notifySendBtn').disabled = true;
       document.getElementById('notifySendBtn').style.opacity = '0.5';
     } else {
       document.getElementById('notifySendBtn').disabled = false;
       document.getElementById('notifySendBtn').style.opacity = '1';
       list.innerHTML = notifyQueue.map(n => {
-        const scheduleIcon = { preprod:'Ã°ÂÂÂ', production:'Ã°ÂÂÂ¬', release:'Ã°ÂÂÂ', project:'Ã°ÂÂÂ' }[n.schedule] || 'Ã¢ÂÂ¢';
+        const scheduleIcon = { preprod:'🗓', production:'🎬', release:'🚀', project:'📁' }[n.schedule] || '•';
         const scheduleLabel = { preprod:'Pre-production', production:'Production', release:'Release', project:'Project' }[n.schedule] || n.schedule;
-        const dateLabel = n.date ? ` ÃÂ· ${new Date(n.date).toLocaleDateString('en-AU', { day:'numeric', month:'short' })}` : '';
+        const dateLabel = n.date ? ` · ${new Date(n.date).toLocaleDateString('en-AU', { day:'numeric', month:'short' })}` : '';
         return `
           <div class="notify-item">
             <div class="notify-item-dot" style="background:var(--sky);"></div>
             <div class="notify-item-body">
               <div class="notify-item-title">${scheduleIcon} ${escapeHTML(n.title)}</div>
               <div class="notify-item-meta">
-                ${scheduleLabel}${dateLabel}${n.extra ? ' ÃÂ· ' + escapeHTML(n.extra) : ''}
+                ${scheduleLabel}${dateLabel}${n.extra ? ' · ' + escapeHTML(n.extra) : ''}
               </div>
             </div>
           </div>
@@ -7192,17 +7172,17 @@
     let body = `Hi Tanya,\n\nHere's the latest additions to the RESINC Media Schedule as of ${dateStr}:\n\n`;
     ['project','preprod','production','release'].forEach(k => {
       if (!groups[k] || !groups[k].length) return;
-      body += `${groupLabels[k]}\n${'Ã¢ÂÂ'.repeat(groupLabels[k].length)}\n`;
+      body += `${groupLabels[k]}\n${'—'.repeat(groupLabels[k].length)}\n`;
       groups[k].forEach(n => {
         const dateLabel = n.date ? ` (${new Date(n.date).toLocaleDateString('en-AU', { day:'numeric', month:'short' })})` : '';
-        body += `Ã¢ÂÂ¢ ${n.title}${dateLabel}\n`;
+        body += `• ${n.title}${dateLabel}\n`;
         if (n.extra) body += `  ${n.extra}\n`;
       });
       body += `\n`;
     });
     body += `Please let me know if you have any questions.\n\nThanks,\n${getCurrentUserName()}`;
 
-    const subject = `RESINC Media Schedule Ã¢ÂÂ ${notifyQueue.length} new item${notifyQueue.length === 1 ? '' : 's'}`;
+    const subject = `RESINC Media Schedule — ${notifyQueue.length} new item${notifyQueue.length === 1 ? '' : 's'}`;
     const mailto = 'mailto:' + encodeURIComponent(NOTIFY_EMAIL) +
                    '?subject=' + encodeURIComponent(subject) +
                    '&body=' + encodeURIComponent(body);
@@ -7258,8 +7238,8 @@
       },
       {
         id: 'proj_budget_battlers_ep1', createdAt: new Date().toISOString(),
-        name: 'Budget Battlers Ep 1 Ã¢ÂÂ Meet the Smiths',
-        description: 'First long-form episode of the Budget Battlers series. Family feature on the Smiths Ã¢ÂÂ their journey from $600/qtr power bills to $30 credits. 7-min YouTube, shortform cuts, blog companion.',
+        name: 'Budget Battlers Ep 1 — Meet the Smiths',
+        description: 'First long-form episode of the Budget Battlers series. Family feature on the Smiths — their journey from $600/qtr power bills to $30 credits. 7-min YouTube, shortform cuts, blog companion.',
         leadId: 'aidan_cocker', categoryId: 'budget',
         status: 'releasing',
         driveLink: 'https://drive.google.com/drive/folders/bb-ep1-demo',
@@ -7335,7 +7315,7 @@
       ]],
       // Byron Influencers
       ['proj_byron_influencers', [
-        'Influencer house tour Ã¢ÂÂ Byron', 'Byron trip', 'Byron flagship home',
+        'Influencer house tour — Byron', 'Byron trip', 'Byron flagship home',
       ]],
       // 150% Guarantee
       ['proj_150_guarantee', [
@@ -7358,7 +7338,7 @@
     const sel = document.getElementById('inputProject');
     if (!sel) return;
     const currentVal = sel.value;
-    sel.innerHTML = '<option value="">Ã¢ÂÂ Standalone (not part of a project) Ã¢ÂÂ</option>' +
+    sel.innerHTML = '<option value="">— Standalone (not part of a project) —</option>' +
       projects.map(p => `<option value="${p.id}">${escapeHTML(p.name)}</option>`).join('');
     sel.value = currentVal;
   }
@@ -7379,7 +7359,7 @@
         <input type="email" placeholder="email@example.com (required)" value="${escapeHTML(p.email || '')}" required
                onchange="updatePersonField(${i}, 'email', this.value)"
                style="flex:1.4; padding:8px 10px; border:1px solid var(--line); border-radius:6px; font-family:inherit; font-size:13px; color:var(--ink); background:var(--paper);">
-        <button class="btn-danger" onclick="removePersonDraft(${i})" style="padding:7px 10px;">Ã¢ÂÂ</button>
+        <button class="btn-danger" onclick="removePersonDraft(${i})" style="padding:7px 10px;">✕</button>
       </div>
     `).join('');
   }
@@ -7394,13 +7374,13 @@
     const missing = peopleDraft.filter(p => !(p.email || '').trim());
     if (missing.length > 0) {
       alert('Everyone needs an email address so Google Calendar invites can be sent.\n\nMissing for:\n\n' +
-            missing.map(p => 'Ã¢ÂÂ¢ ' + p.name).join('\n'));
+            missing.map(p => '• ' + p.name).join('\n'));
       return;
     }
     const badFormat = peopleDraft.filter(p => !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(p.email.trim()));
     if (badFormat.length > 0) {
       alert('These email addresses don\'t look right:\n\n' +
-            badFormat.map(p => 'Ã¢ÂÂ¢ ' + p.name + ' Ã¢ÂÂ ' + p.email).join('\n'));
+            badFormat.map(p => '• ' + p.name + ' — ' + p.email).join('\n'));
       return;
     }
     peopleDraft.forEach(p => { p.name = p.name.trim(); p.email = p.email.trim(); });
@@ -7412,7 +7392,7 @@
 
   // ============== Init ==============
   async function initApp() {
-    showAppLoading('Connecting to the cloudÃ¢ÂÂ¦');
+    showAppLoading('Connecting to the cloud…');
     try {
       const data = await loadAllFromSupabase();
       CATEGORIES       = data.categories;
@@ -7472,12 +7452,12 @@
       el.innerHTML = `
         <div class="app-loading-inner">
           <div class="app-loading-spinner"></div>
-          <div class="app-loading-msg">${escapeHTML(msg || 'LoadingÃ¢ÂÂ¦')}</div>
+          <div class="app-loading-msg">${escapeHTML(msg || 'Loading…')}</div>
         </div>
       `;
       document.body.appendChild(el);
     } else {
-      el.querySelector('.app-loading-msg').textContent = msg || 'LoadingÃ¢ÂÂ¦';
+      el.querySelector('.app-loading-msg').textContent = msg || 'Loading…';
       el.style.display = 'flex';
     }
   }
@@ -7494,12 +7474,12 @@
     }
     el.innerHTML = `
       <div class="app-error-inner">
-        <div class="app-error-icon">Ã¢ÂÂ Ã¯Â¸Â</div>
+        <div class="app-error-icon">⚠️</div>
         <div class="app-error-title">Can't reach the cloud</div>
         <div class="app-error-detail">${escapeHTML(detail)}</div>
         <p class="app-error-help">
           Check your internet connection and try again. If this keeps happening,
-          the Supabase project may need its database schema set up Ã¢ÂÂ see the README.
+          the Supabase project may need its database schema set up — see the README.
         </p>
         <button class="btn-primary" onclick="location.reload()">Retry</button>
       </div>
@@ -7513,9 +7493,9 @@
     dot.classList.remove('online', 'offline', 'syncing');
     dot.classList.add(state);
     dot.title = {
-      online:  'Connected Ã¢ÂÂ live syncing with the team',
-      offline: 'Offline Ã¢ÂÂ changes may not save',
-      syncing: 'SyncingÃ¢ÂÂ¦',
+      online:  'Connected — live syncing with the team',
+      offline: 'Offline — changes may not save',
+      syncing: 'Syncing…',
     }[state] || '';
   }
 
@@ -7577,107 +7557,8 @@
       <div class="user-badge-avatar" style="background:${personColour(currentUserId || 'u')}">${initials(currentUserName)}</div>
       <span class="user-badge-name">${escapeHTML(firstName)}</span>
     `;
-    badge.title = `Signed in as ${currentUserName} Ã¢ÂÂ click to switch`;
+    badge.title = `Signed in as ${currentUserName} — click to switch`;
   }
-</script>
-
-<script src="resinc-autosave.js"></script>
-
-<!-- RESINC Settings Panel -->
-<div id="resinc-settings-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:99999;align-items:center;justify-content:center;">
-  <div style="background:#1e1e2e;border:1px solid #3a3a5c;border-radius:12px;padding:28px 32px;width:420px;max-width:90vw;box-shadow:0 8px 40px rgba(0,0,0,0.6);font-family:inherit;color:#e0e0f0;">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
-      <h2 style="margin:0;font-size:18px;font-weight:600;color:#fff;">âï¸ RESINC Settings</h2>
-      <button id="resinc-settings-close" style="background:none;border:none;color:#888;font-size:22px;cursor:pointer;line-height:1;padding:2px 6px;" title="Close">Ã</button>
-    </div>
-    <div style="margin-bottom:18px;">
-      <label style="display:block;font-size:13px;font-weight:500;color:#aaa;margin-bottom:6px;">GitHub Personal Access Token (for calendar auto-sync)</label>
-      <input id="resinc-pat-input" type="password" placeholder="github_pat_..." style="width:100%;box-sizing:border-box;background:#111124;border:1px solid #3a3a5c;border-radius:6px;padding:9px 12px;color:#e0e0f0;font-size:13px;font-family:monospace;outline:none;" />
-      <div style="margin-top:6px;font-size:11px;color:#666;">Required for auto-saving schedule changes to GitHub so they sync to Google Calendar.</div>
-    </div>
-    <div style="display:flex;gap:10px;justify-content:flex-end;align-items:center;">
-      <span id="resinc-settings-status" style="font-size:12px;color:#5cb85c;flex:1;"></span>
-      <button id="resinc-settings-clear" style="background:#3a1a1a;border:1px solid #7a2a2a;border-radius:6px;padding:8px 16px;color:#e07070;font-size:13px;cursor:pointer;">Clear</button>
-      <button id="resinc-settings-save" style="background:#2563eb;border:none;border-radius:6px;padding:8px 20px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;">Save</button>
-    </div>
-  </div>
-</div>
-
-<!-- Settings gear button injected into top-right UI area -->
-<script>
-(function() {
-  // Inject settings gear button after DOM ready
-  function injectSettingsButton() {
-    // Try to find the header/nav area
-    const target = document.querySelector('.app-header, header, nav, #app-header, .top-bar, .header');
-    const btn = document.createElement('button');
-    btn.id = 'resinc-settings-btn';
-    btn.title = 'RESINC Settings';
-    btn.innerHTML = 'âï¸';
-    btn.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:9998;background:#1e1e2e;border:1px solid #3a3a5c;border-radius:50%;width:44px;height:44px;font-size:20px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;transition:opacity 0.2s;';
-    btn.addEventListener('click', openSettingsPanel);
-    document.body.appendChild(btn);
-  }
-
-  function openSettingsPanel() {
-    const overlay = document.getElementById('resinc-settings-overlay');
-    const input = document.getElementById('resinc-pat-input');
-    const status = document.getElementById('resinc-settings-status');
-    // Pre-fill with existing PAT (masked)
-    const existing = localStorage.getItem('resinc_gh_pat') || '';
-    input.value = existing;
-    status.textContent = existing ? 'â Token currently set' : '';
-    overlay.style.display = 'flex';
-    setTimeout(() => input.focus(), 50);
-  }
-
-  function closeSettingsPanel() {
-    document.getElementById('resinc-settings-overlay').style.display = 'none';
-  }
-
-  function saveSettings() {
-    const input = document.getElementById('resinc-pat-input');
-    const status = document.getElementById('resinc-settings-status');
-    const pat = input.value.trim();
-    if (!pat) {
-      status.style.color = '#e07070';
-      status.textContent = 'Please enter a token first.';
-      return;
-    }
-    localStorage.setItem('resinc_gh_pat', pat);
-    status.style.color = '#5cb85c';
-    status.textContent = 'â Saved!';
-    setTimeout(closeSettingsPanel, 1200);
-  }
-
-  function clearSettings() {
-    const input = document.getElementById('resinc-pat-input');
-    const status = document.getElementById('resinc-settings-status');
-    localStorage.removeItem('resinc_gh_pat');
-    input.value = '';
-    status.style.color = '#e07070';
-    status.textContent = 'Token cleared.';
-  }
-
-  document.addEventListener('DOMContentLoaded', function() {
-    injectSettingsButton();
-    document.getElementById('resinc-settings-close').addEventListener('click', closeSettingsPanel);
-    document.getElementById('resinc-settings-save').addEventListener('click', saveSettings);
-    document.getElementById('resinc-settings-clear').addEventListener('click', clearSettings);
-    // Close on overlay click outside modal
-    document.getElementById('resinc-settings-overlay').addEventListener('click', function(e) {
-      if (e.target === this) closeSettingsPanel();
-    });
-    // Keyboard shortcut: Escape to close
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') closeSettingsPanel();
-    });
-    // Enter to save when input focused
-    document.getElementById('resinc-pat-input').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') saveSettings();
-    });
-  });
-})();
 </script>
 
 </body>
