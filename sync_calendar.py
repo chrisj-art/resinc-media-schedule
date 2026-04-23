@@ -2,26 +2,30 @@
 """
 sync_calendar.py - RESINC Media Schedule -> Google Calendar sync
 Uses Domain-Wide Delegation to write events as chris.j@resinc.com.au
+Fetches people from Supabase to resolve attendeeIds -> email addresses
 """
 
 import json
 import os
 import sys
+import urllib.request
 from datetime import datetime, timedelta
 
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 
-# ── Config ────────────────────────────────────────────────────────────────────
+# -- Config -------------------------------------------------------------------
 
 CALENDAR_ID = os.environ["GOOGLE_CALENDAR_ID"]
 SERVICE_KEY_JSON = os.environ["GOOGLE_SERVICE_ACCOUNT_KEY"]
+SUPABASE_URL = os.environ.get("SUPABASE_URL", "https://kosqyettdnibrxskwgfn.supabase.co")
+SUPABASE_KEY = os.environ.get("SUPABASE_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtvc3F5ZXR0ZG5pYnJ4c2t3Z2ZuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4MTI3NDIsImV4cCI6MjA5MjM4ODc0Mn0.JccP4W0dVw-kcbKlGOwWzwsNwPEb8rBVujN6mQliuMQ")
 IMPERSONATE_USER = "chris.j@resinc.com.au"
 SCOPES = ["https://www.googleapis.com/auth/calendar"]
 EVENTS_FILE = os.environ.get("RESINC_EVENTS_FILE", "resinc_events.json")
 SOURCE_TAG = "resinc-media-schedule"
 
-# ── Auth ──────────────────────────────────────────────────────────────────────
+# -- Auth ---------------------------------------------------------------------
 
 def get_calendar_service():
     key_data = json.loads(SERVICE_KEY_JSON)
@@ -32,7 +36,24 @@ def get_calendar_service():
     )
     return build("calendar", "v3", credentials=creds, cache_discovery=False)
 
-# ── Helpers ───────────────────────────────────────────────────────────────────
+# -- Fetch people from Supabase -----------------------------------------------
+
+def fetch_people():
+    """Returns a dict of {person_id: email} from Supabase."""
+    url = SUPABASE_URL + "/rest/v1/people?select=id,name,email"
+    req = urllib.request.Request(url, headers={
+        "apikey": SUPABASE_KEY,
+        "Authorization": "Bearer " + SUPABASE_KEY,
+    })
+    try:
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            people = json.loads(resp.read())
+            return {p["id"]: p["email"] for p in people if p.get("email")}
+    except Exception as e:
+        print(f"Warning: Could not fetch people from Supabase: {e}")
+        return {}
+
+# -- Helpers ------------------------------------------------------------------
 
 def to_rfc3339_date(date_str):
     return {"date": date_str}
@@ -41,7 +62,7 @@ def to_rfc3339_datetime(date_str, time_str, tz="Australia/Brisbane"):
     dt = datetime.strptime(f"{date_str}T{time_str}", "%Y-%m-%dT%H:%M")
     return {"dateTime": dt.isoformat(), "timeZone": tz}
 
-def build_gcal_event(ev, projects):
+def build_gcal_event(ev, projects, people_map):
     project = next((p for p in projects if p["id"] == ev.get("projectId")), None)
     project_name = project["name"] if project else "RESINC"
     schedule_label = {
@@ -50,7 +71,7 @@ def build_gcal_event(ev, projects):
         "release": "Release",
     }.get(ev.get("scheduleType", ""), ev.get("scheduleType", ""))
 
-    summary = f"[{schedule_label}] {ev['title']} — {project_name}"
+    summary = f"[{schedule_label}] {ev['title']} - {project_name}"
 
     if ev.get("allDay", True) or not ev.get("startTime"):
         start = to_rfc3339_date(ev["date"])
@@ -70,7 +91,14 @@ def build_gcal_event(ev, projects):
     description_parts.append(f"Status: {ev.get('status', 'todo')}")
     description_parts.append(f"Source: {SOURCE_TAG}/{ev['id']}")
 
-    return {
+    # Build attendees list from attendeeIds
+    attendees = []
+    for person_id in ev.get("attendeeIds", []):
+        email = people_map.get(person_id)
+        if email:
+            attendees.append({"email": email})
+
+    gcal_event = {
         "summary": summary,
         "location": ev.get("location", ""),
         "description": "\n".join(description_parts),
@@ -84,7 +112,12 @@ def build_gcal_event(ev, projects):
         },
     }
 
-# ── Sync logic ────────────────────────────────────────────────────────────────
+    if attendees:
+        gcal_event["attendees"] = attendees
+
+    return gcal_event
+
+# -- Sync logic ---------------------------------------------------------------
 
 def fetch_existing_gcal_events(service):
     existing = {}
@@ -105,13 +138,13 @@ def fetch_existing_gcal_events(service):
             break
     return existing
 
-def sync(service, resinc_events, projects):
+def sync(service, resinc_events, projects, people_map):
     existing = fetch_existing_gcal_events(service)
     resinc_ids = {ev["id"] for ev in resinc_events}
     created = updated = deleted = 0
 
     for ev in resinc_events:
-        gcal_body = build_gcal_event(ev, projects)
+        gcal_body = build_gcal_event(ev, projects, people_map)
         if ev["id"] in existing:
             gcal_id = existing[ev["id"]]["id"]
             service.events().update(
@@ -133,7 +166,7 @@ def sync(service, resinc_events, projects):
 
     print(f"Sync complete - created: {created}, updated: {updated}, deleted: {deleted}")
 
-# ── Entry point ───────────────────────────────────────────────────────────────
+# -- Entry point --------------------------------------------------------------
 
 def main():
     if not os.path.exists(EVENTS_FILE):
@@ -150,9 +183,13 @@ def main():
         print("No events to sync.")
         sys.exit(0)
 
+    print(f"Fetching people from Supabase...")
+    people_map = fetch_people()
+    print(f"Found {len(people_map)} people with email addresses")
+
     print(f"Syncing {len(resinc_events)} event(s) to Google Calendar...")
     service = get_calendar_service()
-    sync(service, resinc_events, projects)
+    sync(service, resinc_events, projects, people_map)
 
 if __name__ == "__main__":
     main()
