@@ -4456,9 +4456,35 @@
       : eyebrowBase + ' schedule';
 
     // ===== Toggle states =====
-    document.querySelectorAll('.view-toggle button').forEach(b => {
-      b.classList.toggle('active', b.dataset.view === viewMode);
-    });
+    // In Projects view, repurpose the view-toggle as a schedule picker (quick escape to schedule views)
+    const viewBtns = document.querySelectorAll('.view-toggle button');
+    if (isProjects) {
+      const schedLabels = [
+        { label: '🗓 Pre-production', schedule: 'preprod' },
+        { label: '🎬 Production',     schedule: 'production' },
+        { label: '🚀 Release',        schedule: 'release' }
+      ];
+      viewBtns.forEach((b, i) => {
+        if (!b.dataset.origText) b.dataset.origText = b.textContent;
+        if (!b.dataset.origOnclick) b.dataset.origOnclick = b.getAttribute('onclick') || '';
+        b.textContent = schedLabels[i].label;
+        const sched = schedLabels[i].schedule;
+        b.onclick = function() { setSchedule(sched); setViewMode('month'); };
+        b.classList.toggle('active', sched === currentSchedule);
+      });
+    } else {
+      viewBtns.forEach(b => {
+        if (b.dataset.origText) {
+          b.textContent = b.dataset.origText;
+          delete b.dataset.origText;
+        }
+        if (b.dataset.origOnclick) {
+          b.setAttribute('onclick', b.dataset.origOnclick);
+          delete b.dataset.origOnclick;
+        }
+        b.classList.toggle('active', b.dataset.view === viewMode);
+      });
+    }
     document.querySelectorAll('.schedule-toggle button').forEach(b => {
       b.classList.toggle('active', b.dataset.schedule === currentSchedule);
     });
