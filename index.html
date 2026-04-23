@@ -475,6 +475,41 @@
     gap: 6px;
   }
 
+  /* Hero view switcher — sits above the schedule tabs */
+  .hero-view-switcher {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 22px;
+    margin-bottom: -4px;
+  }
+  .hero-view-switcher .view-toggle {
+    display: inline-flex;
+    background: var(--surface-alt);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 3px;
+    gap: 2px;
+  }
+  .hero-view-switcher .view-toggle button {
+    background: transparent;
+    color: var(--muted);
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 0;
+    border-radius: var(--radius-sm);
+    transition: all 0.12s;
+    cursor: pointer;
+  }
+  .hero-view-switcher .view-toggle button:hover {
+    color: var(--ink);
+  }
+  .hero-view-switcher .view-toggle button.active {
+    background: var(--paper);
+    color: var(--heading);
+    box-shadow: var(--shadow-sm);
+  }
+
   /* Hero tabs — big, confident, underlined-active (Linear/magazine style) */
   .hero-tabs {
     display: flex;
@@ -2202,6 +2237,80 @@
   body.dark-mode .app-error-detail { color: #FCA5A5; background: #4B1818; }
   .app-error-help { font-size: 13px; color: var(--muted); margin: 14px 0 18px; line-height: 1.5; }
 
+  /* Save button in-flight state */
+  button.is-saving {
+    opacity: 0.65;
+    cursor: progress !important;
+    position: relative;
+  }
+  button.is-saving::before {
+    content: '';
+    display: inline-block;
+    width: 10px; height: 10px;
+    margin-right: 8px;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: -1px;
+  }
+
+  /* Duplicate project preset buttons */
+  .dupe-preset {
+    background: var(--surface-alt);
+    color: var(--muted);
+    border: 1px solid var(--line);
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+  .dupe-preset:hover { border-color: var(--sky); color: var(--ink); }
+  .dupe-preset.active {
+    background: var(--sky);
+    color: #FFFFFF;
+    border-color: var(--sky);
+  }
+
+  /* Draggable pre-prod library rows */
+  .preprod-lib-list .lib-row {
+    cursor: default;
+    transition: all 0.15s;
+    position: relative;
+  }
+  .lib-drag-handle {
+    cursor: grab;
+    color: var(--muted);
+    font-size: 14px;
+    letter-spacing: -1px;
+    user-select: none;
+    padding: 0 4px;
+    border-radius: 3px;
+    transition: all 0.12s;
+  }
+  .lib-drag-handle:hover { color: var(--sky); background: var(--sky-tint); }
+  .lib-row.dragging { opacity: 0.45; cursor: grabbing; }
+  .lib-row.dragging .lib-drag-handle { cursor: grabbing; }
+  .lib-row.drag-over {
+    border-color: var(--sky) !important;
+    background: var(--sky-tint) !important;
+    box-shadow: 0 -2px 0 var(--sky);
+  }
+  .lib-row-num {
+    display: inline-block;
+    min-width: 22px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    text-align: center;
+    background: var(--surface-alt);
+    border-radius: 3px;
+    padding: 2px 0;
+    letter-spacing: 0.02em;
+  }
+
   .coverage-strip {
     padding: 16px 26px 18px;
     background: var(--softer);
@@ -2505,6 +2614,14 @@
     </div>
   </div>
 
+  <div class="hero-view-switcher">
+    <div class="view-toggle">
+      <button data-view="month" class="active" onclick="setViewMode('month')">Month</button>
+      <button data-view="gantt" onclick="setViewMode('gantt')">Timeline</button>
+      <button data-view="projects" onclick="setViewMode('projects')">Projects</button>
+    </div>
+  </div>
+
   <div class="hero-tabs schedule-toggle" role="tablist">
     <button data-schedule="preprod" onclick="setSchedule('preprod')">
       <span class="tab-icon">🗓</span>
@@ -2525,11 +2642,6 @@
 </div>
 
 <div class="toolbar">
-  <div class="view-toggle">
-    <button data-view="month" class="active" onclick="setViewMode('month')">Month</button>
-    <button data-view="gantt" onclick="setViewMode('gantt')">Timeline</button>
-    <button data-view="projects" onclick="setViewMode('projects')">Projects</button>
-  </div>
   <div class="search-wrap">
     <span class="search-icon">🔍</span>
     <input type="text" id="searchInput" class="search-input" placeholder="Search…" oninput="onSearchInput()">
@@ -2691,7 +2803,7 @@
     <div class="modal-footer">
       <button class="btn-danger" id="deleteEventBtn" onclick="deleteEvent()" style="display:none;">Delete</button>
       <button class="btn-secondary" onclick="closeEventModal()">Cancel</button>
-      <button class="btn-primary" onclick="saveEvent()">Save</button>
+      <button class="btn-primary" id="saveEventBtn" onclick="guardedSave(this, saveEvent)">Save</button>
     </div>
   </div>
 </div>
@@ -2779,7 +2891,7 @@
     <div class="modal-footer">
       <button class="btn-danger" id="deleteProjectBtn" onclick="deleteProject()" style="display:none; margin-right:auto;">Delete</button>
       <button class="btn-secondary" onclick="closeProjectModal()">Cancel</button>
-      <button class="btn-primary" onclick="saveProject()">Save Project</button>
+      <button class="btn-primary" id="saveProjectBtn" onclick="guardedSave(this, saveProject)">Save Project</button>
     </div>
   </div>
 </div>
@@ -2795,7 +2907,60 @@
     <div id="projectDetailBody"></div>
     <div class="modal-footer">
       <button class="btn-secondary" onclick="closeProjectDetailModal()">Close</button>
+      <button class="btn-secondary" onclick="openDuplicateProjectModal()">⎘ Duplicate</button>
       <button class="btn-secondary" onclick="editCurrentProject()">Edit Project</button>
+    </div>
+  </div>
+</div>
+
+<!-- Duplicate Project Modal -->
+<div class="modal-overlay" id="duplicateProjectModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>⎘ Duplicate Project</h2>
+      <button class="modal-close" onclick="closeDuplicateProjectModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <p class="settings-intro">Create multiple copies of <strong id="dupeProjectName"></strong> — each with a shifted target date. Useful for weekly or monthly series like CH or VV.</p>
+
+      <div class="field">
+        <label>How many copies? <span id="dupeCountHint" style="color:var(--muted); font-weight:normal; font-size:12px;"></span></label>
+        <input type="number" id="dupeCount" min="1" max="365" value="4" oninput="updateDupePreview()">
+      </div>
+
+      <div class="field">
+        <label>Days between each copy</label>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;">
+          <button type="button" class="dupe-preset" data-days="1" onclick="setDupeInterval(1)">Daily</button>
+          <button type="button" class="dupe-preset active" data-days="7" onclick="setDupeInterval(7)">Weekly</button>
+          <button type="button" class="dupe-preset" data-days="14" onclick="setDupeInterval(14)">Fortnightly</button>
+          <button type="button" class="dupe-preset" data-days="30" onclick="setDupeInterval(30)">Monthly (~30d)</button>
+          <button type="button" class="dupe-preset" data-days="91" onclick="setDupeInterval(91)">Quarterly (~91d)</button>
+        </div>
+        <input type="number" id="dupeInterval" min="1" max="365" value="7" oninput="updateDupePreview()" style="margin-top:8px; max-width:140px;">
+      </div>
+
+      <div class="field">
+        <label>Name pattern</label>
+        <p style="font-size:11px; color:var(--muted); margin:2px 0 6px;">Use <code>{n}</code> as a placeholder for the copy number, starting from 2.</p>
+        <input type="text" id="dupeNamePattern" placeholder="e.g. CH Episode {n}" oninput="updateDupePreview()">
+      </div>
+
+      <div class="field">
+        <label>
+          <input type="checkbox" id="dupeCopyTasks" checked onchange="updateDupePreview()">
+          Copy pre-production tasks (shifted by the same interval)
+        </label>
+      </div>
+
+      <div class="callout" style="margin-top:14px;">
+        <div class="callout-title">📅 Preview</div>
+        <div class="callout-body" id="dupePreview" style="font-size:12px; line-height:1.7;"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeDuplicateProjectModal()">Cancel</button>
+      <button class="btn-primary" id="dupeConfirmBtn" onclick="guardedSave(this, confirmDuplicateProject)">Create copies</button>
     </div>
   </div>
 </div>
@@ -3199,6 +3364,36 @@
   }
 
   // ====================================================================
+  // SAVE BUTTON DEBOUNCE
+  // Wraps a save handler so the button is disabled while saving,
+  // preventing accidental double-clicks from creating duplicates.
+  // Button shows "Saving…" while the async work runs, then re-enables.
+  // ====================================================================
+  async function guardedSave(btn, handler) {
+    if (!btn || btn.disabled) return;  // already in-flight, ignore second click
+    const originalLabel = btn.textContent;
+    btn.disabled = true;
+    btn.classList.add('is-saving');
+    btn.textContent = 'Saving…';
+    try {
+      // handler may be sync OR async; await works either way
+      await handler();
+    } catch (err) {
+      console.error('Save failed:', err);
+      showToast('Save failed — ' + (err && err.message ? err.message : 'please try again'));
+    } finally {
+      // Tiny delay so rapid double-clicks can't slip through even if save was instant
+      await new Promise(r => setTimeout(r, 250));
+      // Button may be gone (modal closed on success) — guard for that
+      if (btn && btn.parentNode) {
+        btn.disabled = false;
+        btn.classList.remove('is-saving');
+        btn.textContent = originalLabel;
+      }
+    }
+  }
+
+  // ====================================================================
   // REAL-TIME SUBSCRIPTIONS
   // When another user adds/edits/deletes, we get a notification here
   // and update the local arrays + re-render.
@@ -3344,6 +3539,13 @@
     { id: 'lib_11', title: 'Release forms & consents signed' },
     { id: 'lib_12', title: 'Final brief to crew' },
     { id: 'lib_13', title: 'Day-of logistics check' },
+    // Moments / Channel 9 production workflow
+    { id: 'lib_20', title: 'Channel 9 filming' },
+    { id: 'lib_21', title: 'Moments filming' },
+    { id: 'lib_22', title: 'Moments content sent for approval' },
+    { id: 'lib_23', title: 'Moments content approved & sent to Channel 9' },
+    { id: 'lib_24', title: 'Channel 9 edit sent for approval' },
+    { id: 'lib_25', title: 'Final edit approved' },
   ];
   let PREPROD_LIBRARY = [];
 
@@ -5201,6 +5403,7 @@
       selectedDay = date;
     }
     render();
+    showToast(wasEditing ? `Updated "${title}" ✓` : `Saved "${title}" ✓`);
 
     // If this was a quick-add from within a project, re-open the project detail
     if (pendingReopenProject) {
@@ -5987,6 +6190,7 @@
     saveProjectsToStorage();
     closeProjectModal();
     render();
+    showToast(wasNew ? `Created "${payload.name}" ✓` : `Updated "${payload.name}" ✓`);
     // For NEW projects, pop the detail view so the user can immediately see the pipeline
     if (wasNew) {
       setTimeout(() => openProjectDetail(payload.id), 150);
@@ -6014,6 +6218,159 @@
       await sb.from('events').upsert(unlinked.map(eventToRow));
     }
     await deleteProjectFromCloud(id);
+  }
+
+  // ============== Duplicate Project ==============
+  // Lets the user create N copies of a project, each with target date shifted
+  // by a chosen interval. Optionally copies pre-production tasks, also shifted.
+  function openDuplicateProjectModal() {
+    const proj = getProject(viewingProjectId);
+    if (!proj) return;
+    // Default the name pattern by trying to detect a trailing number
+    const nameMatch = proj.name.match(/^(.*?)(\d+)\s*$/);
+    const defaultPattern = nameMatch
+      ? `${nameMatch[1]}{n}`
+      : `${proj.name} copy {n}`;
+    document.getElementById('dupeProjectName').textContent = proj.name;
+    document.getElementById('dupeCount').value = 4;
+    document.getElementById('dupeInterval').value = 7;
+    document.getElementById('dupeNamePattern').value = defaultPattern;
+    document.getElementById('dupeCopyTasks').checked = true;
+    // Mark weekly preset active
+    document.querySelectorAll('.dupe-preset').forEach(b => {
+      b.classList.toggle('active', parseInt(b.dataset.days) === 7);
+    });
+    updateDupePreview();
+    closeProjectDetailModal();
+    document.getElementById('duplicateProjectModal').classList.add('active');
+  }
+  function closeDuplicateProjectModal() {
+    document.getElementById('duplicateProjectModal').classList.remove('active');
+  }
+  function setDupeInterval(days) {
+    document.getElementById('dupeInterval').value = days;
+    document.querySelectorAll('.dupe-preset').forEach(b => {
+      b.classList.toggle('active', parseInt(b.dataset.days) === days);
+    });
+    updateDupePreview();
+  }
+  function updateDupePreview() {
+    const src = getProject(viewingProjectId);
+    if (!src) return;
+    const count = Math.max(1, Math.min(365, parseInt(document.getElementById('dupeCount').value) || 1));
+    const interval = Math.max(1, parseInt(document.getElementById('dupeInterval').value) || 7);
+    const pattern = document.getElementById('dupeNamePattern').value || 'Copy {n}';
+    const srcTargetIso = src.targetDate || '';
+    const previewLines = [];
+    const maxShow = 5;
+    for (let i = 0; i < Math.min(count, maxShow); i++) {
+      const copyNum = i + 2;  // starts at 2 (source is 1)
+      const name = pattern.replace(/\{n\}/g, copyNum);
+      let targetStr = '(no target date)';
+      if (srcTargetIso) {
+        const t = new Date(srcTargetIso + 'T00:00:00');
+        t.setDate(t.getDate() + interval * (i + 1));
+        targetStr = '🎯 ' + formatDate(toISODate(t));
+      }
+      previewLines.push(`<div style="padding:2px 0;"><strong>${escapeHTML(name)}</strong> &nbsp;<span style="color:var(--muted);">${targetStr}</span></div>`);
+    }
+    if (count > maxShow) {
+      previewLines.push(`<div style="padding:2px 0; color:var(--muted); font-style:italic;">…and ${count - maxShow} more</div>`);
+    }
+    document.getElementById('dupePreview').innerHTML = previewLines.join('');
+    document.getElementById('dupeCountHint').textContent = count === 1 ? '(1 copy)' : `(${count} copies, plus the original)`;
+  }
+  async function confirmDuplicateProject() {
+    const src = getProject(viewingProjectId);
+    if (!src) { showToast('Project not found'); return; }
+    const count = Math.max(1, Math.min(365, parseInt(document.getElementById('dupeCount').value) || 1));
+    const interval = Math.max(1, parseInt(document.getElementById('dupeInterval').value) || 7);
+    const pattern = document.getElementById('dupeNamePattern').value.trim() || 'Copy {n}';
+    const copyTasks = document.getElementById('dupeCopyTasks').checked;
+    const srcTargetIso = src.targetDate || '';
+    const srcTasks = copyTasks
+      ? events.filter(ev => ev.projectId === src.id && scheduleOf(ev) === 'preprod')
+      : [];
+
+    const nowIso = new Date().toISOString();
+    const actor = getCurrentUserName();
+    const newProjects = [];
+    const newTasks = [];
+
+    for (let i = 0; i < count; i++) {
+      const copyNum = i + 2;
+      const name = pattern.replace(/\{n\}/g, copyNum);
+      // Shifted target date
+      let newTargetIso = '';
+      if (srcTargetIso) {
+        const t = new Date(srcTargetIso + 'T00:00:00');
+        t.setDate(t.getDate() + interval * (i + 1));
+        newTargetIso = toISODate(t);
+      }
+      const newProjId = 'proj_' + Math.random().toString(36).slice(2, 10);
+      const newProj = {
+        id: newProjId,
+        name,
+        description: src.description || '',
+        driveLink: '',  // fresh — each copy gets its own folder
+        targetDate: newTargetIso,
+        teamAware: false,  // not yet briefed
+        leadId: src.leadId || null,
+        status: 'planning',
+        categoryId: src.categoryId,
+        createdAt: nowIso,
+        createdBy: actor,
+        lastModifiedAt: nowIso,
+        lastModifiedBy: actor,
+      };
+      newProjects.push(newProj);
+
+      // Copy tasks with same shift
+      if (copyTasks) {
+        srcTasks.forEach(srcTask => {
+          const t = new Date(srcTask.date + 'T00:00:00');
+          t.setDate(t.getDate() + interval * (i + 1));
+          const newTaskDate = toISODate(t);
+          newTasks.push({
+            id: uid(),
+            title: srcTask.title,
+            date: newTaskDate, endDate: newTaskDate,
+            allDay: true, startTime: null, endTime: null,
+            categoryId: srcTask.categoryId,
+            attendeeIds: (srcTask.attendeeIds || []).slice(),
+            status: 'todo',  // fresh status
+            location: '',
+            details: '',
+            scheduleType: 'preprod',
+            projectId: newProjId,
+            driveLink: '',
+            createdAt: nowIso,
+            createdBy: actor,
+            lastModifiedAt: nowIso,
+            lastModifiedBy: actor,
+          });
+        });
+      }
+    }
+
+    // Push to cloud in two batches
+    try {
+      const { error: projErr } = await sb.from('projects').upsert(newProjects.map(projectToRow));
+      if (projErr) throw new Error(projErr.message);
+      if (newTasks.length > 0) {
+        const { error: taskErr } = await sb.from('events').upsert(newTasks.map(eventToRow));
+        if (taskErr) throw new Error(taskErr.message);
+      }
+      // Update in-memory
+      newProjects.forEach(p => projects.push(p));
+      newTasks.forEach(t => events.push(t));
+      queueNotification('project', `${count} duplicate${count === 1 ? '' : 's'} of ${src.name}`, 'project', null, `Pattern: ${pattern}, ${interval}d apart`);
+      closeDuplicateProjectModal();
+      render();
+      showToast(`Created ${count} ${count === 1 ? 'copy' : 'copies'} of "${src.name}" ✓`);
+    } catch (err) {
+      alert('Couldn\'t create copies: ' + err.message);
+    }
   }
 
   // ============== Project Detail ==============
@@ -6225,10 +6582,15 @@
   // ----- Pre-prod task library tab -----
   function buildPreprodLibraryPanel() {
     return `
-      <p class="settings-intro">Your library of common pre-production tasks. When you open a project's Pre-plan section, you'll see these as a menu — pick the ones that apply, set the date and assignee. Edit or add to the list here so your team has a consistent set to work from.</p>
-      <div id="preprodLibraryList">
+      <p class="settings-intro">Your library of common pre-production tasks. Drag the ⋮⋮ handle to reorder — the order here is the order they appear in the project-creation picker. Edit the title in place; deletes only remove the template, not tasks already created from it.</p>
+      <div id="preprodLibraryList" class="preprod-lib-list">
         ${PREPROD_LIBRARY.map((task, i) => `
-          <div class="admin-row">
+          <div class="admin-row lib-row" draggable="true" data-idx="${i}" data-libid="${task.id}"
+               ondragstart="libDragStart(event)" ondragover="libDragOver(event)"
+               ondrop="libDrop(event)" ondragend="libDragEnd(event)"
+               ondragenter="libDragEnter(event)" ondragleave="libDragLeave(event)">
+            <span class="lib-drag-handle" title="Drag to reorder">⋮⋮</span>
+            <span class="lib-row-num">${i + 1}</span>
             <input type="text" class="preprod-lib-title" value="${escapeHTML(task.title)}" data-idx="${i}" data-field="title" placeholder="Task title">
             <button class="admin-delete" data-action="delete-libtask" data-idx="${i}">Delete</button>
           </div>
@@ -6236,6 +6598,51 @@
       </div>
       <button class="admin-add" data-action="add-libtask">+ Add task to library</button>
     `;
+  }
+
+  // Drag-to-reorder handlers for the preprod library
+  let libDraggingIdx = null;
+  function libDragStart(e) {
+    const row = e.currentTarget;
+    libDraggingIdx = parseInt(row.dataset.idx);
+    row.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+    // Firefox needs this to start the drag
+    try { e.dataTransfer.setData('text/plain', String(libDraggingIdx)); } catch (err) {}
+  }
+  function libDragOver(e) { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; }
+  function libDragEnter(e) {
+    e.preventDefault();
+    const row = e.currentTarget;
+    if (!row.classList.contains('dragging')) row.classList.add('drag-over');
+  }
+  function libDragLeave(e) {
+    e.currentTarget.classList.remove('drag-over');
+  }
+  async function libDrop(e) {
+    e.preventDefault();
+    const targetRow = e.currentTarget;
+    targetRow.classList.remove('drag-over');
+    const fromIdx = libDraggingIdx;
+    const toIdx = parseInt(targetRow.dataset.idx);
+    if (fromIdx == null || toIdx == null || fromIdx === toIdx) return;
+    // Reorder in-memory
+    const moved = PREPROD_LIBRARY.splice(fromIdx, 1)[0];
+    PREPROD_LIBRARY.splice(toIdx, 0, moved);
+    // Push new sort_order values to cloud for all affected items
+    const rowsToUpdate = PREPROD_LIBRARY.map((t, i) => ({
+      id: t.id, title: t.title, sort_order: i,
+    }));
+    const { error } = await sb.from('preprod_library').upsert(rowsToUpdate);
+    if (error) { showToast('Reorder didn\'t save — ' + error.message); return; }
+    // Refresh UI
+    renderSettingsPanel();
+    showToast('Order updated ✓');
+  }
+  function libDragEnd(e) {
+    e.currentTarget.classList.remove('dragging');
+    document.querySelectorAll('.lib-row.drag-over').forEach(r => r.classList.remove('drag-over'));
+    libDraggingIdx = null;
   }
 
   // ============== Add-from-library modal (opens from project detail) ==============
@@ -6976,12 +7383,7 @@
       selectedCategory = CATEGORIES[0].id;
     }
 
-    // Clear stale viewAs if the stored ID no longer matches any loaded person
-        if (viewAsPersonId && !people.find(p => p.id === viewAsPersonId)) {
-                viewAsPersonId = '';
-                localStorage.removeItem('resinc_view_as');
-        }
-        applyDarkMode();
+    applyDarkMode();
     renderLegend();
     renderViewAsOptions();
     renderNotifyBadge();
