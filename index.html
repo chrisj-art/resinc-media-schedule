@@ -4482,6 +4482,17 @@
     document.querySelectorAll('.hero-tabs, .hero-controls').forEach(el => {
       el.style.display = isProjects ? 'none' : '';
     });
+    // Hide month nav arrows and month picker chevron in Projects view
+    document.querySelectorAll('.nav-btn').forEach(el => {
+      el.style.visibility = isProjects ? 'hidden' : '';
+    });
+    const heroTitleBtn = document.getElementById('heroTitleBtn');
+    if (heroTitleBtn) {
+      heroTitleBtn.style.cursor = isProjects ? 'default' : '';
+      heroTitleBtn.style.pointerEvents = isProjects ? 'none' : '';
+    }
+    const heroChevron = document.querySelector('.hero-chevron');
+    if (heroChevron) heroChevron.style.display = isProjects ? 'none' : '';
     // In projects view, hide schedule-specific controls
     document.querySelectorAll('.filter-chips, .search-filter-row').forEach(el => {
       if (el) el.style.display = isProjects ? 'none' : '';
