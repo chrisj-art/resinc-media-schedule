@@ -3602,6 +3602,7 @@
   let editingProjectId = null;
   let viewingEventId = null;
   let viewingProjectId = null;
+  let dupeSourceId = null;
   let selectedCategory = 'media';  // sensible default until categories load
   let selectedPlatforms = ['youtube'];
   let selectedStatus = 'todo';
@@ -6280,8 +6281,9 @@
       b.classList.toggle('active', parseInt(b.dataset.days) === 7);
     });
     updateDupePreview();
+    dupeSourceId = viewingProjectId;
     closeProjectDetailModal();
-    document.getElementById('duplicateProjectModal').classList.add('active');
+       document.getElementById('duplicateProjectModal').classList.add('active');
   }
   function closeDuplicateProjectModal() {
     document.getElementById('duplicateProjectModal').classList.remove('active');
@@ -6295,8 +6297,7 @@
   }
   function updateDupePreview() {
     const src = getProject(viewingProjectId);
-    if (!src) return;
-    const count = Math.max(1, Math.min(365, parseInt(document.getElementById('dupeCount').value) || 1));
+    if dupeSourceId   const count = Math.max(1, Math.min(365, parseInt(document.getElementById('dupeCount').value) || 1));
     const interval = Math.max(1, parseInt(document.getElementById('dupeInterval').value) || 7);
     const pattern = document.getElementById('dupeNamePattern').value || 'Copy {n}';
     const srcTargetIso = src.targetDate || '';
@@ -6320,7 +6321,7 @@
     document.getElementById('dupeCountHint').textContent = count === 1 ? '(1 copy)' : `(${count} copies, plus the original)`;
   }
   async function confirmDuplicateProject() {
-    const src = getProject(viewingProjectId);
+    const src = getProject(dupeSourceId);
     if (!src) { showToast('Project not found'); return; }
     const count = Math.max(1, Math.min(365, parseInt(document.getElementById('dupeCount').value) || 1));
     const interval = Math.max(1, parseInt(document.getElementById('dupeInterval').value) || 7);
