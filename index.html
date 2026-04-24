@@ -6287,10 +6287,10 @@
     document.querySelectorAll('.dupe-preset').forEach(b => {
       b.classList.toggle('active', parseInt(b.dataset.days) === 7);
     });
-    updateDupePreview();
     dupeSourceId = viewingProjectId;
     closeProjectDetailModal();
-       document.getElementById('duplicateProjectModal').classList.add('active');
+    updateDupePreview();
+           document.getElementById('duplicateProjectModal').classList.add('active');
   }
   function closeDuplicateProjectModal() {
     document.getElementById('duplicateProjectModal').classList.remove('active');
