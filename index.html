@@ -3145,6 +3145,7 @@
       createdBy: r.created_by,
       lastModifiedAt: r.last_modified_at,
       lastModifiedBy: r.last_modified_by,
+      calendarInviteSent: r.calendar_invite_sent || false,
     };
   }
   function eventToRow(e) {
@@ -3170,6 +3171,7 @@
       created_by: e.createdBy || null,
       last_modified_at: e.lastModifiedAt || new Date().toISOString(),
       last_modified_by: e.lastModifiedBy || null,
+      calendar_invite_sent: e.calendarInviteSent || false,
     };
   }
   function rowToProject(r) {
@@ -5279,7 +5281,7 @@
     }
   }
 
-  function closeEventModal() { document.getElementById('eventModal').classList.remove('active'); }
+  function closeEventModal() { editingEventId = null; document.getElementById('eventModal').classList.remove('active'); }
   function toggleAllDay() {
     document.getElementById('timeFields').style.display =
       document.getElementById('inputAllDay').checked ? 'none' : 'flex';
@@ -5393,6 +5395,7 @@
       createdBy: existingEvent ? (existingEvent.createdBy || actor) : actor,
       lastModifiedAt: nowIso,
       lastModifiedBy: actor,
+      calendarInviteSent: existingEvent ? (existingEvent.calendarInviteSent || false) : false,
     };
     if (isRelease) {
       payload.platforms = selectedPlatforms.slice();
@@ -5425,7 +5428,7 @@
       }
       queueNotification('item', payload.title, existingSchedule, payload.date, extraBits.join(' · '));
     }
-    saveEventsToStorage();
+    saveEventsToStorage(payload);
 
     // Google Calendar invite only for PRODUCTION events with attendees
     let calendarOpened = false;
@@ -5435,6 +5438,8 @@
       if (missingEmail.length === 0) {
         window.open(buildGoogleCalendarURL(payload), '_blank');
         calendarOpened = true;
+        payload.calendarInviteSent = true;
+        saveEventsToStorage(payload);
       }
     }
 
@@ -5610,7 +5615,9 @@
         <button class="btn-danger" onclick="deleteCurrentEvent()" style="margin-right:auto;">🗑 Delete</button>
         <button class="btn-secondary" onclick="editCurrentEvent()">Edit</button>
         <button class="btn-secondary" onclick="downloadCurrentICS()" title="Download .ics — works with Apple Calendar, Outlook, iOS">📥 .ics</button>
-        <button class="btn-primary" onclick="sendToGoogleCalendar()">📅 Google invite</button>
+        ${ev.calendarInviteSent
+          ? '<button class="btn-secondary" onclick="sendToGoogleCalendar()" title="A Google Calendar invite was already sent. Clicking will open a new one to update attendees.">📅 Resend invite</button>'
+          : '<button class="btn-primary" onclick="sendToGoogleCalendar()">📅 Send invite</button>'}
       `;
     }
     document.getElementById('detailFooter').innerHTML = footer;
