@@ -6303,8 +6303,8 @@
     updateDupePreview();
   }
   function updateDupePreview() {
-    const src = getProject(viewingProjectId);
-    if dupeSourceId   const count = Math.max(1, Math.min(365, parseInt(document.getElementById('dupeCount').value) || 1));
+    const src = getProject(dupeSourceId);
+    const count = Math.max(1, Math.min(365, parseInt(document.getElementById('dupeCount').value) || 1));
     const interval = Math.max(1, parseInt(document.getElementById('dupeInterval').value) || 7);
     const pattern = document.getElementById('dupeNamePattern').value || 'Copy {n}';
     const srcTargetIso = src.targetDate || '';
