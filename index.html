@@ -2958,7 +2958,7 @@
       </div>
       <div class="field">
         <label>
-          <input type="checkbox" id="dupeCopyProdEvents" onchange="updateDupePreview()">
+          <input type="checkbox" id="dupeCopyProdEvents" checked onchange="updateDupePreview()">
           Copy production &amp; release events (shifted by the same interval)
         </label>
       </div>
@@ -5654,8 +5654,10 @@
     const ev = events.find(e => e.id === viewingEventId);
     if (!ev) return;
     if (!confirm(`Delete "${ev.title}"?\n\nThis cannot be undone.`)) return;
+    const id = viewingEventId;
     events = events.filter(e => e.id !== viewingEventId);
     saveEventsToStorage();
+    deleteEventFromCloud(id);
     closeDetailModal();
     render();
   }
