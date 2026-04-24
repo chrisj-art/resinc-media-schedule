@@ -5616,8 +5616,8 @@
         <button class="btn-secondary" onclick="editCurrentEvent()">Edit</button>
         <button class="btn-secondary" onclick="downloadCurrentICS()" title="Download .ics — works with Apple Calendar, Outlook, iOS">📥 .ics</button>
         ${ev.calendarInviteSent
-          ? '<button class="btn-secondary" onclick="sendToGoogleCalendar()" title="A Google Calendar invite was already sent. Clicking will open a new one to update attendees.">📅 Resend invite</button>'
-          : '<button class="btn-primary" onclick="sendToGoogleCalendar()">📅 Send invite</button>'}
+          ? '<button class="btn-secondary" onclick="sendToGoogleCalendar()" title="Google Calendar can't edit existing events via link — this opens a pre-filled NEW event. In Google Calendar: delete the old one, save this new one, then resend to attendees.">📅 Update in Google Cal</button>'
+          : '<button class="btn-primary" onclick="sendToGoogleCalendar()" title="Opens Google Calendar with this event pre-filled. Save it there to add it to your calendar and invite attendees.">📅 Add to Google Cal</button>'}
       `;
     }
     document.getElementById('detailFooter').innerHTML = footer;
