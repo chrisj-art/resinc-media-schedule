@@ -505,8 +505,8 @@
     color: var(--ink);
   }
   .hero-view-switcher .view-toggle button.active {
-    background: var(--sky);
-    color: #ffffff;
+    background: var(--paper);
+    color: var(--heading);
     box-shadow: var(--shadow-sm);
   }
 
@@ -576,36 +576,31 @@
     flex-wrap: wrap;
   }
   .nav-btn {
-    background: var(--sky-tint);
-    color: var(--sky);
-    width: 36px;
-    height: 36px;
+    background: var(--surface-alt);
+    color: var(--ink);
+    width: 30px;
+    height: 30px;
     border-radius: var(--radius-md);
     padding: 0;
-    font-size: 18px;
-    font-weight: 700;
+    font-size: 15px;
+    font-weight: 600;
     display: flex;
     align-items: center;
     justify-content: center;
     line-height: 1;
-    border: 1px solid rgba(0,174,239,0.25);
-    transition: all 0.15s;
+    border: 1px solid var(--line);
   }
-  .nav-btn:hover { background: var(--sky); color: #fff; border-color: var(--sky); }
-  .nav-btn-title { width: 40px; height: 40px; font-size: 20px; }
   .nav-btn:hover { background: var(--paper); border-color: var(--line-strong); }
   .today-btn {
-    background: var(--navy);
-    color: #fff;
-    border: none;
-    padding: 7px 16px;
+    background: var(--paper);
+    color: var(--ink-subtle);
+    border: 1px solid var(--line);
+    padding: 6px 12px;
     font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    border-radius: var(--radius-md);
+    font-weight: 600;
+    letter-spacing: 0.01em;
   }
-  .today-btn:hover { background: var(--sky); }
+  .today-btn:hover { background: var(--surface-alt); color: var(--ink); }
 
   .view-toggle,
   .sub-toggle {
@@ -2589,8 +2584,8 @@
     </button>
     <button class="icon-btn" id="darkToggleBtn" onclick="toggleDarkMode()" title="Toggle dark mode">🌙</button>
     <button class="icon-btn" onclick="openSettingsModal()" title="Settings">⚙</button>
-    <button class="btn-ghost" onclick="openNewProjectModal()">📁 + Project</button>
-    <button class="btn-primary" onclick="openNewEventModal()">✨ + New</button>
+    <button class="btn-ghost" onclick="openNewProjectModal()">+ Project</button>
+    <button class="btn-primary" onclick="openNewEventModal()">+ New</button>
   </div>
 </header>
 
@@ -2598,14 +2593,10 @@
   <div class="hero-top">
     <div style="flex: 1; min-width: 0; position: relative;">
       <div class="hero-eyebrow" id="heroEyebrow">Production Schedule</div>
-      <div style="display:flex; align-items:center; gap:10px;">
-        <button class="nav-btn" onclick="changeView(-1)" title="Previous month" style="flex-shrink:0;">‹</button>
-        <button class="hero-title-btn" id="heroTitleBtn" onclick="toggleMonthPicker()">
-          <h2 class="hero-title" id="heroTitle">April 2026</h2>
-          <span class="hero-chevron">▾</span>
-        </button>
-        <button class="nav-btn" onclick="changeView(1)" title="Next month" style="flex-shrink:0;">›</button>
-      </div>
+      <button class="hero-title-btn" id="heroTitleBtn" onclick="toggleMonthPicker()">
+        <h2 class="hero-title" id="heroTitle">April 2026</h2>
+        <span class="hero-chevron">▾</span>
+      </button>
       <div class="hero-stats" id="heroStats"></div>
       <div class="month-picker" id="monthPicker" style="display:none;">
         <div class="month-picker-head">
@@ -2617,7 +2608,9 @@
       </div>
     </div>
     <div class="hero-controls">
-      <button class="today-btn" onclick="goToToday()">📅 Today</button>
+      <button class="nav-btn" onclick="changeView(-1)" title="Previous">‹</button>
+      <button class="today-btn" onclick="goToToday()">Today</button>
+      <button class="nav-btn" onclick="changeView(1)" title="Next">›</button>
     </div>
   </div>
 
@@ -2654,15 +2647,18 @@
     <input type="text" id="searchInput" class="search-input" placeholder="Search…" oninput="onSearchInput()">
     <button class="search-clear" id="searchClearBtn" onclick="clearSearch()" style="display:none;">×</button>
   </div>
-
+  <div class="view-as-wrap">
+    <label class="view-as-label">View as:</label>
+    <select class="view-as-select" id="viewAsSelect" onchange="setViewAs(this.value)"></select>
+  </div>
   <div class="legend" id="legend"></div>
 </div>
 <div class="filter-chips" id="filterChips">
   <button class="filter-chip" data-filter="overdue" onclick="toggleFilter('overdue')">⚠ Overdue</button>
   <button class="filter-chip" data-filter="thisweek" onclick="toggleFilter('thisweek')">📅 This week</button>
   <button class="filter-chip" data-filter="unassigned" onclick="toggleFilter('unassigned')">👤 Unassigned</button>
-  <button class="filter-chip" data-filter="noproject" onclick="toggleFilter('noproject')">🔗 Standalone</button>
-  <button class="filter-chip" data-filter="draft" onclick="toggleFilter('draft')">⏳ Not done</button>
+  <button class="filter-chip" data-filter="noproject" onclick="toggleFilter('noproject')">◇ Standalone</button>
+  <button class="filter-chip" data-filter="draft" onclick="toggleFilter('draft')">✓ Not done</button>
   <button class="filter-chip filter-clear" id="filterClearBtn" onclick="clearAllFilters()" style="display:none;">Clear filters ×</button>
 </div>
 
@@ -2946,20 +2942,14 @@
 
       <div class="field">
         <label>Name pattern</label>
-        <p style="font-size:11px; color:var(--muted); margin:2px 0 6px;">Use <code>{n}</code> as the episode/copy number (starting from 2). Example: <em>CH Episode {n}</em> → CH Episode 2, CH Episode 3…</p>
-        <input type="text" id="dupeNamePattern" placeholder="e.g. CH Episode {n} or Budget Battlers Ep {n}" oninput="updateDupePreview()">
+        <p style="font-size:11px; color:var(--muted); margin:2px 0 6px;">Use <code>{n}</code> as a placeholder for the copy number, starting from 2.</p>
+        <input type="text" id="dupeNamePattern" placeholder="e.g. CH Episode {n}" oninput="updateDupePreview()">
       </div>
 
       <div class="field">
         <label>
           <input type="checkbox" id="dupeCopyTasks" checked onchange="updateDupePreview()">
           Copy pre-production tasks (shifted by the same interval)
-        </label>
-      </div>
-      <div class="field">
-        <label>
-          <input type="checkbox" id="dupeCopyProdEvents" checked onchange="updateDupePreview()">
-          Copy production &amp; release events (shifted by the same interval)
         </label>
       </div>
 
@@ -3032,7 +3022,7 @@
 <div class="modal-overlay" id="addFromLibraryModal">
   <div class="modal modal-wide">
     <div class="modal-header">
-      <h2 id="addFromLibraryTitle">Add pre-production tasks</h2>
+      <h2>Add pre-production tasks</h2>
       <button class="modal-close" onclick="closeAddFromLibrary()">×</button>
     </div>
     <div class="modal-body">
@@ -3145,7 +3135,6 @@
       createdBy: r.created_by,
       lastModifiedAt: r.last_modified_at,
       lastModifiedBy: r.last_modified_by,
-      calendarInviteSent: r.calendar_invite_sent || false,
     };
   }
   function eventToRow(e) {
@@ -3171,7 +3160,6 @@
       created_by: e.createdBy || null,
       last_modified_at: e.lastModifiedAt || new Date().toISOString(),
       last_modified_by: e.lastModifiedBy || null,
-      calendar_invite_sent: e.calendarInviteSent || false,
     };
   }
   function rowToProject(r) {
@@ -3604,14 +3592,13 @@
   let editingProjectId = null;
   let viewingEventId = null;
   let viewingProjectId = null;
-  let dupeSourceId = null;
   let selectedCategory = 'media';  // sensible default until categories load
   let selectedPlatforms = ['youtube'];
   let selectedStatus = 'todo';
   let selectedProjectId = null;
   let selectedPeopleIds = [];
   let selectedDay = toISODate(new Date());
-  let viewMode = localStorage.getItem('resinc_view_mode') || 'projects';
+  let viewMode = localStorage.getItem('resinc_view_mode') || 'month';
   let currentSchedule = localStorage.getItem('resinc_schedule') || 'production';
   let ganttGroupBy = localStorage.getItem('resinc_gantt_groupby') || 'category';
   let ganttScale = localStorage.getItem('resinc_gantt_scale') ||
@@ -4458,22 +4445,8 @@
       : eyebrowBase + ' schedule';
 
     // ===== Toggle states =====
-    // In Projects view, repurpose the view-toggle as a schedule picker (quick escape to schedule views)
-    const viewBtns = document.querySelectorAll('.view-toggle button');
-    const viewLabels = { month: 'Month', gantt: 'Timeline', projects: 'Projects' };
-    const schedMap = ['preprod', 'production', 'release'];
-    const schedLabels2 = ['🗓 Pre-production', '🎬 Production', '🚀 Release'];
-    viewBtns.forEach((b, i) => {
-      if (viewMode === 'projects') {
-        b.textContent = schedLabels2[i];
-        const sched = schedMap[i];
-        b.onclick = function() { setSchedule(sched); setViewMode('month'); };
-        b.classList.toggle('active', sched === currentSchedule);
-      } else {
-        b.textContent = viewLabels[b.dataset.view] || b.dataset.view;
-        b.onclick = function() { setViewMode(b.dataset.view); };
-        b.classList.toggle('active', b.dataset.view === viewMode);
-      }
+    document.querySelectorAll('.view-toggle button').forEach(b => {
+      b.classList.toggle('active', b.dataset.view === viewMode);
     });
     document.querySelectorAll('.schedule-toggle button').forEach(b => {
       b.classList.toggle('active', b.dataset.schedule === currentSchedule);
@@ -4497,21 +4470,6 @@
     const isProjects = viewMode === 'projects';
     document.querySelectorAll('.hero-tabs, .hero-controls').forEach(el => {
       el.style.display = isProjects ? 'none' : '';
-    });
-    // Hide month nav arrows and month picker chevron in Projects view
-    document.querySelectorAll('.nav-btn').forEach(el => {
-      el.style.visibility = isProjects ? 'hidden' : '';
-    });
-    const heroTitleBtn = document.getElementById('heroTitleBtn');
-    if (heroTitleBtn) {
-      heroTitleBtn.style.cursor = isProjects ? 'default' : '';
-      heroTitleBtn.style.pointerEvents = isProjects ? 'none' : '';
-    }
-    const heroChevron = document.querySelector('.hero-chevron');
-    if (heroChevron) heroChevron.style.display = isProjects ? 'none' : '';
-    // In projects view, hide schedule-specific controls
-    document.querySelectorAll('.filter-chips, .search-filter-row').forEach(el => {
-      if (el) el.style.display = isProjects ? 'none' : '';
     });
     const heroEl = document.querySelector('.hero');
     if (heroEl) {
@@ -5281,7 +5239,7 @@
     }
   }
 
-  function closeEventModal() { editingEventId = null; document.getElementById('eventModal').classList.remove('active'); }
+  function closeEventModal() { document.getElementById('eventModal').classList.remove('active'); }
   function toggleAllDay() {
     document.getElementById('timeFields').style.display =
       document.getElementById('inputAllDay').checked ? 'none' : 'flex';
@@ -5395,7 +5353,6 @@
       createdBy: existingEvent ? (existingEvent.createdBy || actor) : actor,
       lastModifiedAt: nowIso,
       lastModifiedBy: actor,
-      calendarInviteSent: existingEvent ? (existingEvent.calendarInviteSent || false) : false,
     };
     if (isRelease) {
       payload.platforms = selectedPlatforms.slice();
@@ -5428,7 +5385,7 @@
       }
       queueNotification('item', payload.title, existingSchedule, payload.date, extraBits.join(' · '));
     }
-    saveEventsToStorage(payload);
+    saveEventsToStorage();
 
     // Google Calendar invite only for PRODUCTION events with attendees
     let calendarOpened = false;
@@ -5438,8 +5395,6 @@
       if (missingEmail.length === 0) {
         window.open(buildGoogleCalendarURL(payload), '_blank');
         calendarOpened = true;
-        payload.calendarInviteSent = true;
-        saveEventsToStorage(payload);
       }
     }
 
@@ -5615,9 +5570,7 @@
         <button class="btn-danger" onclick="deleteCurrentEvent()" style="margin-right:auto;">🗑 Delete</button>
         <button class="btn-secondary" onclick="editCurrentEvent()">Edit</button>
         <button class="btn-secondary" onclick="downloadCurrentICS()" title="Download .ics — works with Apple Calendar, Outlook, iOS">📥 .ics</button>
-        ${ev.calendarInviteSent
-          ? '<button class="btn-secondary" onclick="sendToGoogleCalendar()" title="Google Calendar can't edit existing events via link — this opens a pre-filled NEW event. In Google Calendar: delete the old one, save this new one, then resend to attendees.">📅 Update in Google Cal</button>'
-          : '<button class="btn-primary" onclick="sendToGoogleCalendar()" title="Opens Google Calendar with this event pre-filled. Save it there to add it to your calendar and invite attendees.">📅 Add to Google Cal</button>'}
+        <button class="btn-primary" onclick="sendToGoogleCalendar()">📅 Google invite</button>
       `;
     }
     document.getElementById('detailFooter').innerHTML = footer;
@@ -5654,10 +5607,8 @@
     const ev = events.find(e => e.id === viewingEventId);
     if (!ev) return;
     if (!confirm(`Delete "${ev.title}"?\n\nThis cannot be undone.`)) return;
-    const id = viewingEventId;
     events = events.filter(e => e.id !== viewingEventId);
     saveEventsToStorage();
-    deleteEventFromCloud(id);
     closeDetailModal();
     render();
   }
@@ -5835,7 +5786,7 @@
       const coverage = getProjectPlatformCoverage(proj.id);
       const lead = proj.leadId ? getPerson(proj.leadId) : null;
       return `
-        <div class="project-card" style="border-left: 3px solid ${cat.hex}" onclick="openProjectDetail('${proj.id}')">
+        <div class="project-card" onclick="openProjectDetail('${proj.id}')">
           <div class="project-card-stripe" style="background:${cat.hex}"></div>
           <div class="project-card-head">
             <div class="project-card-title">${escapeHTML(proj.name)}</div>
@@ -6289,10 +6240,9 @@
     document.querySelectorAll('.dupe-preset').forEach(b => {
       b.classList.toggle('active', parseInt(b.dataset.days) === 7);
     });
-    dupeSourceId = viewingProjectId;
-    closeProjectDetailModal();
     updateDupePreview();
-           document.getElementById('duplicateProjectModal').classList.add('active');
+    closeProjectDetailModal();
+    document.getElementById('duplicateProjectModal').classList.add('active');
   }
   function closeDuplicateProjectModal() {
     document.getElementById('duplicateProjectModal').classList.remove('active');
@@ -6305,7 +6255,8 @@
     updateDupePreview();
   }
   function updateDupePreview() {
-    const src = getProject(dupeSourceId);
+    const src = getProject(viewingProjectId);
+    if (!src) return;
     const count = Math.max(1, Math.min(365, parseInt(document.getElementById('dupeCount').value) || 1));
     const interval = Math.max(1, parseInt(document.getElementById('dupeInterval').value) || 7);
     const pattern = document.getElementById('dupeNamePattern').value || 'Copy {n}';
@@ -6330,7 +6281,7 @@
     document.getElementById('dupeCountHint').textContent = count === 1 ? '(1 copy)' : `(${count} copies, plus the original)`;
   }
   async function confirmDuplicateProject() {
-    const src = getProject(dupeSourceId);
+    const src = getProject(viewingProjectId);
     if (!src) { showToast('Project not found'); return; }
     const count = Math.max(1, Math.min(365, parseInt(document.getElementById('dupeCount').value) || 1));
     const interval = Math.max(1, parseInt(document.getElementById('dupeInterval').value) || 7);
@@ -6339,10 +6290,6 @@
     const srcTargetIso = src.targetDate || '';
     const srcTasks = copyTasks
       ? events.filter(ev => ev.projectId === src.id && scheduleOf(ev) === 'preprod')
-      : [];
-    const copyProdEvents = document.getElementById('dupeCopyProdEvents') && document.getElementById('dupeCopyProdEvents').checked;
-    const srcProdEvents = copyProdEvents
-      ? events.filter(ev => ev.projectId === src.id && (scheduleOf(ev) === 'production' || scheduleOf(ev) === 'release'))
       : [];
 
     const nowIso = new Date().toISOString();
@@ -6403,16 +6350,7 @@
             lastModifiedBy: actor,
           });
         });
-            // Copy production + release events
-      if (copyProdEvents) {
-        srcProdEvents.forEach(srcEv => {
-          let newDate = srcEv.date, newEndDate = srcEv.endDate || srcEv.date;
-          if (srcEv.date) { const t = new Date(srcEv.date + 'T00:00:00'); t.setDate(t.getDate() + interval * (i + 1)); newDate = toISODate(t); }
-          if (srcEv.endDate) { const t2 = new Date(srcEv.endDate + 'T00:00:00'); t2.setDate(t2.getDate() + interval * (i + 1)); newEndDate = toISODate(t2); }
-          newTasks.push({ id: uid(), title: srcEv.title, date: newDate, endDate: newEndDate, allDay: srcEv.allDay !== false, startTime: srcEv.startTime || null, endTime: srcEv.endTime || null, categoryId: srcEv.categoryId, attendeeIds: (srcEv.attendeeIds || []).slice(), status: 'todo', location: srcEv.location || '', details: srcEv.details || '', scheduleType: srcEv.scheduleType, projectId: newProjId, driveLink: '', createdAt: nowIso, createdBy: actor, lastModifiedAt: nowIso, lastModifiedBy: actor });
-        });
       }
-}
     }
 
     // Push to cloud in two batches
@@ -6532,7 +6470,6 @@
           <div class="project-lane-items">
             ${prodItems.length ? prodItems.map(renderItem).join('') : '<div class="project-lane-empty">No events yet</div>'}
           </div>
-          <button class="project-lane-apply" onclick="closeProjectDetailModal(); openAddFromLibrary('${id}', 'production');">⚡ Pick from library</button>
           <button class="project-lane-add" onclick="addItemToProject('production')">+ Add event</button>
         </div>
         <div class="project-lane">
@@ -6710,15 +6647,13 @@
 
   // ============== Add-from-library modal (opens from project detail) ==============
   let addingToProjectId = null;
-  let addingScheduleType = 'preprod';
   let libraryPickedIds = new Set();   // task ids selected from the library
   let libraryCustomTitle = '';        // optional "add your own" task
   let librarySharedDate = '';         // optional shared due date
   let librarySharedAssignee = '';     // optional shared assignee
 
-  function openAddFromLibrary(projectId, scheduleType) {
+  function openAddFromLibrary(projectId) {
     addingToProjectId = projectId;
-    addingScheduleType = scheduleType || 'preprod';
     libraryPickedIds = new Set();
     libraryCustomTitle = '';
     librarySharedDate = toISODate(new Date());  // default to today
@@ -6734,19 +6669,10 @@
     const proj = getProject(addingToProjectId);
     if (!proj) return;
     document.getElementById('addFromLibraryIntro').innerHTML =
-      `Adding ${addingScheduleType === 'production' ? 'production events' : 'pre-production tasks'} to <strong style="color:var(--heading);">${escapeHTML(proj.name)}</strong>. Tick the ones you need — all picked items will use the date & assignee below (you can tweak each after they're created).`;
-
-    // Update modal title
-    const _libTitle = document.getElementById('addFromLibraryTitle');
-    if (_libTitle) _libTitle.textContent = addingScheduleType === 'production' ? 'Add production events' : 'Add pre-production tasks';
-
-    // Filter library by schedule type: production items have sort_order >= 20
-    const _filteredLib = PREPROD_LIBRARY
-      .filter(t => addingScheduleType === 'production' ? (t.sort_order || 0) >= 20 : (t.sort_order || 0) < 20)
-      .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+      `Adding pre-production tasks to <strong style="color:var(--heading);">${escapeHTML(proj.name)}</strong>. Tick the ones you need — all picked tasks will use the date & assignee below (you can tweak each task after they're created).`;
 
     // List of library tasks with checkboxes
-    document.getElementById('libraryTaskList').innerHTML = _filteredLib.map(task => {
+    document.getElementById('libraryTaskList').innerHTML = PREPROD_LIBRARY.map(task => {
       const checked = libraryPickedIds.has(task.id);
       return `
         <label class="library-task-row ${checked ? 'checked' : ''}">
@@ -6807,13 +6733,13 @@
         attendeeIds: fallbackAssignee ? [fallbackAssignee] : [],
         status: 'todo',
         location: '', details: '',
-        scheduleType: addingScheduleType,
+        scheduleType: 'preprod',
         projectId: proj.id,
         driveLink: '',
       });
     });
     saveEventsToStorage();
-    queueNotification(addingScheduleType, `${toAdd.length} ${addingScheduleType === 'production' ? 'production event' : 'pre-production task'}${toAdd.length === 1 ? '' : 's'} added to ${proj.name}`, addingScheduleType, date, '');
+    queueNotification('preprod', `${toAdd.length} pre-production task${toAdd.length === 1 ? '' : 's'} added to ${proj.name}`, 'preprod', date, '');
 
     closeAddFromLibrary();
     render();
